@@ -24,6 +24,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.dipesan.miniatm.miniatm.utils.AppUtil.showDialog;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -111,12 +113,12 @@ public class PurchasePhoneCreditFragment extends Fragment {
         if (fragmentPhoneCreditProviderEditText.getText().toString().length() > 0 &&
                 fragmentPhoneCreditNominalEditText.getText().toString().length() >0 &&
                 fragmentPhoneNumberEditText.getText().toString().length()>=9){
-//            String message = String.format("Pembelian pulsa %s ke %s sebesar %s telah berhasil",
-//                    itemProviders[whichItemProvider],
-//                    fragmentPhoneNumberEditText.getText().toString(),
-//                    itemsNominal[whichItemNominal]);
-//            showDialog(getActivity(), message);
-            showAlert();
+            String message = String.format("Pembelian pulsa %s ke %s sebesar %s telah berhasil",
+                    itemProviders[whichItemProvider],
+                    fragmentPhoneNumberEditText.getText().toString(),
+                    itemsNominal[whichItemNominal]);
+            showDialog(getActivity(), message);
+            //showAlert();
             fragmentPhoneCreditProviderEditText.setText(null);
                     fragmentPhoneCreditNominalEditText.setText(null);
             fragmentPhoneNumberEditText.setText(null);
