@@ -1,0 +1,33 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.dipesan.miniatm.miniatm.view.purchase.PurchaseFragment">
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/balance_activity_phone_credit_button"
+            android:textStyle="bold"
+            android:textColor="@color/colorTextIcons"
+            android:text="@string/phone_credit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ButtonTheme"
+            />
+        <Button
+            android:id="@+id/balance_activity_electric_token_button"
+            android:textStyle="bold"
+            android:textColor="@color/colorTextIcons"
+            android:text="@string/electric_token"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ButtonTheme"
+            />
+    </LinearLayout>
+</FrameLayout>

@@ -1,0 +1,50 @@
+package com.dipesan.miniatm.miniatm.view.function;
+
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+
+import com.dipesan.miniatm.miniatm.R;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class FunctionVoidFragment extends Fragment {
+
+
+    @BindView(R.id.fragfunction_void_password_edit_text) EditText fragfunctionVoidPasswordEditText;
+
+    public FunctionVoidFragment() {
+        // Required empty public constructor
+    }
+
+    public static FunctionVoidFragment newInstance() {
+        FunctionVoidFragment fragment = new FunctionVoidFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_function_void, container, false);
+        ButterKnife.bind(this, view);
+        return view;
+    }
+
+    @OnClick(R.id.fragfunction_void_password_button)
+    public void onClick() {
+
+    }
+}
