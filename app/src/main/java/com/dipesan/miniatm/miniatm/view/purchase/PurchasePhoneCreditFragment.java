@@ -67,7 +67,6 @@ public class PurchasePhoneCreditFragment extends Fragment {
         fragmentPhoneCreditNominalEditText.setInputType(InputType.TYPE_NULL);
         hideKeyboard(view);
 
-
         return view;
     }
 
@@ -147,7 +146,6 @@ public class PurchasePhoneCreditFragment extends Fragment {
 
     private void addData() {
         HashMap<String, String>queryValues = new HashMap<String, String>();
-
         queryValues.put("providerName", fragmentPhoneCreditProviderEditText.getText().toString());
         queryValues.put("nominal", fragmentPhoneCreditProcessButton.getText().toString());
         queryValues.put("telephoneNumber", fragmentPhoneNumberEditText.getText().toString());
@@ -167,6 +165,7 @@ public class PurchasePhoneCreditFragment extends Fragment {
                 dialogInterface.dismiss();
             }
         });
+
         builder.create().show();
 
     }
@@ -183,6 +182,8 @@ public class PurchasePhoneCreditFragment extends Fragment {
                 dialogInterface.dismiss();
             }
         });
+        builder.setCancelable(false);
+        builder.setNegativeButton("Batal", null);
         builder.create().show();
 
     }

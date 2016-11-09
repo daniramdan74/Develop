@@ -5,7 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
-import com.dipesan.miniatm.miniatm.Activity.SettingsActivity;
+
+import com.dipesan.miniatm.miniatm.Activity.MainSubActivity;
 import com.dipesan.miniatm.miniatm.R;
 import com.dipesan.miniatm.miniatm.utils.ucube.CardReaderType;
 import com.dipesan.miniatm.miniatm.utils.ucube.TransactionType;
@@ -24,6 +25,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
+
+import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU;
+import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_SETTINGS;
 
 /**
  * Created by fachrifebrian on 10/18/16.
@@ -133,11 +137,11 @@ public class YoucubeService {
                                                 break;
 
                                             case DECLINED:
-                                                Toast.makeText(activity, "Transaction Apporved", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(activity, "Transaction DECLINED", Toast.LENGTH_LONG).show();
                                                 break;
 
                                             case CHIP_REQUIRED:
-                                                Toast.makeText(activity, "MSR use forbidden.\nUse chi[", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(activity, "MSR use forbidden.\nUse chip", Toast.LENGTH_LONG).show();
                                                 break;
 
                                             case CANCELLED:
@@ -160,13 +164,15 @@ public class YoucubeService {
 
                                     case FAILED:
                                         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                                        builder.setMessage("Make Sure the Youcube Device is Turned On \n and Registered");
+                                        builder.setMessage("Make Sure the Youcube Device is Turned On and Registered");
                                         builder.setPositiveButton("Setting",
                                                 new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int which) {
                                                         dialog.dismiss();
-                                                        Intent intent = new Intent(activity, SettingsActivity.class);
+                                                        Intent intent = new Intent(activity, MainSubActivity.class);
+                                                        intent.putExtra(MENU, MENU_SETTINGS);
+                                                        activity.overridePendingTransition(0, R.anim.fade_out);
                                                         activity.startActivity(intent);
                                                     }
                                                 });

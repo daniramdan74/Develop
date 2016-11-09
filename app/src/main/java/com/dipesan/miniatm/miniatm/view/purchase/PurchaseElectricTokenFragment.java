@@ -65,6 +65,14 @@ public class PurchaseElectricTokenFragment extends Fragment {
                 dialogInterface.dismiss();
             }
         });
+        builder.setCancelable(false);
+        builder.setNegativeButton("Kembali", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
         builder.create().show();
 
     }

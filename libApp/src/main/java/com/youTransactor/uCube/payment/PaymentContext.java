@@ -57,6 +57,7 @@ public class PaymentContext {
 
 	public PaymentContext(double amount, Currency currency, byte transactionType) {
 		setAmount(amount);
+		setMessage(message);
 		setCurrency(currency);
 		setTransactionType(transactionType);
 	}
@@ -313,6 +314,7 @@ public class PaymentContext {
 	public void setNFCOutcome(byte[] NFCOutcome) {
 		this.NFCOutcome = NFCOutcome;
 	}
+
 	public void setMessage(String message) {
 		this.message = message;
 	}

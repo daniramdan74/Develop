@@ -19,6 +19,9 @@ import com.dipesan.miniatm.miniatm.services.YoucubeService;
 import com.sunmi.controller.ICallback;
 import com.sunmi.impl.V1Printer;
 import com.sunmi.util.ThreadPoolManager;
+import com.youTransactor.uCube.ITaskMonitor;
+import com.youTransactor.uCube.TaskEvent;
+import com.youTransactor.uCube.rpc.command.SimplifiedOnlinePINCommand;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -80,17 +83,17 @@ public class BalanceFragment extends Fragment {
         final View dialogView = inflater.inflate(R.layout.custom_dialog, null);
         builder.setView(dialogView);
         final EditText edt = (EditText) dialogView.findViewById(R.id.enter_pin_edit_text);
-        builder.setIcon(R.drawable.ic_settings)
-                .setTitle("PIN")
-                .setMessage("Enter Your PIN : ");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                LinearLayout linear = (LinearLayout) getActivity().findViewById(R.id.layout_balance);
-                linear.setVisibility(View.VISIBLE);
-                printBalance();
-            }
-        });
+        enterPin();
+//        builder.setIcon(R.drawable.ic_settings)
+//                .setTitle("PIN")
+//                .setMessage("Enter Your PIN : ");
+//        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                LinearLayout linear = (LinearLayout) getActivity().findViewById(R.id.layout_balance);
+//                linear.setVisibility(View.VISIBLE);
+//            }
+//        });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -117,6 +120,26 @@ public class BalanceFragment extends Fragment {
                 v1Printer.lineWrap(4);
                 v1Printer.commitTransaction();
                 Toast.makeText(getActivity(),"Saldo Anda : "+balanceTextView.getText().toString(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void enterPin() {
+        final SimplifiedOnlinePINCommand cmd = new SimplifiedOnlinePINCommand();
+        cmd.setPINRequestLabel("ENTER YOUR PIN :");
+        cmd.setWaitLabel("Mohon Tunggu...");
+        cmd.execute(new ITaskMonitor() {
+            @Override
+            public void handleEvent(TaskEvent event, Object... params) {
+                switch(event) {
+                    case FAILED:
+                        Toast.makeText(getActivity(),"FAILED",Toast.LENGTH_SHORT).show();
+                        break;
+                    case SUCCESS:
+                        Toast.makeText(getActivity(),"FAILED",Toast.LENGTH_SHORT).show();
+//                        printBalance();
+                        break;
+                }
             }
         });
     }

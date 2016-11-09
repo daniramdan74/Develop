@@ -24,6 +24,7 @@ public class PaymentCreditCardFragment extends Fragment {
     final CharSequence[] itemsBank = {"BNI", "ANZ Indonesia", "BRI",
             "Bukopin", "Citibank", "CIMB NIAGA", "Danamon", "HSBC",
             "Bank Mega", "Bank Permata", "Standard Chartered Bank", "Panin Bank"};
+    private int whichItemBanks = 0;
     @BindView(R.id.fragpayment_credit_card_providers_edit_text) EditText fragpaymentCreditCardProvidersEditText;
 
     public PaymentCreditCardFragment() {
@@ -59,10 +60,11 @@ public class PaymentCreditCardFragment extends Fragment {
     private void showProviders() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Penyedia Layanan");
-        builder.setItems(itemsBank, new DialogInterface.OnClickListener() {
+        builder.setSingleChoiceItems(itemsBank,whichItemBanks, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int items) {
                 fragpaymentCreditCardProvidersEditText.setText(itemsBank[items]);
+                dialogInterface.dismiss();
             }
         });
         builder.setNegativeButton("Batal", null);

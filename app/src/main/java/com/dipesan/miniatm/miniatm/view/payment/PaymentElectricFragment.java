@@ -58,7 +58,6 @@ public class PaymentElectricFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(title);
         builder.setMessage(message);
-
         builder.setCancelable(false);
         builder.setNegativeButton("BATAL", new DialogInterface.OnClickListener() {
             @Override

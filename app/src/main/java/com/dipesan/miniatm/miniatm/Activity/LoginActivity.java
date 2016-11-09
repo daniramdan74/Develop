@@ -20,6 +20,9 @@ import com.youTransactor.uCube.rpc.RPCManager;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU;
+import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_SETTINGS;
+
 public class LoginActivity extends AppCompatActivity {
     private YoucubeService youcubeService;
         @Override
@@ -52,9 +55,10 @@ public class LoginActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.login_settings_button:
-                Intent intentSettings = new Intent(this, SettingsActivity.class);
-                startActivity(intentSettings);
+                Intent intent = new Intent(this, MainSubActivity.class);
+                intent.putExtra(MENU, MENU_SETTINGS);
                 overridePendingTransition(0, R.anim.fade_out);
+                startActivity(intent);
                 break;
             case R.id.login_logo_image_view:
                 Intent intentMainActivity = new Intent(this, MainActivity.class);
