@@ -51,6 +51,7 @@ public class PaymentContext {
 	private byte[] NFCOutcome;
 	private byte[] transactionData;
 	private ResourceBundle msgBundle;
+	private String message;
 
 	public PaymentContext() {}
 
@@ -312,5 +313,7 @@ public class PaymentContext {
 	public void setNFCOutcome(byte[] NFCOutcome) {
 		this.NFCOutcome = NFCOutcome;
 	}
-
+	public void setMessage(String message) {
+		this.message = message;
+	}
 }

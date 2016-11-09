@@ -21,20 +21,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.dipesan.miniatm.miniatm.utils.AppUtil.showDialog;
-
 /**
  * A simple {@link Fragment} subclass.
  */
 public class PurchaseElectricTokenFragment extends Fragment {
     private final CharSequence[] itemsNominal = {"30.000", "50.000", "100.000", "150.000", "200.000", "300.000", "500.000"};
-    private int whichItemNominal = 0;
-
     @BindView(R.id.fragment_electric_nominal_edit_text) EditText fragmentElectricNominalEditText;
     @BindView(R.id.fragelectric_text_input_layout_nominal) TextInputLayout fragelectricTextInputLayoutNominal;
     @BindView(R.id.fragment_electric_meter_number_edit_text) EditText fragmentElectricMeterNumberEditText;
     @BindView(R.id.fragpelectric_text_input_layout_meter_number) TextInputLayout fragpelectricTextInputLayoutMeterNumber;
     @BindView(R.id.fragment_electric_process_button) Button fragmentElectricProcessButton;
+    private int whichItemNominal = 0;
 
     public PurchaseElectricTokenFragment() {
         // Required empty public constructor
@@ -55,6 +52,7 @@ public class PurchaseElectricTokenFragment extends Fragment {
 
         return view;
     }
+
     private void showNominal() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 //               .setTitle("Pilih Provider")
@@ -70,6 +68,7 @@ public class PurchaseElectricTokenFragment extends Fragment {
         builder.create().show();
 
     }
+
     @OnClick({R.id.fragment_electric_nominal_edit_text, R.id.fragment_electric_meter_number_edit_text, R.id.fragment_electric_process_button})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -85,17 +84,32 @@ public class PurchaseElectricTokenFragment extends Fragment {
     }
 
     private void showProcess() {
-        String message = String.format("Pembelian token listrik sebesar %s ke %s berhasil dilakukan",
-                itemsNominal[whichItemNominal],
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(Html.fromHtml("<font color='#FF7F27'>Pembelian</font>"));
+        String message = String.format("Dari Rekening : 1234 " +
+                "\nPenyedia Jasa : PLN Prabayar" +
+                "\nID PEL/No Meter : %s " +
+                "\nNominal : %s " +
+                "\nNo Meter : 12345678" +
+                "\nNama : Ujang Saepuloh" +
+                "\nTarif/Daya : R1/900" +
+                "\nJumlah KWH : 30,20",
                 fragmentElectricMeterNumberEditText.getText().toString(),
+                itemsNominal[whichItemNominal],
                 itemsNominal[whichItemNominal]);
-        showDialog(getActivity(), message);
+        builder.setMessage(message);
+        builder.setIcon(R.mipmap.ic_launcher);
         fragmentElectricMeterNumberEditText.setText(null);
         fragmentElectricNominalEditText.setText(null);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().getAttributes().windowAnimations = R.style.dialog_animation;
+        alertDialog.show();
+
 
     }
+
     public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 

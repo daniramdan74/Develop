@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 
 import com.dipesan.miniatm.miniatm.R;
 import com.dipesan.miniatm.miniatm.view.About.AboutFragment;
+import com.dipesan.miniatm.miniatm.view.Account.AccountFragment;
 import com.dipesan.miniatm.miniatm.view.balance.BalanceFragment;
 import com.dipesan.miniatm.miniatm.view.function.FunctionFragment;
 import com.dipesan.miniatm.miniatm.view.function.FunctionSettelmentFragment;
@@ -47,6 +48,7 @@ public class AppConstant {
     public static final int MENU_SETTINGS=5;
     public static final int MENU_FUNCTION=6;
     public static final int MENU_ABOUT=7;
+    public static final int MENU_ACCOUNT=8;
 
 //SUbMenu
 
@@ -84,6 +86,7 @@ public class AppConstant {
             case MENU_SETTINGS: return R.string.settings;
             case MENU_FUNCTION: return R.string.function;
             case MENU_ABOUT:return R.string.about;
+            case MENU_ACCOUNT:return R.string.account;
 
 
             //sub menu
@@ -121,6 +124,7 @@ public class AppConstant {
             case MENU_SETTINGS : return SettingsFragment.newInstance();
             case MENU_FUNCTION: return FunctionFragment.newInstance();
             case MENU_ABOUT:return AboutFragment.newInstance();
+            case MENU_ACCOUNT:return AccountFragment.newInstance();
 
             //submenu
             //balance
@@ -144,7 +148,7 @@ public class AppConstant {
             case SUB_MENU_FUNCTION_VOID:return FunctionVoidFragment.newInstance();
             case SUB_MENU_FUNCTION_SETTELMENT:return FunctionSettelmentFragment.newInstance();
 
-            default: return InterBankFragment.newInstance();
+            default: return BalanceFragment.newInstance();
 
         }
 

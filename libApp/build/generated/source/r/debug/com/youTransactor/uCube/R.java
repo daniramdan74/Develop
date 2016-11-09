@@ -1751,6 +1751,7 @@ containing a value of this type.
     }
     public static final class raw {
         public static int keystore=0x7f050000;
+        public static int ucube_strings=0x7f050001;
     }
     public static final class string {
         public static int abc_action_bar_home_description=0x7f060000;

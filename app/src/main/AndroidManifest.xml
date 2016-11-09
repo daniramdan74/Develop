@@ -25,6 +25,13 @@
         </activity>
         <activity android:name=".Activity.MainSubActivity">
         </activity>
+        <activity android:name=".utils.print.PrintActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

@@ -1,5 +1,9 @@
 [
     {
+        "merged": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\raw\\ucube_strings.properties",
+        "source": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\bundles\\debug\\res\\raw\\ucube_strings.properties"
+    },
+    {
         "merged": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\raw\\keystore",
         "source": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\bundles\\debug\\res\\raw\\keystore"
     }

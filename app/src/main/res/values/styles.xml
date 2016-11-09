@@ -42,6 +42,13 @@
     <item name="android:inputType">none</item>
     <item name="android:maxLines">1</item>
 </style>
+    <style name="dialog_animation">
+
+        <item name="android:windowEnterAnimation">@anim/slide_in_left</item>
+
+        <item name="android:windowExitAnimation">@anim/slide_out_right</item>
+
+    </style>
 
 
     </resources>

@@ -1,0 +1,96 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <Button
+                android:id="@+id/b_self"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="self"/>
+
+            <Button
+                android:id="@+id/b_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="text"/>
+
+            <Button
+                android:id="@+id/b_baidu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="baidu"/>
+
+            <Button
+                android:id="@+id/b_meituan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="meituan"/>
+
+            <Button
+                android:id="@+id/b_erlmo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="erlmo"/>
+
+            <Button
+                android:id="@+id/b_koubei"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="koubei"/>
+
+            <Button
+                android:id="@+id/b_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Table"/>
+
+            <Button
+                android:id="@+id/b_barcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Barcode"/>
+
+            <Button
+                android:id="@+id/b_qcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Qrcode"/>
+
+            <Button
+                android:id="@+id/b_pic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Picture"/>
+
+            <Button
+                android:id="@+id/b_lines"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Line"/>
+
+
+            <Button
+                android:id="@+id/b_exit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Exit"/>
+
+            <TextView
+                android:id="@+id/info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

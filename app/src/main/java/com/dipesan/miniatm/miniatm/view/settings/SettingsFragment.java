@@ -85,13 +85,6 @@ public class SettingsFragment extends Fragment {
         settingsServerEditText.setText(settings.getString(MDMManager.MDM_SERVER_URL_SETTINGS_KEY, MDMManager.DEFAULT_URL));
         settingsDeviceEditText.setText(settings.getString(AppConstant.DEVICE_NAME_SETTINGS_KEY,""));
         settingsDeviceEditText.setInputType(InputType.TYPE_NULL);
-        settingsDeviceEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-showDevice();
-            }
-        });
-
          return view;
     }
 
@@ -231,7 +224,7 @@ showDevice();
                 saveSettings();
                 break;
             case R.id.settings_device_edit_text:
-
+                showDevice();
                 break;
             case R.id.settings_server_edit_text:
 

@@ -2,5 +2,9 @@
     {
         "merged": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\res\\merged\\release\\raw\\keystore",
         "source": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\src\\main\\res\\raw\\keystore"
+    },
+    {
+        "merged": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\res\\merged\\release\\raw\\ucube_strings.properties",
+        "source": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\src\\main\\res\\raw\\ucube_strings.properties"
     }
 ]
