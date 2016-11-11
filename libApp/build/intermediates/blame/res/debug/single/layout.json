@@ -32,12 +32,12 @@
         "source": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.3.0\\res\\layout\\notification_template_part_chronometer.xml"
     },
     {
-        "merged": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_material.xml",
-        "source": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.3.0\\res\\layout\\abc_alert_dialog_material.xml"
-    },
-    {
         "merged": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_toolbar.xml",
         "source": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.3.0\\res\\layout\\abc_screen_toolbar.xml"
+    },
+    {
+        "merged": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_material.xml",
+        "source": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.3.0\\res\\layout\\abc_alert_dialog_material.xml"
     },
     {
         "merged": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\res\\merged\\debug\\layout\\abc_popup_menu_item_layout.xml",
@@ -76,12 +76,12 @@
         "source": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.3.0\\res\\layout\\abc_list_menu_item_checkbox.xml"
     },
     {
-        "merged": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_button_bar_material.xml",
-        "source": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.3.0\\res\\layout\\abc_alert_dialog_button_bar_material.xml"
-    },
-    {
         "merged": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_lines.xml",
         "source": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.3.0\\res\\layout\\notification_template_lines.xml"
+    },
+    {
+        "merged": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_button_bar_material.xml",
+        "source": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.3.0\\res\\layout\\abc_alert_dialog_button_bar_material.xml"
     },
     {
         "merged": "D:\\dipesan_com\\mini_atm\\MiniAtm\\libApp\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view_list_item.xml",

@@ -16,9 +16,9 @@ import android.widget.Toast;
 
 import com.dipesan.miniatm.miniatm.R;
 import com.dipesan.miniatm.miniatm.services.YoucubeService;
+import com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager;
 import com.sunmi.controller.ICallback;
 import com.sunmi.impl.V1Printer;
-import com.sunmi.util.ThreadPoolManager;
 import com.youTransactor.uCube.ITaskMonitor;
 import com.youTransactor.uCube.TaskEvent;
 import com.youTransactor.uCube.rpc.command.SimplifiedOnlinePINCommand;
@@ -32,8 +32,9 @@ import butterknife.ButterKnife;
 public class BalanceFragment extends Fragment {
     private static final String TAG = "BalanceFragment";
     @BindView(R.id.balance_text_view) TextView balanceTextView;
+
     private YoucubeService youcubeService;
-    private V1Printer v1Printer;
+    private V1Printer printer;
     private ICallback iCallback = new ICallback() {
 
         @Override
@@ -54,6 +55,7 @@ public class BalanceFragment extends Fragment {
     };
 
 
+
     public BalanceFragment() {
         // Required empty public constructor
     }
@@ -71,8 +73,8 @@ public class BalanceFragment extends Fragment {
         LinearLayout linear = (LinearLayout) view.findViewById(R.id.layout_balance);
         linear.setVisibility(View.INVISIBLE);
         showAlert();
-        v1Printer = new V1Printer(getActivity());
-        v1Printer.setCallback(iCallback);
+        printer = new V1Printer(getActivity());
+        printer.setCallback(iCallback);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -80,20 +82,21 @@ public class BalanceFragment extends Fragment {
     private void showAlert() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
+
         final View dialogView = inflater.inflate(R.layout.custom_dialog, null);
         builder.setView(dialogView);
         final EditText edt = (EditText) dialogView.findViewById(R.id.enter_pin_edit_text);
-        enterPin();
-//        builder.setIcon(R.drawable.ic_settings)
-//                .setTitle("PIN")
-//                .setMessage("Enter Your PIN : ");
-//        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                LinearLayout linear = (LinearLayout) getActivity().findViewById(R.id.layout_balance);
-//                linear.setVisibility(View.VISIBLE);
-//            }
-//        });
+                builder.setIcon(R.drawable.ic_settings)
+                .setTitle("PIN")
+                .setMessage("Enter Your PIN : ");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                LinearLayout linear = (LinearLayout) getActivity().findViewById(R.id.layout_balance);
+                linear.setVisibility(View.VISIBLE);
+                printBalance();
+            }
+        });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -106,21 +109,63 @@ public class BalanceFragment extends Fragment {
 
     private void printBalance() {
         ThreadPoolManager.getInstance().executeTask(new Runnable() {
+
             @Override
             public void run() {
 
-                v1Printer.beginTransaction();
-                v1Printer.printerInit();
+                printer.beginTransaction();
 
-                v1Printer.setFontSize(24);
-                v1Printer.printText("Merchant Qubepay\n");
-                v1Printer.printText("===============================\n");
-                v1Printer.printText("Saldo anda " +balanceTextView.getText().toString() + "\n");
-                v1Printer.printText("===============================\n");
-                v1Printer.lineWrap(4);
-                v1Printer.commitTransaction();
-                Toast.makeText(getActivity(),"Saldo Anda : "+balanceTextView.getText().toString(),Toast.LENGTH_SHORT).show();
+                printer.printerInit();
+
+                printer.setFontSize(24);
+                printer.printText("支付宝\n");
+                printer.printText("Alipay\n");
+                printer.printText("===============================\n");
+                printer.printText("订单金额                 0.01元\n");
+                printer.printText("    参与优惠金额        0.01元\n");
+                printer.printText("商家实收\n");
+                printer.printText("------------------------------- \n");
+                printer.printText("开票金额(用户实付)   0.01元\n");
+                printer.printText("--------------------------------\n");
+                printer.printText("交易号:\n");
+                printer.printText("2016040621001004150224503623\n\n");
+                printer.printText("门店名称  正新鸡排(欢乐谷二店)\n");
+                printer.printText("买家帐号         1id***@21cn.com\n");
+                printer.printText("--------------------------------\n");
+                printer.printText("日期           2016-04-06 11:29\n");
+                printer.printText("--------------------------------\n");
+                printer.printText("此小票不需要用户签字\n");
+                printer.setFontSize(32);
+                printer.printText("http://www.sunmi.com\n");
+                printer.printOriginalText("http://www.sunmi.com\n");
+                printer.setFontSize(24);
+                printer.printText("http://www.sunmi.com\n");
+                printer.printOriginalText("http://www.sunmi.com\n");
+                printer.lineWrap(6);
+
+                printer.commitTransaction();
+
+                //重复打印
+                printer.commitTransaction();
             }
+
+
+//        ThreadPoolManager.getInstance().executeTask(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                v2Printer.beginTransaction();
+//                v2Printer.printerInit();
+//                v2Printer.setFontSize(24);
+//                v2Printer.printText("Merchant Qubepay\n");
+//                v2Printer.printText("===============================\n");
+//                v2Printer.printText("Saldo anda " +balanceTextView.getText().toString() + "\n");
+//                v2Printer.printText("===============================\n");
+//                v2Printer.lineWrap(4);
+//                v2Printer.commitTransaction();
+//                Toast.makeText(getActivity(), "Saldo Anda : " +balanceTextView.getText().toString(), Toast.LENGTH_SHORT).
+//                show();
+//            }
         });
     }
 
@@ -131,12 +176,12 @@ public class BalanceFragment extends Fragment {
         cmd.execute(new ITaskMonitor() {
             @Override
             public void handleEvent(TaskEvent event, Object... params) {
-                switch(event) {
+                switch (event) {
                     case FAILED:
-                        Toast.makeText(getActivity(),"FAILED",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "FAILED", Toast.LENGTH_SHORT).show();
                         break;
                     case SUCCESS:
-                        Toast.makeText(getActivity(),"FAILED",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "FAILED", Toast.LENGTH_SHORT).show();
 //                        printBalance();
                         break;
                 }

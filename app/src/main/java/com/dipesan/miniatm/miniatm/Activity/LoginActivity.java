@@ -12,7 +12,6 @@ import android.view.View;
 import com.dipesan.miniatm.miniatm.R;
 import com.dipesan.miniatm.miniatm.services.BluetoothConnexionManager;
 import com.dipesan.miniatm.miniatm.services.YoucubeService;
-import com.dipesan.miniatm.miniatm.utils.print.PrintActivity;
 import com.youTransactor.uCube.LogManager;
 import com.youTransactor.uCube.mdm.MDMManager;
 import com.youTransactor.uCube.rpc.RPCManager;
@@ -21,7 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU;
-import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_SETTINGS;
+import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_ACCOUNT;
 
 public class LoginActivity extends AppCompatActivity {
     private YoucubeService youcubeService;
@@ -51,19 +50,14 @@ public class LoginActivity extends AppCompatActivity {
         RPCManager.getInstance().setConnexionManager(BluetoothConnexionManager.getInstance());
     }
 
-    @OnClick({R.id.login_settings_button, R.id.login_logo_image_view, R.id.login_button, R.id.login_register_button})
+    @OnClick({R.id.login_logo_image_view, R.id.login_button, R.id.login_register_button})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.login_settings_button:
-                Intent intent = new Intent(this, MainSubActivity.class);
-                intent.putExtra(MENU, MENU_SETTINGS);
-                overridePendingTransition(0, R.anim.fade_out);
-                startActivity(intent);
-                break;
             case R.id.login_logo_image_view:
                 Intent intentMainActivity = new Intent(this, MainActivity.class);
                 startActivity(intentMainActivity);
                 overridePendingTransition(0, R.anim.fade_out);
+                finish();
                 break;
             case R.id.login_button:
                 youcubeService.setIsMessage(true);
@@ -76,8 +70,10 @@ public class LoginActivity extends AppCompatActivity {
                 });
                 break;
             case R.id.login_register_button:
-                Intent intenprinter = new Intent(this, PrintActivity.class);
-                startActivity(intenprinter);
+                Intent intentSettings = new Intent(this, MainSubActivity.class);
+                intentSettings.putExtra(MENU, MENU_ACCOUNT);
+                startActivity(intentSettings);
+                overridePendingTransition(0, R.anim.fade_out);
                 break;
         }
     }
@@ -85,13 +81,6 @@ public class LoginActivity extends AppCompatActivity {
     private void moveActivity() {
         startActivity(new Intent(this, MainActivity.class));
         overridePendingTransition(0, R.anim.fade_out);
-    }
-
-    @OnClick(R.id.pengaturan)
-    public void onClickPengaturan() {
-        this.getSupportFragmentManager().beginTransaction()
-                .replace(R.id.login_frame_layout,null)//erorr
-                .commit();
-        overridePendingTransition(0, R.anim.fade_out);
+        finish();
     }
 }

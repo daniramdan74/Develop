@@ -12,10 +12,11 @@
     <string name="function">Function</string>
     <string name="about">About</string>
     <string name="account">Pembukaan Rekening</string>
+    <string name="cash">Tarik Tunai</string>
 
 
     <!--purchase-->
-    <string name="phone_credit">Pulsa</string>
+    <string name="phone_credit">Pulsa Handphone</string>
     <string name="electric_token">Token Listrik</string>
     <!--payment-->
     <string name="credit_card">Kartu Kredit</string>

@@ -1,6 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbarStyle="insideOverlay"
@@ -9,10 +8,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
@@ -53,11 +52,12 @@
                     android:layout_weight="50">
 
                     <EditText
-                        android:backgroundTint="@color/colorPrimary"
-                        android:inputType="text"
+                        android:id="@+id/fragaccount_type_customers_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorPrimary"
                         android:hint="Tipe Nasabah"
+                        android:inputType="text"
                         android:maxLines="1"/>
                 </android.support.design.widget.TextInputLayout>
 
@@ -68,12 +68,13 @@
                     android:layout_weight="50">
 
                     <EditText
-                        android:backgroundTint="@color/colorPrimary"
-                        android:maxLines="1"
+                        android:id="@+id/fragaccount_product_type_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorPrimary"
                         android:hint="Jenis Produk"
-                        android:inputType="text"/>
+                        android:inputType="text"
+                        android:maxLines="1"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -83,12 +84,13 @@
                     android:layout_weight="50">
 
                     <EditText
-                        android:backgroundTint="@color/colorPrimary"
-                        android:maxLines="1"
+                        android:id="@+id/fragaccount_type_account_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorPrimary"
                         android:hint="Jenis Rekening"
-                        android:inputType="text"/>
+                        android:inputType="text"
+                        android:maxLines="1"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -98,28 +100,55 @@
                     android:layout_weight="50">
 
                     <EditText
-                        android:backgroundTint="@color/colorPrimary"
-                        android:maxLines="1"
+                        android:id="@+id/fragaccount_name_customers_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Nama Pemilik"
-                        android:inputType="text"/>
+                        android:backgroundTint="@color/colorPrimary"
+                        android:hint="Nama Calon Nasabah"
+                        android:inputType="text"
+                        android:maxLines="1"/>
                 </android.support.design.widget.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
-                    style="@style/TextInputLayoutForm"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50">
+                    android:layout_height="wrap_content">
 
-                    <EditText
-                        android:backgroundTint="@color/colorPrimary"
-                        android:maxLines="1"
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/fragaccount_name_text_input_layout"
+                        style="@style/TextInputLayoutForm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50">
+
+                        <EditText
+                            android:id="@+id/fragaccount_type_identity_edit_text"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:hint="Tipe "
+                            android:inputType="text"
+                            android:maxLines="1"/>
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        style="@style/TextInputLayoutForm"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="No. Identitas"
-                        android:inputType="text"/>
-                </android.support.design.widget.TextInputLayout>
+                        android:layout_toRightOf="@+id/fragaccount_name_text_input_layout"
+                        android:layout_weight="50">
+
+                        <EditText
+                            android:id="@+id/fragaccount_identity_number_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:hint="No. Identitas"
+                            android:inputType="text"
+                            android:maxLines="1"/>
+                    </android.support.design.widget.TextInputLayout>
+
+                </RelativeLayout>
+
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -148,9 +177,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:layout_marginBottom="10dp"
                 android:orientation="vertical">
 
                 <android.support.design.widget.TextInputLayout
@@ -161,13 +190,13 @@
                     android:layout_weight="50">
 
                     <EditText
-                        android:backgroundTint="@color/colorPrimary"
-                        android:maxLines="1"
+                        android:id="@+id/fragaccount_source_funds_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorPrimary"
                         android:hint="Sumber Dana"
                         android:inputType="text"
-                        android:id="@+id/editText"/>
+                        android:maxLines="1"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -177,22 +206,48 @@
                     android:layout_weight="50">
 
                     <EditText
-                        android:backgroundTint="@color/colorPrimary"
-                        android:maxLines="1"
+                        android:id="@+id/fragaccount_open_account_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorPrimary"
                         android:hint="Tujuan Pembukaan"
-                        android:inputType="text"/>
+                        android:inputType="text"
+                        android:maxLines="1"/>
                 </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    style="@style/TextInputLayoutForm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50">
+
+                    <EditText
+                        android:id="@+id/fragaccount_type_initial_deposit_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:hint="Setoran Awal"
+                        android:inputType="text"
+                        android:maxLines="1"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <CheckBox
+                    android:id="@+id/fragaccount_data_matches_check_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Data Sudah Sesuai"
+                    android:textColor="@color/colorDivide"/>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
         <Button
-            android:textStyle="bold"
-            android:text="Save"
-            android:layout_marginBottom="10dp"
-            android:theme="@style/ButtonTheme"
+            android:id="@+id/fragaccount_process_button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:text="Proses"
+            android:textStyle="bold"
+            android:theme="@style/ButtonTheme"/>
     </LinearLayout>
 </ScrollView>

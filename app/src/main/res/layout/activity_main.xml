@@ -62,6 +62,27 @@
             android:theme="@style/ButtonTheme"
             />
         <Button
+            android:id="@+id/main_activity_transfer_button"
+            android:drawableLeft="@drawable/ic_repeat"
+            android:textStyle="bold"
+            android:textColor="@color/colorTextIcons"
+            android:text="@string/tranfer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ButtonTheme"
+            />
+        <Button
+            android:id="@+id/main_activity_account_button"
+            android:drawableLeft="@drawable/ic_description"
+            android:textStyle="bold"
+            android:textColor="@color/colorTextIcons"
+            android:text="@string/account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ButtonTheme"
+            />
+
+        <Button
             android:id="@+id/main_activity_purchase_button"
             android:drawableLeft="@drawable/ic_shopping"
             android:textStyle="bold"
@@ -82,37 +103,15 @@
             android:theme="@style/ButtonTheme"
             />
         <Button
-            android:id="@+id/main_activity_transfer_button"
-            android:drawableLeft="@drawable/ic_repeat"
+            android:id="@+id/main_activity_cash_button"
+            android:drawableLeft="@drawable/ic_style"
             android:textStyle="bold"
             android:textColor="@color/colorTextIcons"
-            android:text="@string/tranfer"
+            android:text="@string/cash"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/ButtonTheme"
             />
-        <!--<Button-->
-            <!--android:id="@+id/main_activity_function_button"-->
-            <!--android:drawableLeft="@drawable/ic_phonelink_setup_white_48px"-->
-            <!--android:textStyle="bold"-->
-            <!--android:textColor="@color/colorTextIcons"-->
-            <!--android:text="@string/function"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:theme="@style/ButtonTheme"-->
-            <!--/>-->
-
-        <Button
-            android:id="@+id/main_activity_account_button"
-            android:drawableLeft="@drawable/ic_description"
-            android:textStyle="bold"
-            android:textColor="@color/colorTextIcons"
-            android:text="@string/account"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ButtonTheme"
-            />
-
 
     </LinearLayout>
 

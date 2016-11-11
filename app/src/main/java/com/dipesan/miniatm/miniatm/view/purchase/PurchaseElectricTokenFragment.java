@@ -105,6 +105,7 @@ public class PurchaseElectricTokenFragment extends Fragment {
                 fragmentElectricMeterNumberEditText.getText().toString(),
                 itemsNominal[whichItemNominal],
                 itemsNominal[whichItemNominal]);
+
         builder.setMessage(message);
         builder.setIcon(R.mipmap.ic_launcher);
         fragmentElectricMeterNumberEditText.setText(null);

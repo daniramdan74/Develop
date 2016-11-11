@@ -154,5 +154,10 @@ public class AppConstant {
 
     }
 
+    //merchant
+    public static final String NAME_MERCHANT = "Merchant Qubepay.com";
+    public static final String ID_MERCHANT = "19283494";
+    public static final String NO_REFRENCE = "1234-5678-90";
+
 
 }
