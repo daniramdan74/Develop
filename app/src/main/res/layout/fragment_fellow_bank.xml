@@ -3,14 +3,20 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context="com.dipesan.miniatm.miniatm.view.transfer.FellowBankFragment">
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbarStyle="insideOverlay"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical">
+
         <android.support.design.widget.TextInputLayout
             android:id="@+id/fragfellow_bank_destination_bank_text_input_layout"
             style="@style/TextInputLayoutForm"
@@ -29,55 +35,283 @@
                 />
         </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/fragfellow_bank_destination_account_text_input_layout"
-        style="@style/TextInputLayoutForm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp">
-
-        <EditText
-            android:id="@+id/fragfellow_bank_destination_account_edit_text"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/fragfellow_bank_destination_account_text_input_layout"
+            style="@style/TextInputLayoutForm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary"
-            android:hint="No Rekening Tujuan"
-            android:inputType="number"
-            android:maxLines="1"
-            />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_marginTop="5dp">
+
+            <EditText
+                android:id="@+id/fragfellow_bank_destination_account_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="No Rekening Tujuan"
+                android:inputType="number"
+                android:maxLines="1"
+                />
+        </android.support.design.widget.TextInputLayout>
 
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/fragfellow_bank_amount_transfer_text_input_layout"
-        style="@style/TextInputLayoutForm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp">
-
-        <EditText
-            android:id="@+id/fragfellow_bank_amount_transfer_edit_text"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/fragfellow_bank_amount_transfer_text_input_layout"
+            style="@style/TextInputLayoutForm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary"
-            android:hint="Jumlah Transfer"
-            android:inputType="number"
-            android:maxLength="12"
-            android:maxLines="1"
-            />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_marginTop="5dp">
+
+            <EditText
+                android:id="@+id/fragfellow_bank_amount_transfer_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="Nominal Transfer"
+                android:inputType="number"
+                android:maxLength="12"
+                android:maxLines="1"
+                />
+        </android.support.design.widget.TextInputLayout>
 
 
-    <Button
-        android:id="@+id/fragfellow_bank_process_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp"
-        android:text="Proses"
-        android:theme="@style/ButtonTheme"/>
+        <Button
+            android:id="@+id/fragfellow_bank_process_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:text="Proses"
+            android:theme="@style/ButtonTheme"/>
+
+
+        <LinearLayout
+            android:id="@+id/fragfellowbank_detail_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginTop="2dp"
+                            android:gravity="center_horizontal"
+                            android:text="Detail Data Transfer"
+                            android:textColor="@color/colorTextIcons"
+                            android:textStyle="bold"
+                            />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="5dp">
+
+                        <TextView
+                            android:id="@+id/textview1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:text="Tujuan Transfer"
+                            android:textStyle="bold"/>
+
+                        <TextView
+
+                            android:id="@+id/textview2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textview1"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toLeftOf="@+id/fragfellowbank_destination_bank_text_view"
+                            android:text="Bank Tujuan : "/>
+
+                        <TextView
+                            android:id="@+id/textview3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textview2"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toLeftOf="@+id/fragfellowbank_destination_bank_text_view"
+                            android:text="No Rekening : "/>
+
+                        <TextView
+                            android:id="@+id/textview4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/textview3"
+                            android:layout_marginBottom="5dp"
+                            android:layout_toLeftOf="@+id/fragfellowbank_destination_bank_text_view"
+                            android:text="Nama Pemilik : "/>
+
+                        <TextView
+                            android:id="@+id/textview5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/textview4"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toLeftOf="@+id/fragfellowbank_destination_bank_text_view"
+                            android:text="Nominal : "/>
+
+
+                        <TextView
+                            android:id="@+id/textview6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textview5"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Dari"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/textview7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textview6"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toLeftOf="@+id/fragfellowbank_destination_bank_text_view"
+                            android:text="Bank : "/>
+
+                        <TextView
+                            android:id="@+id/textview8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textview7"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toLeftOf="@+id/fragfellowbank_destination_bank_text_view"
+                            android:text="No Rekening : "/>
+
+                        <TextView
+                            android:id="@+id/textview9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textview8"
+                            android:layout_marginBottom="5dp"
+                            android:layout_toLeftOf="@+id/fragfellowbank_destination_bank_text_view"
+                            android:text="Nama Pemilik : "/>
+
+                        <TextView
+                            android:id="@+id/fragfellowbank_destination_bank_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@id/textview2"
+                            android:layout_marginLeft="5dp"
+                            android:layout_toRightOf="@id/textview1"
+                            android:text="BRI"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/fragfellowbank_number_account_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@+id/fragfellowbank_destination_bank_text_view"
+                            android:layout_alignTop="@id/textview3"
+                            android:layout_below="@+id/fragfellowbank_destination_bank_text_view"
+                            android:layout_toRightOf="@id/textview1"
+                            android:text="BRI"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/fragfellowbank_name_account_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@+id/fragfellowbank_destination_bank_text_view"
+                            android:layout_alignTop="@id/textview4"
+                            android:layout_below="@+id/fragfellowbank_number_account_text_view"
+                            android:layout_toRightOf="@id/textview1"
+                            android:text="BRI"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/fragfellowbank_nominal_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@+id/fragfellowbank_destination_bank_text_view"
+                            android:layout_alignTop="@id/textview5"
+                            android:layout_below="@+id/fragfellowbank_name_account_text_view"
+                            android:layout_toRightOf="@id/textview1"
+                            android:text="BRI"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/fragfellowbank_from_Bank_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@+id/fragfellowbank_destination_bank_text_view"
+                            android:layout_alignTop="@id/textview7"
+                            android:layout_toRightOf="@id/textview1"
+                            android:text="BRI"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/fragfellowbank_from_account_number_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@+id/fragfellowbank_destination_bank_text_view"
+                            android:layout_alignTop="@id/textview8"
+                            android:layout_toRightOf="@id/textview1"
+                            android:text="BRI"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/fragfellowbank_from_account_name_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@+id/fragfellowbank_destination_bank_text_view"
+                            android:layout_alignTop="@id/textview9"
+                            android:layout_toRightOf="@id/textview1"
+                            android:text="BRI"
+                            android:textStyle="bold"/>
+
+                    </RelativeLayout>
+
+                    <CheckBox
+                        android:id="@+id/fragfellowbank_data_matches_check_box"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Data sudah sesuai"
+                        android:textColor="@color/colorDivide"/>
+
+                    <Button
+                        android:id="@+id/fragfellowbank_send_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Kirim"
+                        android:textStyle="bold"
+                        android:theme="@style/ButtonTheme"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
     </LinearLayout>
-
+</ScrollView>
 </FrameLayout>

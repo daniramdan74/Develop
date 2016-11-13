@@ -12,7 +12,6 @@
         android:layout_marginTop="10dp"
         android:orientation="vertical"
         android:id="@+id/textView">
-
         <android.support.design.widget.TextInputLayout
             style="@style/TextInputLayoutForm"
             android:layout_width="match_parent"
@@ -23,7 +22,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                android:hint="ID PEL AIR / PDAM"
+                android:hint="Wilayah"
+                android:inputType="number"
+                android:maxLength="12"
+                android:maxLines="1"
+                />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            style="@style/TextInputLayoutForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="ID Pelanggan"
                 android:inputType="number"
                 android:maxLength="12"
                 android:maxLines="1"

@@ -20,7 +20,6 @@ import butterknife.OnClick;
 
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU;
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_ABOUT;
-import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_ACCOUNT;
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_BALANCE;
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_PAYMENT;
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_PURCHASE;
@@ -77,13 +76,13 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(0, R.anim.fade_out);
     }
 
-    @OnClick(R.id.main_activity_account_button)
-    public void onClickAccount() {
-        Intent intentSettings = new Intent(this, MainSubActivity.class);
-        intentSettings.putExtra(MENU, MENU_ACCOUNT);
-        startActivity(intentSettings);
-        overridePendingTransition(0, R.anim.fade_out);
-    }
+//    @OnClick(R.id.main_activity_account_button)
+//    public void onClickAccount() {
+//        Intent intentSettings = new Intent(this, MainSubActivity.class);
+//        intentSettings.putExtra(MENU, MENU_ACCOUNT);
+//        startActivity(intentSettings);
+//        overridePendingTransition(0, R.anim.fade_out);
+//    }
 
 
     //function button

@@ -18,15 +18,12 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dipesan.miniatm.miniatm.R;
 import com.dipesan.miniatm.miniatm.SQLiteDatabase.DatabaseHelper;
 import com.dipesan.miniatm.miniatm.services.YoucubeService;
 import com.sunmi.controller.ICallback;
 import com.sunmi.impl.V1Printer;
-
-import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,11 +33,11 @@ import butterknife.OnClick;
  * A simple {@link Fragment} subclass.
  */
 public class PurchasePhoneCreditFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
-    private YoucubeService youcubeService;
     private static final String TAG = "PhoneCredit";
-    private final CharSequence[] itemProviders = {"Telkomsel", "Indosat Ooredo0", "XL", "Three", "Smartfren"};
-    private final CharSequence[] itemsNominal = {"25.000", "50.000", "100.000","500.000"};
+    private final CharSequence[] itemProviders = {"Telkomsel", "Indosat Ooredoo", "XL", "Three", "Smartfren"};
+    private final CharSequence[] itemsNominal = {"25.000", "50.000", "100.000", "500.000"};
     private final int[] itemPrices = {30000, 50000, 100000, 150000, 200000, 300000, 500000};
+    @BindView(R.id.fragment_phone_credit_data_matches_check_box) CheckBox fragmentPhoneCreditDataMatchesCheckBox;
     DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
     @BindView(R.id.fragment_phone_credit_provider_edit_text) EditText fragmentPhoneCreditProviderEditText;
     @BindView(R.id.fragment_phone_credit_process_button) Button fragmentPhoneCreditProcessButton;
@@ -49,6 +46,7 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
     @BindView(R.id.fragphone_text_input_layout_credit_provider) TextInputLayout fragphoneTextInputLayoutCreditProvider;
     @BindView(R.id.fragphone_text_input_layout_nominal) TextInputLayout fragphoneTextInputLayoutNominal;
     @BindView(R.id.fragphone_text_input_layout_phone_number) TextInputLayout fragphoneTextInputLayoutPhoneNumber;
+    private YoucubeService youcubeService;
     private TextView ProviderTextView, NominalTextView, NumberTextView;
     private CheckBox ConfirmCheckbox;
     private Button cancelButton, confirmButton;
@@ -95,7 +93,8 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
         fragmentPhoneCreditNominalEditText.setInputType(InputType.TYPE_NULL);
         printer = new V1Printer(getActivity());
         printer.setCallback(iCallback);
-
+        fragmentPhoneCreditProcessButton.setEnabled(false);
+        fragmentPhoneCreditDataMatchesCheckBox.setOnCheckedChangeListener(this);
         return view;
     }
 
@@ -118,7 +117,7 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
 
     private void showProcess() {
         if (fragmentPhoneCreditProviderEditText.getText().toString().isEmpty()) {
-            fragphoneTextInputLayoutCreditProvider.setError("Provider Masih Kosong");
+            fragmentPhoneCreditNominalEditText.setError("Provider Masih Kosong");
             return;
         }
         else {
@@ -132,7 +131,7 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
             fragphoneTextInputLayoutNominal.setErrorEnabled(false);
         }
         if (fragmentPhoneNumberEditText.getText().toString().isEmpty()) {
-            fragphoneTextInputLayoutPhoneNumber.setError("No Telepon Kosong");
+            fragmentPhoneCreditNominalEditText.setError("No Telepon Kosong");
             return;
         }
         else if (fragmentPhoneNumberEditText.getText().toString().length() < 9) {
@@ -144,69 +143,11 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
         if (fragmentPhoneCreditProviderEditText.getText().toString().length() > 0 &&
                 fragmentPhoneCreditNominalEditText.getText().toString().length() > 0 &&
                 fragmentPhoneNumberEditText.getText().toString().length() >= 9) {
-
-//
-//
-//            String message = String.format("Pembelian pulsa %s ke %s sebesar %s telah berhasil",
-//                    itemProviders[whichItemProvider],
-//                    fragmentPhoneNumberEditText.getText().toString(),
-//                    itemsNominal[whichItemNominal]);
-//            showDialog(getActivity(), message);
-
-
-            showAlert2();
+            print();
         }
     }
 
-    private void showAlert2() {
-        boolean checkflag;
-
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.layout_custom_dialog_phone_credit, null);
-        builder.setView(dialogView);
-        builder.setTitle("Pembelian Pulsa");
-        ProviderTextView = ButterKnife.findById(dialogView, R.id.detail_data_provider_text_view);
-        NominalTextView = ButterKnife.findById(dialogView, R.id.detail_data_nominal_text_view);
-        NumberTextView = ButterKnife.findById(dialogView, R.id.detail_data_number_text_view);
-        ConfirmCheckbox = ButterKnife.findById(dialogView, R.id.confirm_checkbox);
-        cancelButton = ButterKnife.findById(dialogView, R.id.cancel_button);
-        confirmButton = ButterKnife.findById(dialogView, R.id.confirm_button);
-        confirmButton.setTextColor(getResources().getColor(R.color.colorDivide));
-        confirmButton.setEnabled(false);
-        ConfirmCheckbox = ButterKnife.findById(dialogView, R.id.confirm_checkbox);
-        ConfirmCheckbox.setOnCheckedChangeListener(this);
-        ProviderTextView.setText(fragmentPhoneCreditProviderEditText.getText().toString());
-        NominalTextView.setText(fragmentPhoneCreditNominalEditText.getText().toString());
-        NumberTextView.setText(fragmentPhoneNumberEditText.getText().toString());
-
-
-        final AlertDialog alertDialog = builder.create();
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                youcubeService.setIsMessage(true);
-                youcubeService.setMessage("Make Payment");
-                youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
-                    @Override
-                    public void onApproved() {
-                        printPhoneCredit();
-                        Toast.makeText(getActivity(), "Success",Toast.LENGTH_SHORT).show();
-                    }
-                });
-               }
-        });
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-            }
-        });
-        alertDialog.show();
-    }
-
-
-    private void printPhoneCredit() {
+    private void print() {
         com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager.getInstance().executeTask(new Runnable() {
 
             @Override
@@ -230,14 +171,12 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
                 fragmentPhoneNumberEditText.setText(null);
             }
         });
-    }
+        fragmentPhoneCreditProviderEditText.setText(null);
+        fragmentPhoneCreditNominalEditText.setText(null);
+        fragmentPhoneNumberEditText.setText(null);
+        fragmentPhoneCreditProcessButton.setEnabled(false);
+        editDataEnabled();
 
-    private void addData() {
-        HashMap<String, String> queryValues = new HashMap<String, String>();
-        queryValues.put("providerName", fragmentPhoneCreditProviderEditText.getText().toString());
-        queryValues.put("nominal", fragmentPhoneCreditProcessButton.getText().toString());
-        queryValues.put("telephoneNumber", fragmentPhoneNumberEditText.getText().toString());
-        databaseHelper.addPhoneCredit(queryValues);
     }
 
     private void showNominal() {
@@ -284,14 +223,30 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
         if (checkflag = isChecked) {
-            ConfirmCheckbox.setTextColor(getResources().getColor(R.color.colorPrimary));
-            confirmButton.setEnabled(true);
-            confirmButton.setTextColor(getResources().getColor(R.color.colorPrimary));
+            editDataDisabled();
+            fragmentPhoneCreditDataMatchesCheckBox.setTextColor(getResources().getColor(R.color.colorPrimary));
+            fragmentPhoneCreditProcessButton.setEnabled(true);
         }
         else {
-            ConfirmCheckbox.setTextColor(getResources().getColor(R.color.colorDivide));
-            confirmButton.setEnabled(false);
-            confirmButton.setTextColor(getResources().getColor(R.color.colorDivide));
+            editDataEnabled();
+            fragmentPhoneCreditDataMatchesCheckBox.setTextColor(getResources().getColor(R.color.colorDivide));
+            fragmentPhoneCreditProcessButton.setEnabled(false);
+
         }
     }
+
+    private void editDataEnabled() {
+        fragmentPhoneCreditProviderEditText.setEnabled(true);
+        fragmentPhoneCreditNominalEditText.setEnabled(true);
+        fragmentPhoneNumberEditText.setEnabled(true);
+
+    }
+
+    private void editDataDisabled() {
+        fragmentPhoneCreditProviderEditText.setEnabled(false);
+        fragmentPhoneCreditNominalEditText.setEnabled(false);
+        fragmentPhoneNumberEditText.setEnabled(false);
+
+    }
 }
+

@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                android:hint="Penyedia Layanan"
+                android:hint="Bank / Provider"
                 android:maxLines="1"
                 />
         </android.support.design.widget.TextInputLayout>

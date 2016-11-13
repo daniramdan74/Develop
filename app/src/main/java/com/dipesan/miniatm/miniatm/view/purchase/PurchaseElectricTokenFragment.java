@@ -25,7 +25,7 @@ import butterknife.OnClick;
  * A simple {@link Fragment} subclass.
  */
 public class PurchaseElectricTokenFragment extends Fragment {
-    private final CharSequence[] itemsNominal = {"30.000", "50.000", "100.000", "150.000", "200.000", "300.000", "500.000"};
+    private final CharSequence[] itemsNominal = {"25.000", "50.000", "100.000","500.000"};
     @BindView(R.id.fragment_electric_nominal_edit_text) EditText fragmentElectricNominalEditText;
     @BindView(R.id.fragelectric_text_input_layout_nominal) TextInputLayout fragelectricTextInputLayoutNominal;
     @BindView(R.id.fragment_electric_meter_number_edit_text) EditText fragmentElectricMeterNumberEditText;

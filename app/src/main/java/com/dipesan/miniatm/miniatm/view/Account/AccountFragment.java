@@ -15,8 +15,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.dipesan.miniatm.miniatm.R;
+import com.dipesan.miniatm.miniatm.services.YoucubeService;
 import com.dipesan.miniatm.miniatm.utils.AppConstant;
 import com.sunmi.controller.ICallback;
 import com.sunmi.impl.V1Printer;
@@ -29,6 +31,7 @@ import butterknife.OnClick;
  * A simple {@link Fragment} subclass.
  */
 public class AccountFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
+    private YoucubeService youcubeService;
     private static final String TAG = "AccountFragment";
     private final CharSequence[] itemTypeCustomers = {"Perorangan", "Perusahaan"};
     private final CharSequence[] itemProductsType = {"Biasa", "Berjangka", "Junior", "Deposito"};
@@ -92,7 +95,6 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
         fragaccountTypeCustomersEditText.setInputType(InputType.TYPE_NULL);
         fragaccountProductTypeEditText.setInputType(InputType.TYPE_NULL);
         fragaccountTypeAccountEditText.setInputType(InputType.TYPE_NULL);
-
         fragaccountTypeIdentityEditText.setInputType(InputType.TYPE_NULL);
         fragaccountSourceFundsEditText.setInputType(InputType.TYPE_NULL);
         fragaccountSourceFundsEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -112,7 +114,7 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
         fragaccountProcessButton.setEnabled(false);
         printer = new V1Printer(getActivity());
         printer.setCallback(iCallback);
-
+        youcubeService = new YoucubeService(getActivity());
         return view;
     }
     public void hideKeyboard(View view) {
@@ -126,7 +128,17 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
     }
 
     private void showProcess() {
-        print();
+        youcubeService.setIsMessage(true);
+        youcubeService.setMessage("Login Merchant");
+        youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
+            @Override
+            public void onApproved() {
+                print();
+                Toast.makeText(getActivity(),"Data Pembukaan Rekening"+"\n       Berhasil Dilakukan !",Toast.LENGTH_SHORT).show();
+                clearEditText();
+            }
+        });
+
     }
 
     @OnClick({R.id.fragaccount_type_customers_edit_text, R.id.fragaccount_product_type_edit_text, R.id.fragaccount_type_account_edit_text, R.id.fragaccount_name_customers_edit_text, R.id.fragaccount_type_identity_edit_text, R.id.fragaccount_identity_number_edit_text, R.id.fragaccount_source_funds_edit_text, R.id.fragaccount_open_account_edit_text, R.id.fragaccount_type_initial_deposit_edit_text})
@@ -263,14 +275,43 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
                 fragaccountDataMatchesCheckBox.setTextColor(getResources().getColor(R.color.colorPrimary));
                 fragaccountProcessButton.setEnabled(true);
                 fragaccountProcessButton.setHighlightColor(getResources().getColor(R.color.colorPrimaryDark));
+                lockEditText();
             }
             else {
                 fragaccountDataMatchesCheckBox.setTextColor(getResources().getColor(R.color.colorDivide));
                 fragaccountProcessButton.setEnabled(false);
                 fragaccountProcessButton.setHighlightColor(getResources().getColor(R.color.colorDivide));
+                openEditText();
             }
 
     }
+
+    private void lockEditText() {
+        fragaccountTypeCustomersEditText.setEnabled(false);
+        fragaccountProductTypeEditText.setEnabled(false);
+        fragaccountTypeAccountEditText.setEnabled(false);
+        fragaccountNameCustomersEditText.setEnabled(false);
+        fragaccountTypeIdentityEditText.setEnabled(false);
+        fragaccountIdentityNumberEditText.setEnabled(false);
+        fragaccountSourceFundsEditText.setEnabled(false);
+        fragaccountOpenAccountEditText.setEnabled(false);
+        fragaccountTypeInitialDepositEditText.setEnabled(false);
+
+    }
+
+    private void openEditText() {
+        fragaccountTypeCustomersEditText.setEnabled(true);
+        fragaccountProductTypeEditText.setEnabled(true);
+        fragaccountTypeAccountEditText.setEnabled(true);
+        fragaccountNameCustomersEditText.setEnabled(true);
+        fragaccountTypeIdentityEditText.setEnabled(true);
+        fragaccountIdentityNumberEditText.setEnabled(true);
+        fragaccountSourceFundsEditText.setEnabled(true);
+        fragaccountOpenAccountEditText.setEnabled(true);
+        fragaccountTypeInitialDepositEditText.setEnabled(true);
+    }
+
+
     private void print() {
         com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager.getInstance().executeTask(new Runnable() {
 
@@ -283,12 +324,30 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
                 printer.printText("\nPembukaan Rekening");
                 printer.printText("\n===============================");
                 printer.printText("\nNo Referensi : \n" + AppConstant.NO_REFRENCE);
+                printer.printText("\nNama Nasabah : \n" + fragaccountNameCustomersEditText.getText().toString());
+                printer.printText("\nSetoran Awal : \n" + fragaccountTypeInitialDepositEditText.getText().toString());
+                printer.printText("\n");
+                printer.printText("\n");
                 printer.printText("\nMerchant :");
                 printer.printText("\n"+ AppConstant.NAME_MERCHANT);
-                printer.printText("\n"+ AppConstant.ID_MERCHANT);
+                printer.printText("\nID "+ AppConstant.ID_MERCHANT);
                 printer.lineWrap(4);
                 printer.commitTransaction();
             }
         });
+    }
+
+    private void clearEditText() {
+        fragaccountTypeCustomersEditText.setText(null);
+        fragaccountProductTypeEditText.setText(null);
+        fragaccountTypeAccountEditText.setText(null);
+        fragaccountNameCustomersEditText.setText(null);
+        fragaccountTypeIdentityEditText.setText(null);
+        fragaccountIdentityNumberEditText.setText(null);
+        fragaccountSourceFundsEditText.setText(null);
+        fragaccountOpenAccountEditText.setText(null);
+        fragaccountTypeInitialDepositEditText.setText(null);
+        fragaccountProcessButton.setEnabled(false);
+        fragaccountDataMatchesCheckBox.setChecked(false);
     }
 }

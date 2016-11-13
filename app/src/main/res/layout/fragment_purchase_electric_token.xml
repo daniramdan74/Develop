@@ -1,6 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
-             android:layout_height="match_parent">
+             android:layout_height="match_parent"
+             xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -9,6 +10,26 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/fragpelectric_text_input_layout_meter_number"
+            style="@style/TextInputLayoutForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+>
+
+            <EditText
+                android:id="@+id/fragment_electric_meter_number_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="ID PEL / No Referensi"
+                android:inputType="number"
+                android:maxLength="15"
+                android:maxLines="1"
+                />
+        </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/fragelectric_text_input_layout_nominal"
@@ -24,25 +45,6 @@
                 android:backgroundTint="@color/colorPrimary"
                 android:hint="Nominal"
                 android:inputType="number"
-                android:maxLines="1"
-                />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/fragpelectric_text_input_layout_meter_number"
-            style="@style/TextInputLayoutForm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
-
-            <EditText
-                android:id="@+id/fragment_electric_meter_number_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
-                android:hint="ID PEL / No Meter"
-                android:inputType="number"
-                android:maxLength="12"
                 android:maxLines="1"
                 />
         </android.support.design.widget.TextInputLayout>

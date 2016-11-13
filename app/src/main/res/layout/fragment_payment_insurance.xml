@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                android:hint="Penyedia Layanan"
+                android:hint="Provider"
                 android:maxLines="1"
                 />
         </android.support.design.widget.TextInputLayout>
@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                android:hint="No Kartu Peserta"
+                android:hint="No Keanggotaan"
                 android:inputType="number"
                 android:maxLength="12"
                 android:maxLines="1"

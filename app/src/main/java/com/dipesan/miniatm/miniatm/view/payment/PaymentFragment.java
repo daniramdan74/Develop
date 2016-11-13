@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU;
+import static com.dipesan.miniatm.miniatm.utils.AppConstant.SUB_MENU_INTERNET;
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.SUB_MENU_PAYMENT_BPJS;
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.SUB_MENU_PAYMENT_CREDIT_CARD;
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.SUB_MENU_PAYMENT_ELECTRIC;
@@ -86,6 +87,13 @@ public class PaymentFragment extends Fragment {
                 intent.putExtra(MENU, SUB_MENU_PAYMENT_BPJS);
                 break;
         }
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.payment_activity_internet_button)
+    public void onClickInternet() {
+        Intent intent = new Intent(getActivity(), MainDetailActivity.class);
+        intent.putExtra(MENU, SUB_MENU_INTERNET);
         startActivity(intent);
     }
 }

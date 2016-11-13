@@ -71,16 +71,16 @@
             android:layout_height="wrap_content"
             android:theme="@style/ButtonTheme"
             />
-        <Button
-            android:id="@+id/main_activity_account_button"
-            android:drawableLeft="@drawable/ic_description"
-            android:textStyle="bold"
-            android:textColor="@color/colorTextIcons"
-            android:text="@string/account"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ButtonTheme"
-            />
+        <!--<Button-->
+            <!--android:id="@+id/main_activity_account_button"-->
+            <!--android:drawableLeft="@drawable/ic_description"-->
+            <!--android:textStyle="bold"-->
+            <!--android:textColor="@color/colorTextIcons"-->
+            <!--android:text="@string/account"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:theme="@style/ButtonTheme"-->
+            <!--/>-->
 
         <Button
             android:id="@+id/main_activity_purchase_button"
@@ -110,7 +110,7 @@
             android:text="@string/cash"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/ButtonTheme"
+            android:theme="@style/ButtonTheme2"
             />
 
     </LinearLayout>

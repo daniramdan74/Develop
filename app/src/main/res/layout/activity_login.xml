@@ -61,6 +61,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"/>
+        <TextView
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:id="@+id/merchant_text_view"
+            android:text="daftar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"/>
+
     </LinearLayout>
 
 

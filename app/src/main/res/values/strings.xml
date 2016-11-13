@@ -13,19 +13,20 @@
     <string name="about">About</string>
     <string name="account">Pembukaan Rekening</string>
     <string name="cash">Tarik Tunai</string>
-
+    <string name="register_merchant">Pendaftaran Merchant</string>
 
     <!--purchase-->
     <string name="phone_credit">Pulsa Handphone</string>
     <string name="electric_token">Token Listrik</string>
     <!--payment-->
     <string name="credit_card">Kartu Kredit</string>
-    <string name="post_paid_phone">Telepon Pasca Bayar</string>
-    <string name="electric">Listrik</string>
-    <string name="water">Air / PDAM</string>
+    <string name="post_paid_phone">PSTN / Pasca Bayar</string>
+    <string name="electric">PLN</string>
+    <string name="water">PDAM</string>
     <string name="insurance">Asuransi</string>
     <string name="television">TV Berlangganan</string>
     <string name="bpjs">BPJS KESEHATAN</string>
+    <string name="internet">Internet</string>
     <!--transfer-->
     <string name="interbank">Sesama Bank</string>
     <string name="fellow_bank">Antar Bank</string>

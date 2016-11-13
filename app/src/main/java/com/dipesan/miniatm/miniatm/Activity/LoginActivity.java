@@ -21,13 +21,15 @@ import butterknife.OnClick;
 
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU;
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_ACCOUNT;
+import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_MERCHANT;
 
 public class LoginActivity extends AppCompatActivity {
     private YoucubeService youcubeService;
-        @Override
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-            initBluetoothConnection();
+        initBluetoothConnection();
         // activity fullscreen
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -35,8 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         overridePendingTransition(0, R.anim.fade_out);
-
-            youcubeService = new YoucubeService(this);
+        youcubeService = new YoucubeService(this);
     }
 
     private void initBluetoothConnection() {
@@ -78,9 +79,19 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+
     private void moveActivity() {
         startActivity(new Intent(this, MainActivity.class));
         overridePendingTransition(0, R.anim.fade_out);
         finish();
+    }
+
+
+    @OnClick(R.id.merchant_text_view)
+    public void onClickMerchant() {
+        Intent intentMerchant = new Intent(this, MainSubActivity.class);
+        intentMerchant.putExtra(MENU, MENU_MERCHANT);
+        startActivity(intentMerchant);
+        overridePendingTransition(0, R.anim.fade_out);
     }
 }

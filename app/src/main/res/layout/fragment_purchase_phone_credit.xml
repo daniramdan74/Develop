@@ -98,7 +98,12 @@
                 />
         </android.support.design.widget.TextInputLayout>
 
-
+        <CheckBox
+            android:id="@+id/fragment_phone_credit_data_matches_check_box"
+            android:textColor="@color/colorDivide"
+            android:text="Data sudah sesuai"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
         <Button
             android:id="@+id/fragment_phone_credit_process_button"
             android:layout_width="match_parent"

@@ -9,6 +9,8 @@ import com.dipesan.miniatm.miniatm.view.balance.BalanceFragment;
 import com.dipesan.miniatm.miniatm.view.function.FunctionFragment;
 import com.dipesan.miniatm.miniatm.view.function.FunctionSettelmentFragment;
 import com.dipesan.miniatm.miniatm.view.function.FunctionVoidFragment;
+import com.dipesan.miniatm.miniatm.view.merchant.MerchantFragment;
+import com.dipesan.miniatm.miniatm.view.payment.InternetFragment;
 import com.dipesan.miniatm.miniatm.view.payment.PaymentBpjsFragment;
 import com.dipesan.miniatm.miniatm.view.payment.PaymentCreditCardFragment;
 import com.dipesan.miniatm.miniatm.view.payment.PaymentElectricFragment;
@@ -49,6 +51,7 @@ public class AppConstant {
     public static final int MENU_FUNCTION=6;
     public static final int MENU_ABOUT=7;
     public static final int MENU_ACCOUNT=8;
+    public static final int MENU_MERCHANT=9;
 
 //SUbMenu
 
@@ -67,6 +70,7 @@ public class AppConstant {
     public static final int SUB_MENU_PAYMENT_INSURANCE = 18;
     public static final int SUB_MENU_PAYMENT_TELEVISION = 19;
     public static final int SUB_MENU_PAYMENT_BPJS = 22;
+    public static final int SUB_MENU_INTERNET = 25;
 
     //transfer
     public static final int SUB_MENU_TRANSFER_INTER_BANK = 20;
@@ -87,6 +91,7 @@ public class AppConstant {
             case MENU_FUNCTION: return R.string.function;
             case MENU_ABOUT:return R.string.about;
             case MENU_ACCOUNT:return R.string.account;
+            case MENU_MERCHANT:return R.string.register_merchant;
 
 
             //sub menu
@@ -102,6 +107,7 @@ public class AppConstant {
             case SUB_MENU_PAYMENT_INSURANCE: return R.string.insurance;
             case SUB_MENU_PAYMENT_TELEVISION : return R.string.television;
             case SUB_MENU_PAYMENT_BPJS:return R.string.bpjs;
+            case SUB_MENU_INTERNET:return R.string.internet;
 
             case SUB_MENU_TRANSFER_INTER_BANK:return R.string.interbank;
             case SUB_MENU_TRANSFER_FELLOW_BANK:return R.string.fellow_bank;
@@ -125,6 +131,7 @@ public class AppConstant {
             case MENU_FUNCTION: return FunctionFragment.newInstance();
             case MENU_ABOUT:return AboutFragment.newInstance();
             case MENU_ACCOUNT:return AccountFragment.newInstance();
+            case MENU_MERCHANT:return MerchantFragment.newIstance();
 
             //submenu
             //balance
@@ -140,6 +147,8 @@ public class AppConstant {
             case SUB_MENU_PAYMENT_INSURANCE: return PaymentInsuranceFragment.newIstance();
             case SUB_MENU_PAYMENT_TELEVISION: return PaymentTelevisionFragment.newIstance();
             case SUB_MENU_PAYMENT_BPJS : return PaymentBpjsFragment.newIstance();
+            case SUB_MENU_INTERNET : return InternetFragment.newInstance();
+
             //transfer
             case SUB_MENU_TRANSFER_FELLOW_BANK:return FellowBankFragment.newInstance();
             case SUB_MENU_TRANSFER_INTER_BANK:return InterBankFragment.newInstance();

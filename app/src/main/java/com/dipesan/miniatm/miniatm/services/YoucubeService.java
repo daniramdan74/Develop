@@ -60,7 +60,7 @@ public class YoucubeService {
     public void enterCard(final OnEnterCardListener onEnterCardListener) {
         this.listener = onEnterCardListener;
 
-        Currency currency = new Currency(360, 2, "IDR");
+        Currency currency = new Currency(360, 2, "Login Merchant");
         TransactionType trxType = TransactionType.DEBIT;
 
         final PaymentContext paymentContext = new PaymentContext();

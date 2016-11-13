@@ -3,6 +3,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context="com.dipesan.miniatm.miniatm.view.payment.PaymentFragment">
+
     <LinearLayout
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
@@ -28,6 +29,15 @@
         android:layout_height="wrap_content"
         android:theme="@style/ButtonTheme"
         />
+        <Button
+            android:id="@+id/payment_activity_internet_button"
+            android:textStyle="bold"
+            android:textColor="@color/colorTextIcons"
+            android:text="@string/internet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ButtonTheme"
+            />
         <Button
             android:id="@+id/payment_activity_electric_button"
             android:textStyle="bold"
