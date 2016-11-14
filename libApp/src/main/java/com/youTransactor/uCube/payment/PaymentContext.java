@@ -13,7 +13,6 @@ package com.youTransactor.uCube.payment;
 import com.youTransactor.uCube.rpc.Constants;
 import com.youTransactor.uCube.rpc.EMVApplicationDescriptor;
 
-import java.text.MessageFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +50,7 @@ public class PaymentContext {
 	private byte[] NFCOutcome;
 	private byte[] transactionData;
 	private ResourceBundle msgBundle;
-	private String message;
+	private String message= "";
 
 	public PaymentContext() {}
 
@@ -67,14 +66,14 @@ public class PaymentContext {
 			return Integer.toString((int) amount);
 		}
 
-		StringBuilder pat = new StringBuilder(10);
-		pat.append("{0,number,#0.0");
-		for (int i = 1; i < currency.getExponent(); i++) {
-			pat.append('0');
-		}
-		pat.append('}');
-
-		return MessageFormat.format(pat.toString(), amount);
+//		StringBuilder pat = new StringBuilder(10);
+//		pat.append("{0,number,#0.0");
+//		for (int i = 1; i < currency.getExponent(); i++) {
+//			pat.append('0');
+//		}
+//		pat.append('}');
+//		return MessageFormat.format(pat.toString(), amount);
+		return null;
 	}
 
 	public String getString(String key) {

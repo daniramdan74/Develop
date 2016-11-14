@@ -7,12 +7,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dipesan.miniatm.miniatm.R;
 import com.dipesan.miniatm.miniatm.utils.AppConstant;
@@ -91,6 +93,7 @@ public class InterBankFragment extends Fragment implements CompoundButton.OnChec
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fraginter_bank_process_button:
+                hideKeyboard(getView());
                 showDetail();
                 break;
             case R.id.fraginterbank_send_button:
@@ -134,9 +137,8 @@ public class InterBankFragment extends Fragment implements CompoundButton.OnChec
         editDataEnabled();
         fraginterBankDestinationAccountEditText.setText(null);
         fraginterBankAmountTransferEditText.setText(null);
-
-
-
+        Toast.makeText(getActivity(), "Transfer Berhasil", Toast.LENGTH_SHORT).show();
+        fraginterbankDataMatchesCheckBox.setChecked(false);
     }
 
     private void showDetail() {
@@ -187,4 +189,9 @@ public class InterBankFragment extends Fragment implements CompoundButton.OnChec
 
 
     }
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
 }

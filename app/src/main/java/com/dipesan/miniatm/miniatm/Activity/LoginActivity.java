@@ -22,6 +22,7 @@ import butterknife.OnClick;
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU;
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_ACCOUNT;
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_MERCHANT;
+import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_SETTINGS;
 
 public class LoginActivity extends AppCompatActivity {
     private YoucubeService youcubeService;
@@ -58,7 +59,6 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intentMainActivity = new Intent(this, MainActivity.class);
                 startActivity(intentMainActivity);
                 overridePendingTransition(0, R.anim.fade_out);
-                finish();
                 break;
             case R.id.login_button:
                 youcubeService.setIsMessage(true);
@@ -83,7 +83,6 @@ public class LoginActivity extends AppCompatActivity {
     private void moveActivity() {
         startActivity(new Intent(this, MainActivity.class));
         overridePendingTransition(0, R.anim.fade_out);
-        finish();
     }
 
 
@@ -91,6 +90,14 @@ public class LoginActivity extends AppCompatActivity {
     public void onClickMerchant() {
         Intent intentMerchant = new Intent(this, MainSubActivity.class);
         intentMerchant.putExtra(MENU, MENU_MERCHANT);
+        startActivity(intentMerchant);
+        overridePendingTransition(0, R.anim.fade_out);
+    }
+
+    @OnClick(R.id.settings_text_view)
+    public void onClickSettings() {
+        Intent intentMerchant = new Intent(this, MainDetailActivity.class);
+        intentMerchant.putExtra(MENU, MENU_SETTINGS);
         startActivity(intentMerchant);
         overridePendingTransition(0, R.anim.fade_out);
     }

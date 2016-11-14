@@ -36,7 +36,8 @@ import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_SETTINGS;
 public class YoucubeService {
     private Activity activity;
     private OnEnterCardListener listener;
-    private String message = "";
+    private String message = "Login Merchant";
+    private String message2 = "ENTER PIN";
     private double amount = 0;
     private ResourceBundle msgBundle;
     private boolean isMessage = false;
@@ -49,6 +50,7 @@ public class YoucubeService {
         this.message = message;
     }
 
+
     public void setAmount(double amount) {
         this.amount = amount;
     }
@@ -60,12 +62,15 @@ public class YoucubeService {
     public void enterCard(final OnEnterCardListener onEnterCardListener) {
         this.listener = onEnterCardListener;
 
-        Currency currency = new Currency(360, 2, "Login Merchant");
+        Currency currency = new Currency(360, 0, "");
         TransactionType trxType = TransactionType.DEBIT;
 
         final PaymentContext paymentContext = new PaymentContext();
 
-        paymentContext.setMessage(isMessage ? message : String.format("%s %s %s", message, currency.getLabel(), amount));
+        //paymentContext.setMessage(isMessage?message : "Login Merchant");
+
+        paymentContext.setMessage(isMessage ? message : String.format("%s %s %s", message, ""));
+//        paymentContext.setMessage(isMessage ? message : String.format("", message, ""));
         paymentContext.setAmount(amount);
         paymentContext.setCurrency(currency);
         paymentContext.setTransactionType(trxType.getCode());

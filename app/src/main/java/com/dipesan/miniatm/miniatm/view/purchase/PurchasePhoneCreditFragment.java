@@ -18,10 +18,12 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dipesan.miniatm.miniatm.R;
 import com.dipesan.miniatm.miniatm.SQLiteDatabase.DatabaseHelper;
 import com.dipesan.miniatm.miniatm.services.YoucubeService;
+import com.dipesan.miniatm.miniatm.utils.AppConstant;
 import com.sunmi.controller.ICallback;
 import com.sunmi.impl.V1Printer;
 
@@ -158,17 +160,18 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
                 printer.printText("===============================");
                 printer.printText("\nPembelian Pulsa");
                 printer.printText("\n===============================");
-                printer.printText("\nProvider : \n" + fragmentPhoneCreditProviderEditText.getText().toString());
-                printer.printText("\nNominal : \n" + fragmentPhoneCreditNominalEditText.getText().toString());
+                printer.printText("\nProvider :");
+                printer.printText("\n"+itemProviders[whichItemProvider]);
+                printer.printText("\nNominal :");
+                printer.printText("\n"+itemsNominal[whichItemNominal]);
                 printer.printText("\nNomor Telpon : \n" + fragmentPhoneNumberEditText.getText().toString());
+                printer.printText("\n");
+                printer.printText("\n");
                 printer.printText("\nMerchant :");
-                printer.printText("\nPT. Qreatif Unggul Berniaga");
-                printer.printText("\n== TERIMAKASIH ==");
+                printer.printText("\n"+ AppConstant.NAME_MERCHANT);
+                printer.printText("\nID"+AppConstant.ID_MERCHANT);
                 printer.lineWrap(4);
                 printer.commitTransaction();
-                fragmentPhoneCreditProviderEditText.setText(null);
-                fragmentPhoneCreditNominalEditText.setText(null);
-                fragmentPhoneNumberEditText.setText(null);
             }
         });
         fragmentPhoneCreditProviderEditText.setText(null);
@@ -176,7 +179,8 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
         fragmentPhoneNumberEditText.setText(null);
         fragmentPhoneCreditProcessButton.setEnabled(false);
         editDataEnabled();
-
+        Toast.makeText(getActivity(), "Pembelian Pulsa \n Berhasil dilakukan", Toast.LENGTH_SHORT).show();
+        fragmentPhoneCreditDataMatchesCheckBox.setChecked(false);
     }
 
     private void showNominal() {
