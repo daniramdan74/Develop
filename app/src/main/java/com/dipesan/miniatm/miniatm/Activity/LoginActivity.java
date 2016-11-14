@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.dipesan.miniatm.miniatm.R;
 import com.dipesan.miniatm.miniatm.services.BluetoothConnexionManager;
@@ -16,15 +18,21 @@ import com.youTransactor.uCube.LogManager;
 import com.youTransactor.uCube.mdm.MDMManager;
 import com.youTransactor.uCube.rpc.RPCManager;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.dipesan.miniatm.miniatm.R.id.login_logo_image_view;
+import static com.dipesan.miniatm.miniatm.R.id.settings_text_view;
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU;
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_ACCOUNT;
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_MERCHANT;
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_SETTINGS;
 
 public class LoginActivity extends AppCompatActivity {
+    @BindView(R.id.settings_text_view) TextView settingsTextView;
+    @BindView(R.id.merchant_text_view) TextView merchantTextView;
+    @BindView(R.id.login_logo_image_view) ImageView loginLogoImageView;
     private YoucubeService youcubeService;
 
     @Override
@@ -37,8 +45,11 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        merchantTextView.setVisibility(View.INVISIBLE);
+        loginLogoImageView.setEnabled(false);
         overridePendingTransition(0, R.anim.fade_out);
         youcubeService = new YoucubeService(this);
+
     }
 
     private void initBluetoothConnection() {
@@ -52,10 +63,10 @@ public class LoginActivity extends AppCompatActivity {
         RPCManager.getInstance().setConnexionManager(BluetoothConnexionManager.getInstance());
     }
 
-    @OnClick({R.id.login_logo_image_view, R.id.login_button, R.id.login_register_button})
+    @OnClick({login_logo_image_view, R.id.login_button, R.id.login_register_button})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.login_logo_image_view:
+            case login_logo_image_view:
                 Intent intentMainActivity = new Intent(this, MainActivity.class);
                 startActivity(intentMainActivity);
                 overridePendingTransition(0, R.anim.fade_out);
@@ -94,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
         overridePendingTransition(0, R.anim.fade_out);
     }
 
-    @OnClick(R.id.settings_text_view)
+    @OnClick(settings_text_view)
     public void onClickSettings() {
         Intent intentMerchant = new Intent(this, MainDetailActivity.class);
         intentMerchant.putExtra(MENU, MENU_SETTINGS);

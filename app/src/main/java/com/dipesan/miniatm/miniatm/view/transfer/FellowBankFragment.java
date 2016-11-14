@@ -131,14 +131,36 @@ public class FellowBankFragment extends Fragment implements CompoundButton.OnChe
     }
 
     private void showDetail() {
-        fragfellowbankDetailLinearLayout.setVisibility(View.VISIBLE);
-        fragfellowbankDestinationBankTextView.setText(fragfellowBankDestinationBankEditText.getText().toString());
-        fragfellowbankNumberAccountTextView.setText(fragfellowBankDestinationAccountEditText.getText().toString());
-        fragfellowbankNominalTextView.setText(fragfellowBankAmountTransferEditText.getText().toString());
-        fragfellowbankSendButton.setEnabled(false);
-        fragfellowbankFromBankTextView.setText("BANK MANDIRI");
-        fragfellowbankFromAccountNumberTextView.setText("1234-567-890");
-        fragfellowbankFromAccountNameTextView.setText("Dani Ramdan");
+        if (fragfellowBankDestinationBankEditText.getText().toString().isEmpty()){
+            fragfellowBankDestinationBankTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fragfellowBankDestinationBankTextInputLayout.setErrorEnabled(false);
+        }
+        if (fragfellowBankDestinationAccountEditText.getText().toString().isEmpty()) {
+        fragfellowBankDestinationAccountTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fragfellowBankDestinationAccountTextInputLayout.setErrorEnabled(false);
+
+        }
+        if (fragfellowBankAmountTransferEditText.getText().toString().isEmpty()){
+            fragfellowBankAmountTransferTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fragfellowBankAmountTransferTextInputLayout.setErrorEnabled(false);
+        }
+
+        if (fragfellowBankDestinationBankEditText.getText().toString().length()>0&&
+        fragfellowBankDestinationAccountEditText.getText().toString().length()>0&&
+                fragfellowBankAmountTransferEditText.getText().toString().length()>0
+        ) {
+            fragfellowbankDetailLinearLayout.setVisibility(View.VISIBLE);
+            fragfellowbankDestinationBankTextView.setText(fragfellowBankDestinationBankEditText.getText().toString());
+            fragfellowbankNumberAccountTextView.setText(fragfellowBankDestinationAccountEditText.getText().toString());
+            fragfellowbankNominalTextView.setText(fragfellowBankAmountTransferEditText.getText().toString());
+            fragfellowbankSendButton.setEnabled(false);
+            fragfellowbankFromBankTextView.setText("BANK MANDIRI");
+            fragfellowbankFromAccountNumberTextView.setText("1234-567-890");
+            fragfellowbankFromAccountNameTextView.setText("Dani Ramdan");
+        }
     }
 
     private void editDataEnabled() {
@@ -164,8 +186,11 @@ public class FellowBankFragment extends Fragment implements CompoundButton.OnChe
                 fragfellowBankDestinationBankEditText.setText(itemsBank[item]);
             }
         });
+        builder.setCancelable(false);
+        builder.setNegativeButton("Batal", null);
         AlertDialog alert = builder.create();
         alert.show();
+
 
     }
 

@@ -100,7 +100,7 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
     private void showNominal() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 //               .setTitle("Pilih Provider")
-                .setTitle(Html.fromHtml("<font color='#FF7F27'>Nominal</font>"));
+                .setTitle(Html.fromHtml("<font color='#303f9f'>Nominal</font>"));
         builder.setSingleChoiceItems(itemsNominal, whichItemNominal, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
@@ -110,7 +110,7 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
             }
         });
         builder.setCancelable(false);
-        builder.setNegativeButton("Kembali", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -140,11 +140,24 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
     private void showDetail() {
         fragpurchaseElectricDataMatchesCheckbox.setOnCheckedChangeListener(this);
         hideKeyboard(getView());
-        fragpurchaseElectricDetailDataLinearLayout.setVisibility(View.VISIBLE);
-        fragpurchaseElectricIdCustomerTextView.setText(fragmentElectricMeterNumberEditText.getText().toString());
-        fragpurchaseElectricNominalTextView.setText(fragmentElectricNominalEditText.getText().toString());
-        fragpurchaseElectricNameCustomerTextView.setText("Randy Riawan");
-        fragpurchaseElectricFareTextView.setText("R1/900");
+        if (fragmentElectricNominalEditText.getText().toString().isEmpty()){
+            fragelectricTextInputLayoutNominal.setError("Tidak Boleh Kosong");
+        }else {
+            fragelectricTextInputLayoutNominal.setErrorEnabled(false);
+        }
+        if (fragmentElectricMeterNumberEditText.getText().toString().isEmpty()){
+            fragpelectricTextInputLayoutMeterNumber.setError("Tidak Boleh Kosong");
+        }else {
+            fragpelectricTextInputLayoutMeterNumber.setErrorEnabled(false);
+        }
+        if (fragmentElectricNominalEditText.getText().toString().length()>0 &&
+        fragmentElectricMeterNumberEditText.getText().toString().length()>0){
+            fragpurchaseElectricDetailDataLinearLayout.setVisibility(View.VISIBLE);
+            fragpurchaseElectricIdCustomerTextView.setText(fragmentElectricMeterNumberEditText.getText().toString());
+            fragpurchaseElectricNominalTextView.setText(fragmentElectricNominalEditText.getText().toString());
+            fragpurchaseElectricNameCustomerTextView.setText("Randy Riawan");
+            fragpurchaseElectricFareTextView.setText("R1/900");
+        }
     }
 
     public void hideKeyboard(View view) {

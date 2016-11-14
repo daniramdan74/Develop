@@ -2,6 +2,7 @@ package com.dipesan.miniatm.miniatm.view.transfer;
 
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.dipesan.miniatm.miniatm.R;
 import com.dipesan.miniatm.miniatm.utils.AppConstant;
+import com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager;
 import com.sunmi.controller.ICallback;
 import com.sunmi.impl.V1Printer;
 
@@ -29,6 +31,8 @@ import butterknife.OnClick;
  * A simple {@link Fragment} subclass.
  */
 public class InterBankFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
+    @BindView(R.id.fraginter_bank_destination_account_text_input_layout) TextInputLayout fraginterBankDestinationAccountTextInputLayout;
+    @BindView(R.id.fraginter_bank_amount_transfer_text_input_layout) TextInputLayout fraginterBankAmountTransferTextInputLayout;
     private boolean checkflag;
     private static final String TAG = "InterBankFragment";
 
@@ -103,7 +107,7 @@ public class InterBankFragment extends Fragment implements CompoundButton.OnChec
     }
 
     private void print() {
-        com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager.getInstance().executeTask(new Runnable() {
+        ThreadPoolManager.getInstance().executeTask(new Runnable() {
 
             @Override
             public void run() {
@@ -114,21 +118,21 @@ public class InterBankFragment extends Fragment implements CompoundButton.OnChec
                 printer.printText("\nTransfer Sesama Bank");
                 printer.printText("\n===============================");
                 printer.printText("\n Tujuan Transfer");
-                printer.printText("\nBank Tujuan  : "+fraginterbankDestinationBankTextView.getText().toString());
-                printer.printText("\nNo Rekening  : "+fraginterbankNumberAccountTextView.getText().toString());
-                printer.printText("\nNama Pemilik : "+fraginterbankNameAccountTextView.getText().toString());
-                printer.printText("\n     Nominal : "+fraginterbankNominalTextView.getText().toString());
+                printer.printText("\nBank Tujuan  : " + fraginterbankDestinationBankTextView.getText().toString());
+                printer.printText("\nNo Rekening  : " + fraginterbankNumberAccountTextView.getText().toString());
+                printer.printText("\nNama Pemilik : " + fraginterbankNameAccountTextView.getText().toString());
+                printer.printText("\n     Nominal : " + fraginterbankNominalTextView.getText().toString());
                 printer.printText("\n");
                 printer.printText("\n--------------------------");
                 printer.printText("\n Dari");
-                printer.printText("\n       Bank  : "+fraginterbankFromBankTextView.getText().toString());
-                printer.printText("\nNo Rekening  : "+fraginterbankFromAccountNumberTextView.getText().toString());
-                printer.printText("\nNama Pemilik : "+fraginterbankFromAccountNameTextView.getText().toString());
+                printer.printText("\n       Bank  : " + fraginterbankFromBankTextView.getText().toString());
+                printer.printText("\nNo Rekening  : " + fraginterbankFromAccountNumberTextView.getText().toString());
+                printer.printText("\nNama Pemilik : " + fraginterbankFromAccountNameTextView.getText().toString());
                 printer.printText("\n");
                 printer.printText("\n");
                 printer.printText("\nMerchant :");
-                printer.printText("\n"+ AppConstant.NAME_MERCHANT);
-                printer.printText("\nID "+ AppConstant.ID_MERCHANT);
+                printer.printText("\n" + AppConstant.NAME_MERCHANT);
+                printer.printText("\nID " + AppConstant.ID_MERCHANT);
                 printer.lineWrap(4);
                 printer.commitTransaction();
             }
@@ -142,23 +146,40 @@ public class InterBankFragment extends Fragment implements CompoundButton.OnChec
     }
 
     private void showDetail() {
-        fraginterbankDataMatchesCheckBox.setOnCheckedChangeListener(this);
-        fraginterbankDetailLinearLayout.setVisibility(View.VISIBLE);
-        fraginterbankDestinationBankTextView.setText("Bank Mandiri");
-                fraginterbankNumberAccountTextView.setText(fraginterBankDestinationAccountEditText.getText().toString());
-        fraginterbankNameAccountTextView.setText("Maulana");
-                fraginterbankNominalTextView.setText(fraginterBankAmountTransferEditText.getText().toString());
-        fraginterbankFromBankTextView.setText("Bank Mandiri");
-                fraginterbankFromAccountNumberTextView.setText("1234-567-890");
-        fraginterbankFromAccountNameTextView.setText("Dani Ramdan");
-        fraginterbankSendButton.setEnabled(false);
+        if (fraginterBankDestinationAccountEditText.getText().toString().isEmpty()) {
+            fraginterBankDestinationAccountTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fraginterBankDestinationAccountTextInputLayout.setErrorEnabled(false);
+        }
+        if (fraginterBankAmountTransferEditText.getText().toString().isEmpty()){
+            fraginterBankAmountTransferTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fraginterBankAmountTransferTextInputLayout.setErrorEnabled(false);
+        }
+
+        if (fraginterBankDestinationAccountEditText.getText().toString().length()>0&&
+                fraginterBankAmountTransferEditText.getText().toString().length()>0){
+
+            fraginterbankDataMatchesCheckBox.setOnCheckedChangeListener(this);
+            fraginterbankDetailLinearLayout.setVisibility(View.VISIBLE);
+            fraginterbankDestinationBankTextView.setText("Bank Mandiri");
+            fraginterbankNumberAccountTextView.setText(fraginterBankDestinationAccountEditText.getText().toString());
+            fraginterbankNameAccountTextView.setText("Maulana");
+            fraginterbankNominalTextView.setText(fraginterBankAmountTransferEditText.getText().toString());
+            fraginterbankFromBankTextView.setText("Bank Mandiri");
+            fraginterbankFromAccountNumberTextView.setText("1234-567-890");
+            fraginterbankFromAccountNameTextView.setText("Dani Ramdan");
+            fraginterbankSendButton.setEnabled(false);
+        }
     }
-    private void editDataEnabled(){
+
+    private void editDataEnabled() {
         fraginterBankDestinationAccountEditText.setEnabled(true);
         fraginterBankAmountTransferEditText.setEnabled(true);
         fraginterBankProcessButton.setEnabled(true);
     }
-    private void editDataDisabled(){
+
+    private void editDataDisabled() {
         fraginterBankDestinationAccountEditText.setEnabled(false);
         fraginterBankAmountTransferEditText.setEnabled(false);
         fraginterBankProcessButton.setEnabled(false);
@@ -166,29 +187,30 @@ public class InterBankFragment extends Fragment implements CompoundButton.OnChec
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-            if (checkflag = isChecked) {
-                fraginterbankDataMatchesCheckBox.setTextColor(getResources().getColor(R.color.colorPrimary));
-                fraginterBankProcessButton.setHighlightColor(getResources().getColor(R.color.colorDivide));
-                fraginterBankProcessButton.setEnabled(false);
-                fraginterbankSendButton.setEnabled(true);
-                fraginterbankSendButton.setHighlightColor(getResources().getColor(R.color.colorPrimaryDark));
-                fraginterbankSendButton.setTextColor(getResources().getColor(R.color.colorTextIcons));
+        if (checkflag = isChecked) {
+            fraginterbankDataMatchesCheckBox.setTextColor(getResources().getColor(R.color.colorPrimary));
+            fraginterBankProcessButton.setHighlightColor(getResources().getColor(R.color.colorDivide));
+            fraginterBankProcessButton.setEnabled(false);
+            fraginterbankSendButton.setEnabled(true);
+            fraginterbankSendButton.setHighlightColor(getResources().getColor(R.color.colorPrimaryDark));
+            fraginterbankSendButton.setTextColor(getResources().getColor(R.color.colorTextIcons));
 
-                editDataDisabled();
-            }
-            else {
-                fraginterBankProcessButton.setHighlightColor(getResources().getColor(R.color.colorPrimaryDark));
-                fraginterbankDataMatchesCheckBox.setTextColor(getResources().getColor(R.color.colorDivide));
-                fraginterBankProcessButton.setEnabled(true);
-                fraginterbankSendButton.setEnabled(false);
-                fraginterbankSendButton.setTextColor(getResources().getColor(R.color.colorPrimary));
-                fraginterbankSendButton.setHighlightColor(getResources().getColor(R.color.colorDivide));
-                fraginterbankDetailLinearLayout.setVisibility(View.INVISIBLE);
-                editDataEnabled();
-            }
+            editDataDisabled();
+        }
+        else {
+            fraginterBankProcessButton.setHighlightColor(getResources().getColor(R.color.colorPrimaryDark));
+            fraginterbankDataMatchesCheckBox.setTextColor(getResources().getColor(R.color.colorDivide));
+            fraginterBankProcessButton.setEnabled(true);
+            fraginterbankSendButton.setEnabled(false);
+            fraginterbankSendButton.setTextColor(getResources().getColor(R.color.colorPrimary));
+            fraginterbankSendButton.setHighlightColor(getResources().getColor(R.color.colorDivide));
+            fraginterbankDetailLinearLayout.setVisibility(View.INVISIBLE);
+            editDataEnabled();
+        }
 
 
     }
+
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);

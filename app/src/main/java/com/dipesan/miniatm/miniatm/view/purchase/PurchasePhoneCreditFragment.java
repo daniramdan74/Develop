@@ -118,35 +118,27 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
     }
 
     private void showProcess() {
-        if (fragmentPhoneCreditProviderEditText.getText().toString().isEmpty()) {
-            fragmentPhoneCreditNominalEditText.setError("Provider Masih Kosong");
-            return;
-        }
-        else {
+        if (fragmentPhoneCreditProviderEditText.getText().toString().isEmpty()){
+            fragphoneTextInputLayoutCreditProvider.setError("Tidak Boleh Kosong");
+        }else {
             fragphoneTextInputLayoutCreditProvider.setErrorEnabled(false);
         }
-        if (fragmentPhoneCreditNominalEditText.getText().toString().isEmpty()) {
-            fragphoneTextInputLayoutNominal.setError("Nominal Masih Kosong");
-            return;
-        }
-        else {
+        if (fragmentPhoneCreditNominalEditText.getText().toString().isEmpty()){
+            fragphoneTextInputLayoutNominal.setError("Tidak Boleh Kosong");
+        }else {
             fragphoneTextInputLayoutNominal.setErrorEnabled(false);
         }
-        if (fragmentPhoneNumberEditText.getText().toString().isEmpty()) {
-            fragmentPhoneCreditNominalEditText.setError("No Telepon Kosong");
-            return;
-        }
-        else if (fragmentPhoneNumberEditText.getText().toString().length() < 9) {
-            fragphoneTextInputLayoutPhoneNumber.setError("No Telepon Anda Kurang");
-        }
-        else {
+        if (fragmentPhoneNumberEditText.getText().toString().isEmpty()){
+            fragphoneTextInputLayoutPhoneNumber.setError("Tidak Boleh Kosong");
+        }else {
             fragphoneTextInputLayoutPhoneNumber.setErrorEnabled(false);
         }
-        if (fragmentPhoneCreditProviderEditText.getText().toString().length() > 0 &&
-                fragmentPhoneCreditNominalEditText.getText().toString().length() > 0 &&
-                fragmentPhoneNumberEditText.getText().toString().length() >= 9) {
+        if (fragmentPhoneCreditProviderEditText.getText().toString().length()>0&&
+        fragmentPhoneCreditNominalEditText.getText().toString().length()>0&&
+                fragmentPhoneNumberEditText.getText().toString().length()>0){
             print();
         }
+
     }
 
     private void print() {
@@ -186,7 +178,7 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
     private void showNominal() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 //               .setTitle("Pilih Provider")
-                .setTitle(Html.fromHtml("<font color='#FF7F27'>Nominal Pulsa</font>"));
+                .setTitle(Html.fromHtml("<font color='#303f9f'>Nominal Pulsa</font>"));
         builder.setSingleChoiceItems(itemsNominal, whichItemNominal, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
@@ -195,7 +187,8 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
                 dialogInterface.dismiss();
             }
         });
-
+        builder.setCancelable(false);
+        builder.setNegativeButton("Batal", null);
         builder.create().show();
 
     }
@@ -203,7 +196,7 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
     private void showProvider() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 //               .setTitle("Pilih Provider")
-                .setTitle(Html.fromHtml("<font color='#FF7F27'>Pilih Provider</font>"));
+                .setTitle(Html.fromHtml("<font color='#303f9f'>Pilih Provider</font>"));
         builder.setSingleChoiceItems(itemProviders, whichItemProvider, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {

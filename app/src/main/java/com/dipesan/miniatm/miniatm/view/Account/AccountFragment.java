@@ -4,6 +4,7 @@ package com.dipesan.miniatm.miniatm.view.Account;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
 import android.util.Log;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.dipesan.miniatm.miniatm.R;
 import com.dipesan.miniatm.miniatm.services.YoucubeService;
 import com.dipesan.miniatm.miniatm.utils.AppConstant;
+import com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager;
 import com.sunmi.controller.ICallback;
 import com.sunmi.impl.V1Printer;
 
@@ -31,6 +33,15 @@ import butterknife.OnClick;
  * A simple {@link Fragment} subclass.
  */
 public class AccountFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
+    @BindView(R.id.fragaccount_type_customers_text_input_layout) TextInputLayout fragaccountTypeCustomersTextInputLayout;
+    @BindView(R.id.fragaccount_product_type_text_input_layout) TextInputLayout fragaccountProductTypeTextInputLayout;
+    @BindView(R.id.fragaccount_type_account_text_input_layout) TextInputLayout fragaccountTypeAccountTextInputLayout;
+    @BindView(R.id.fragaccount_name_customers_text_input_layout) TextInputLayout fragaccountNameCustomersTextInputLayout;
+    @BindView(R.id.fragaccount_type_identity_text_input_layout) TextInputLayout fragaccountTypeIdentityTextInputLayout;
+    @BindView(R.id.fragaccount_identity_number_text_input_layout) TextInputLayout fragaccountIdentityNumberTextInputLayout;
+    @BindView(R.id.fragaccount_source_funds_text_input_layout) TextInputLayout fragaccountSourceFundsTextInputLayout;
+    @BindView(R.id.fragaccount_open_account_text_input_layout) TextInputLayout fragaccountOpenAccountTextInputLayout;
+    @BindView(R.id.fragaccount_type_initial_deposit_text_input_layout) TextInputLayout fragaccountTypeInitialDepositTextInputLayout;
     private YoucubeService youcubeService;
     private static final String TAG = "AccountFragment";
     private final CharSequence[] itemTypeCustomers = {"Perorangan", "Perusahaan"};
@@ -117,6 +128,7 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
         youcubeService = new YoucubeService(getActivity());
         return view;
     }
+
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -128,17 +140,76 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
     }
 
     private void showProcess() {
-        youcubeService.setIsMessage(true);
-        youcubeService.setMessage("Login Merchant");
-        youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
-            @Override
-            public void onApproved() {
-                print();
-                Toast.makeText(getActivity(),"Data Pembukaan Rekening"+"\n       Berhasil Dilakukan !",Toast.LENGTH_SHORT).show();
-                clearEditText();
-            }
-        });
+        if (fragaccountTypeCustomersEditText.getText().toString().isEmpty()) {
+            fragaccountTypeCustomersTextInputLayout.setError("Tidak Boleh Kosong");
+            return;
+        }else {
+            fragaccountTypeCustomersTextInputLayout.setErrorEnabled(false);
+        }
+        if (fragaccountProductTypeEditText.getText().toString().isEmpty()) {
+            fragaccountProductTypeTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fragaccountProductTypeTextInputLayout.setErrorEnabled(false);
+        }
+        if (fragaccountTypeAccountEditText.getText().toString().isEmpty()) {
+            fragaccountTypeAccountTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fragaccountTypeAccountTextInputLayout.setErrorEnabled(false);
+        }
+        if (fragaccountNameCustomersEditText.getText().toString().isEmpty()) {
+            fragaccountNameCustomersTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fragaccountNameCustomersTextInputLayout.setErrorEnabled(false);
+        }
+        if (fragaccountTypeIdentityEditText.getText().toString().isEmpty()) {
+            fragaccountTypeIdentityTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fragaccountTypeIdentityTextInputLayout.setErrorEnabled(false);
+        }
 
+        if (fragaccountIdentityNumberEditText.getText().toString().isEmpty()) {
+            fragaccountIdentityNumberTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fragaccountIdentityNumberTextInputLayout.setErrorEnabled(false);
+        }
+
+        if (fragaccountSourceFundsEditText.getText().toString().isEmpty()) {
+            fragaccountSourceFundsTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fragaccountSourceFundsTextInputLayout.setErrorEnabled(false);
+        }
+        if (fragaccountOpenAccountEditText.getText().toString().isEmpty()) {
+            fragaccountOpenAccountTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fragaccountOpenAccountTextInputLayout.setErrorEnabled(false);
+        }
+        if (fragaccountTypeInitialDepositEditText.getText().toString().isEmpty()) {
+            fragaccountTypeInitialDepositTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fragaccountTypeInitialDepositTextInputLayout.setErrorEnabled(false);
+        }
+
+        if (fragaccountTypeCustomersEditText.getText().toString().length()>0 &&
+        fragaccountProductTypeEditText.getText().toString().length()>0 &&
+                fragaccountTypeAccountEditText.getText().toString().length()>0 &&
+        fragaccountNameCustomersEditText.getText().toString().length()>0 &&
+                fragaccountTypeIdentityEditText.getText().toString().length()>0 &&
+        fragaccountIdentityNumberEditText.getText().toString().length()>0 &&
+                fragaccountSourceFundsEditText.getText().toString().length()>0 &&
+        fragaccountOpenAccountEditText.getText().toString().length()>0 &&
+        fragaccountTypeInitialDepositEditText.getText().toString().length()>0){
+            youcubeService.setIsMessage(true);
+            youcubeService.setMessage("Login Merchant");
+            youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
+                @Override
+                public void onApproved() {
+                    print();
+                    Toast.makeText(getActivity(), "Data Pembukaan Rekening" + "\n       Berhasil Dilakukan !", Toast.LENGTH_SHORT).show();
+                    clearEditText();
+                }
+            });
+
+        }
     }
 
     @OnClick({R.id.fragaccount_type_customers_edit_text, R.id.fragaccount_product_type_edit_text, R.id.fragaccount_type_account_edit_text, R.id.fragaccount_name_customers_edit_text, R.id.fragaccount_type_identity_edit_text, R.id.fragaccount_identity_number_edit_text, R.id.fragaccount_source_funds_edit_text, R.id.fragaccount_open_account_edit_text, R.id.fragaccount_type_initial_deposit_edit_text})
@@ -271,18 +342,18 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-            if (checkflag = isChecked) {
-                fragaccountDataMatchesCheckBox.setTextColor(getResources().getColor(R.color.colorPrimary));
-                fragaccountProcessButton.setEnabled(true);
-                fragaccountProcessButton.setHighlightColor(getResources().getColor(R.color.colorPrimaryDark));
-                lockEditText();
-            }
-            else {
-                fragaccountDataMatchesCheckBox.setTextColor(getResources().getColor(R.color.colorDivide));
-                fragaccountProcessButton.setEnabled(false);
-                fragaccountProcessButton.setHighlightColor(getResources().getColor(R.color.colorDivide));
-                openEditText();
-            }
+        if (checkflag = isChecked) {
+            fragaccountDataMatchesCheckBox.setTextColor(getResources().getColor(R.color.colorPrimary));
+            fragaccountProcessButton.setEnabled(true);
+            fragaccountProcessButton.setHighlightColor(getResources().getColor(R.color.colorPrimaryDark));
+            lockEditText();
+        }
+        else {
+            fragaccountDataMatchesCheckBox.setTextColor(getResources().getColor(R.color.colorDivide));
+            fragaccountProcessButton.setEnabled(false);
+            fragaccountProcessButton.setHighlightColor(getResources().getColor(R.color.colorDivide));
+            openEditText();
+        }
 
     }
 
@@ -313,7 +384,7 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
 
 
     private void print() {
-        com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager.getInstance().executeTask(new Runnable() {
+        ThreadPoolManager.getInstance().executeTask(new Runnable() {
 
             @Override
             public void run() {
@@ -329,8 +400,8 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
                 printer.printText("\n");
                 printer.printText("\n");
                 printer.printText("\nMerchant :");
-                printer.printText("\n"+ AppConstant.NAME_MERCHANT);
-                printer.printText("\nID "+ AppConstant.ID_MERCHANT);
+                printer.printText("\n" + AppConstant.NAME_MERCHANT);
+                printer.printText("\nID " + AppConstant.ID_MERCHANT);
                 printer.lineWrap(4);
                 printer.commitTransaction();
             }

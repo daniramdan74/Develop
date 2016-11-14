@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 
 import com.dipesan.miniatm.miniatm.R;
 import com.dipesan.miniatm.miniatm.services.BluetoothConnexionManager;
@@ -15,6 +16,7 @@ import com.youTransactor.uCube.LogManager;
 import com.youTransactor.uCube.mdm.MDMManager;
 import com.youTransactor.uCube.rpc.RPCManager;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -28,6 +30,8 @@ import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_TRANSFER;
 
 public class MainActivity extends AppCompatActivity {
 
+    @BindView(R.id.main_activity_payment_button) Button mainActivityPaymentButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        mainActivityPaymentButton.setEnabled(false);
         initBluetoothConnection();
     }
 
@@ -67,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     @OnClick(R.id.main_activity_settings_button)
     public void onClickSettings() {
         Intent intentSettings = new Intent(this, MainSubActivity.class);
@@ -93,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
 //        startActivity(intentSettings);
 //        overridePendingTransition(0, R.anim.fade_out);
 //    }
-
 
 
     private void initBluetoothConnection() {

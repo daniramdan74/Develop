@@ -45,6 +45,7 @@
                 android:orientation="vertical">
 
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/fragaccount_type_customers_text_input_layout"
                     style="@style/TextInputLayoutForm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -62,6 +63,7 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/fragaccount_product_type_text_input_layout"
                     style="@style/TextInputLayoutForm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -78,6 +80,7 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/fragaccount_type_account_text_input_layout"
                     style="@style/TextInputLayoutForm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -94,6 +97,7 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/fragaccount_name_customers_text_input_layout"
                     style="@style/TextInputLayoutForm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -114,7 +118,7 @@
                     android:layout_height="wrap_content">
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/fragaccount_name_text_input_layout"
+                        android:id="@+id/fragaccount_type_identity_text_input_layout"
                         style="@style/TextInputLayoutForm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -131,10 +135,11 @@
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
+                        android:id="@+id/fragaccount_identity_number_text_input_layout"
                         style="@style/TextInputLayoutForm"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/fragaccount_name_text_input_layout"
+                        android:layout_toRightOf="@+id/fragaccount_type_identity_text_input_layout"
                         android:layout_weight="50">
 
                         <EditText
@@ -184,6 +189,7 @@
                 android:orientation="vertical">
 
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/fragaccount_source_funds_text_input_layout"
                     style="@style/TextInputLayoutForm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -201,6 +207,7 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/fragaccount_open_account_text_input_layout"
                     style="@style/TextInputLayoutForm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -217,6 +224,7 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/fragaccount_type_initial_deposit_text_input_layout"
                     style="@style/TextInputLayoutForm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
