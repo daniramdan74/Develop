@@ -85,6 +85,7 @@ public class SettingsFragment extends Fragment {
         settingsServerEditText.setText(settings.getString(MDMManager.MDM_SERVER_URL_SETTINGS_KEY, MDMManager.DEFAULT_URL));
         settingsDeviceEditText.setText(settings.getString(AppConstant.DEVICE_NAME_SETTINGS_KEY,""));
         settingsDeviceEditText.setInputType(InputType.TYPE_NULL);
+        settingsAutoConnectSwitch.setVisibility(View.INVISIBLE);
          return view;
     }
 

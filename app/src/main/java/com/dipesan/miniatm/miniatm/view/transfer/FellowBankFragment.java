@@ -240,7 +240,7 @@ public class FellowBankFragment extends Fragment implements CompoundButton.OnChe
                 printer.printText("\nTransfer Antar Bank");
                 printer.printText("\n===============================");
                 printer.printText("\n Tujuan Transfer");
-                printer.printText("\nBank Tujuan  : "+fragfellowBankDestinationBankEditText.getText().toString());
+                printer.printText("\nBank Tujuan  : "+fragfellowbankDestinationBankTextView.getText().toString());
                 printer.printText("\nNo Rekening  : "+fragfellowBankDestinationAccountEditText.getText().toString());
                 printer.printText("\nNama Pemilik : "+"Maulana");
                 printer.printText("\n     Nominal : "+fragfellowBankAmountTransferEditText.getText().toString());

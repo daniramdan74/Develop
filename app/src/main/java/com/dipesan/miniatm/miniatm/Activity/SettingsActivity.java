@@ -7,7 +7,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 
 import com.dipesan.miniatm.miniatm.R;
 
@@ -22,7 +21,7 @@ public class SettingsActivity extends AppCompatActivity {
     @BindView(R.id.settings_save_button) Button settingsSaveButton;
 
     @BindView(R.id.settings_device_edit_text) EditText settingsDeviceEditText;
-    @BindView(R.id.settings_auto_connect_switch) Switch settingsAutoConnectSwitch;
+//    @BindView(R.id.settings_auto_connect_switch) Switch settingsAutoConnectSwitch;
     @BindView(R.id.settings_server_edit_text) EditText settingsServerEditText;
 
     @Override
@@ -41,14 +40,12 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({ R.id.settings_save_button, R.id.settings_device_edit_text, R.id.settings_auto_connect_switch})
+    @OnClick({ R.id.settings_save_button, R.id.settings_device_edit_text})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.settings_save_button:
                 break;
             case R.id.settings_device_edit_text:
-                break;
-            case R.id.settings_auto_connect_switch:
                 break;
         }
     }
