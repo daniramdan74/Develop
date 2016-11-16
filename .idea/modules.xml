@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MiniAtm.iml" filepath="$PROJECT_DIR$/MiniAtm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MiniAtm_Awal.iml" filepath="$PROJECT_DIR$/MiniAtm_Awal.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/libApp/libApp.iml" filepath="$PROJECT_DIR$/libApp/libApp.iml" />
     </modules>
