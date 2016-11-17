@@ -32,7 +32,6 @@
     <string name="fellow_bank">Antar Bank</string>
     <string name="settings">Pengaturan</string>
     <string name="login">Masuk</string>
-    <string name="check_balance">Cek Saldo</string>
 
     <!--function-->
     <string name="function_void">Void</string>
@@ -41,5 +40,35 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="type_of_customers">Tipe Nasabah</string>
+    <string name="type_of_products">Jenis Produk</string>
+    <string name="type_of_account">Jenis Rekening</string>
+    <string name="account_">Rekening</string>
+    <string name="customer_name">Nama Nasabah</string>
+    <string name="type">Tipe</string>
+    <string name="no_identitiy">No. Identitas</string>
+    <string name="detailed_account_data">Detail Data Rekenig</string>
+    <string name="source_of_funds">Sumber Dana</string>
+    <string name="purpose_of_account_opening">Tujuan Pembukaan</string>
+    <string name="initial_deposit">Setoran Awal</string>
+    <string name="data_mathes">Data Sudah Sesuai</string>
+    <string name="process">Proses</string>
+    <string name="cancel">Batal</string>
+    <string name="individual">Perorangan</string>
+    <string name="corporate">Perusahaan</string>
+    <string name="itemproductsTypeOrdinary">Biasa</string>
+    <string name="itemproductsTypePeriod">Berjangka</string>
+    <string name="itemproductsTypeJunior">Junior</string>
+    <string name="itemproductsTypeDeposit">Deposito</string>
+    <string name="itemtypeAccountRupiah">Rupiah</string>
+    <string name="itemTypeAccountDollar">Dollar</string>
+    <string name="itemtypeKTP">KTP</string>
+    <string name="itemtypePassport">Pasport</string>
+    <string name="itemtypesourcefundsPersonal">Pribadi</string>
+    <string name="itemtypesourcefundsSalary">Gaji</string>
+    <string name="itemtypesourcefundsCompanyResults">Hasil Usaha</string>
+    <string name="itemtypeopenaccountdeposit">Simpanan</string>
+    <string name="itemtypeopenaccountSalary">Transit Gaji</string>
+    <string name="itemtypeopenaccountTransaction">Transaksi</string>
 
 </resources>

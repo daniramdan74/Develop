@@ -4,12 +4,17 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dipesan.miniatm.miniatm.R;
 import com.dipesan.miniatm.miniatm.services.BluetoothConnexionManager;
@@ -17,6 +22,8 @@ import com.dipesan.miniatm.miniatm.services.YoucubeService;
 import com.youTransactor.uCube.LogManager;
 import com.youTransactor.uCube.mdm.MDMManager;
 import com.youTransactor.uCube.rpc.RPCManager;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,9 +37,12 @@ import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_MERCHANT;
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_SETTINGS;
 
 public class LoginActivity extends AppCompatActivity {
+    Locale myLocale;
     @BindView(R.id.settings_text_view) TextView settingsTextView;
     @BindView(R.id.merchant_text_view) TextView merchantTextView;
     @BindView(R.id.login_logo_image_view) ImageView loginLogoImageView;
+    @BindView(R.id.login_indonesia_image_button) ImageButton loginIndonesiaImageButton;
+    @BindView(R.id.login_english_image_button) ImageButton loginEnglishImageButton;
     private YoucubeService youcubeService;
 
     @Override
@@ -112,4 +122,31 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intentMerchant);
         overridePendingTransition(0, R.anim.fade_out);
     }
+
+    @OnClick({R.id.login_indonesia_image_button, R.id.login_english_image_button})
+    public void onClickLanguage(View view) {
+        switch (view.getId()) {
+            case R.id.login_indonesia_image_button:
+                Toast.makeText(this, "Bahasa Indonesia", Toast.LENGTH_SHORT).show();
+                setLocale("in");
+                break;
+            case R.id.login_english_image_button:
+                Toast.makeText(this, "English", Toast.LENGTH_SHORT).show();
+                setLocale("en");
+                break;
+        }
+    }
+
+
+    public void setLocale(String lang) {
+        myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+        Intent refresh = new Intent(this, LoginActivity.class);
+        startActivity(refresh);
+    }
+
 }

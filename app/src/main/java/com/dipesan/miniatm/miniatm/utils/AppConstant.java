@@ -95,7 +95,7 @@ public class AppConstant {
 
 
             //sub menu
-            case SUB_MENU_BALANCE : return R.string.check_balance;
+            case SUB_MENU_BALANCE : return R.string.balance;
 
             case SUB_MENU_PURCHASE_PHONE_CREDIT: return R.string.phone_credit;
             case SUB_MENU_PURCHASE_ELECTRIC_TOKEN: return R.string.electric_token;
@@ -116,7 +116,7 @@ public class AppConstant {
             case SUB_MENU_FUNCTION_SETTELMENT:return R.string.function_settelment;
 
 
-            default:return R.string.check_balance;
+            default:return R.string.balance;
         }
     }
 

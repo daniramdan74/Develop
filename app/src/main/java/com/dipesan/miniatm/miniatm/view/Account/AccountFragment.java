@@ -8,31 +8,47 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dipesan.miniatm.miniatm.R;
 import com.dipesan.miniatm.miniatm.services.YoucubeService;
 import com.dipesan.miniatm.miniatm.utils.AppConstant;
+import com.dipesan.miniatm.miniatm.utils.MoneyTextWatcher;
 import com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager;
 import com.sunmi.controller.ICallback;
 import com.sunmi.impl.V1Printer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.dipesan.miniatm.miniatm.R.id.fragaccount_name_customers_edit_text;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class AccountFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
+    private static final String TAG = "AccountFragment";
+//    private final CharSequence[] itemTypeCustomers = {"Perorangan", "Perusahaan"};
+//    private final CharSequence[] itemProductsType = {"Biasa", "Berjangka", "Junior", "Deposito"};
+//    private final CharSequence[] itemTypeAccount = {"Rupiah", "Dollar"};
+//    private final CharSequence[] itemTypeSourceFunds = {"Pribadi", "Gaji", "Hasil Usaha"};
+//    private final CharSequence[] itemTypeOpenAccount = {"Simpanan", "Transit Gaji", "Transaksi"};
+//    private final CharSequence[] itemType = {"KTP", "Pasport"};
     @BindView(R.id.fragaccount_type_customers_text_input_layout) TextInputLayout fragaccountTypeCustomersTextInputLayout;
     @BindView(R.id.fragaccount_product_type_text_input_layout) TextInputLayout fragaccountProductTypeTextInputLayout;
     @BindView(R.id.fragaccount_type_account_text_input_layout) TextInputLayout fragaccountTypeAccountTextInputLayout;
@@ -42,21 +58,10 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
     @BindView(R.id.fragaccount_source_funds_text_input_layout) TextInputLayout fragaccountSourceFundsTextInputLayout;
     @BindView(R.id.fragaccount_open_account_text_input_layout) TextInputLayout fragaccountOpenAccountTextInputLayout;
     @BindView(R.id.fragaccount_type_initial_deposit_text_input_layout) TextInputLayout fragaccountTypeInitialDepositTextInputLayout;
-    private YoucubeService youcubeService;
-    private static final String TAG = "AccountFragment";
-    private final CharSequence[] itemTypeCustomers = {"Perorangan", "Perusahaan"};
-    private final CharSequence[] itemProductsType = {"Biasa", "Berjangka", "Junior", "Deposito"};
-    private final CharSequence[] itemTypeAccount = {"Rupiah", "Dollar"};
-    private final CharSequence[] itemTypeSourceFunds = {"Pribadi", "Gaji", "Hasil Usaha"};
-    private final CharSequence[] itemTypeOpenAccount = {"Simpanan", "Transit Gaji", "Transaksi"};
-    private final CharSequence[] itemType = {"KTP", "Pasport"};
-
-    private boolean checkflag;
-
     @BindView(R.id.fragaccount_type_customers_edit_text) EditText fragaccountTypeCustomersEditText;
     @BindView(R.id.fragaccount_product_type_edit_text) EditText fragaccountProductTypeEditText;
     @BindView(R.id.fragaccount_type_account_edit_text) EditText fragaccountTypeAccountEditText;
-    @BindView(R.id.fragaccount_name_customers_edit_text) EditText fragaccountNameCustomersEditText;
+    @BindView(fragaccount_name_customers_edit_text) EditText fragaccountNameCustomersEditText;
     @BindView(R.id.fragaccount_type_identity_edit_text) EditText fragaccountTypeIdentityEditText;
     @BindView(R.id.fragaccount_identity_number_edit_text) EditText fragaccountIdentityNumberEditText;
     @BindView(R.id.fragaccount_source_funds_edit_text) EditText fragaccountSourceFundsEditText;
@@ -64,6 +69,8 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
     @BindView(R.id.fragaccount_type_initial_deposit_edit_text) EditText fragaccountTypeInitialDepositEditText;
     @BindView(R.id.fragaccount_data_matches_check_box) CheckBox fragaccountDataMatchesCheckBox;
     @BindView(R.id.fragaccount_process_button) Button fragaccountProcessButton;
+    private YoucubeService youcubeService;
+    private boolean checkflag;
     private int whichTypeCustomers, whichProductsType, whichTypeAccount, whichTypeSourceFunds, whichTypeOpenAccount, whichType = 0;
 
     private V1Printer printer;
@@ -101,7 +108,7 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_account, container, false);
+        final View view = inflater.inflate(R.layout.fragment_account, container, false);
         ButterKnife.bind(this, view);
         fragaccountTypeCustomersEditText.setInputType(InputType.TYPE_NULL);
         fragaccountProductTypeEditText.setInputType(InputType.TYPE_NULL);
@@ -126,7 +133,43 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
         printer = new V1Printer(getActivity());
         printer.setCallback(iCallback);
         youcubeService = new YoucubeService(getActivity());
+        fragaccountNameCustomersEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    hideKeyboard(view);
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+        fragaccountTypeIdentityEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    hideKeyboard(view);
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+        fragaccountTypeInitialDepositEditText.addTextChangedListener(new MoneyTextWatcher(fragaccountTypeInitialDepositEditText));
+        fragaccountTypeInitialDepositEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    hideKeyboard(view);
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
         return view;
+
     }
 
     public void hideKeyboard(View view) {
@@ -143,61 +186,70 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
         if (fragaccountTypeCustomersEditText.getText().toString().isEmpty()) {
             fragaccountTypeCustomersTextInputLayout.setError("Tidak Boleh Kosong");
             return;
-        }else {
+        }
+        else {
             fragaccountTypeCustomersTextInputLayout.setErrorEnabled(false);
         }
         if (fragaccountProductTypeEditText.getText().toString().isEmpty()) {
             fragaccountProductTypeTextInputLayout.setError("Tidak Boleh Kosong");
-        }else {
+        }
+        else {
             fragaccountProductTypeTextInputLayout.setErrorEnabled(false);
         }
         if (fragaccountTypeAccountEditText.getText().toString().isEmpty()) {
             fragaccountTypeAccountTextInputLayout.setError("Tidak Boleh Kosong");
-        }else {
+        }
+        else {
             fragaccountTypeAccountTextInputLayout.setErrorEnabled(false);
         }
         if (fragaccountNameCustomersEditText.getText().toString().isEmpty()) {
             fragaccountNameCustomersTextInputLayout.setError("Tidak Boleh Kosong");
-        }else {
+        }
+        else {
             fragaccountNameCustomersTextInputLayout.setErrorEnabled(false);
         }
         if (fragaccountTypeIdentityEditText.getText().toString().isEmpty()) {
             fragaccountTypeIdentityTextInputLayout.setError("Tidak Boleh Kosong");
-        }else {
+        }
+        else {
             fragaccountTypeIdentityTextInputLayout.setErrorEnabled(false);
         }
 
         if (fragaccountIdentityNumberEditText.getText().toString().isEmpty()) {
             fragaccountIdentityNumberTextInputLayout.setError("Tidak Boleh Kosong");
-        }else {
+        }
+        else {
             fragaccountIdentityNumberTextInputLayout.setErrorEnabled(false);
         }
 
         if (fragaccountSourceFundsEditText.getText().toString().isEmpty()) {
             fragaccountSourceFundsTextInputLayout.setError("Tidak Boleh Kosong");
-        }else {
+        }
+        else {
             fragaccountSourceFundsTextInputLayout.setErrorEnabled(false);
         }
         if (fragaccountOpenAccountEditText.getText().toString().isEmpty()) {
             fragaccountOpenAccountTextInputLayout.setError("Tidak Boleh Kosong");
-        }else {
+        }
+        else {
             fragaccountOpenAccountTextInputLayout.setErrorEnabled(false);
         }
         if (fragaccountTypeInitialDepositEditText.getText().toString().isEmpty()) {
             fragaccountTypeInitialDepositTextInputLayout.setError("Tidak Boleh Kosong");
-        }else {
+        }
+        else {
             fragaccountTypeInitialDepositTextInputLayout.setErrorEnabled(false);
         }
 
-        if (fragaccountTypeCustomersEditText.getText().toString().length()>0 &&
-        fragaccountProductTypeEditText.getText().toString().length()>0 &&
-                fragaccountTypeAccountEditText.getText().toString().length()>0 &&
-        fragaccountNameCustomersEditText.getText().toString().length()>0 &&
-                fragaccountTypeIdentityEditText.getText().toString().length()>0 &&
-        fragaccountIdentityNumberEditText.getText().toString().length()>0 &&
-                fragaccountSourceFundsEditText.getText().toString().length()>0 &&
-        fragaccountOpenAccountEditText.getText().toString().length()>0 &&
-        fragaccountTypeInitialDepositEditText.getText().toString().length()>0){
+        if (fragaccountTypeCustomersEditText.getText().toString().length() > 0 &&
+                fragaccountProductTypeEditText.getText().toString().length() > 0 &&
+                fragaccountTypeAccountEditText.getText().toString().length() > 0 &&
+                fragaccountNameCustomersEditText.getText().toString().length() > 0 &&
+                fragaccountTypeIdentityEditText.getText().toString().length() > 0 &&
+                fragaccountIdentityNumberEditText.getText().toString().length() > 0 &&
+                fragaccountSourceFundsEditText.getText().toString().length() > 0 &&
+                fragaccountOpenAccountEditText.getText().toString().length() > 0 &&
+                fragaccountTypeInitialDepositEditText.getText().toString().length() > 0) {
             youcubeService.setIsMessage(true);
             youcubeService.setMessage("Login Merchant");
             youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
@@ -212,7 +264,7 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
         }
     }
 
-    @OnClick({R.id.fragaccount_type_customers_edit_text, R.id.fragaccount_product_type_edit_text, R.id.fragaccount_type_account_edit_text, R.id.fragaccount_name_customers_edit_text, R.id.fragaccount_type_identity_edit_text, R.id.fragaccount_identity_number_edit_text, R.id.fragaccount_source_funds_edit_text, R.id.fragaccount_open_account_edit_text, R.id.fragaccount_type_initial_deposit_edit_text})
+    @OnClick({R.id.fragaccount_type_customers_edit_text, R.id.fragaccount_product_type_edit_text, R.id.fragaccount_type_account_edit_text, fragaccount_name_customers_edit_text, R.id.fragaccount_type_identity_edit_text, R.id.fragaccount_identity_number_edit_text, R.id.fragaccount_source_funds_edit_text, R.id.fragaccount_open_account_edit_text, R.id.fragaccount_type_initial_deposit_edit_text})
     public void onClickEditText(View view) {
         switch (view.getId()) {
             case R.id.fragaccount_type_customers_edit_text:
@@ -224,7 +276,7 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
             case R.id.fragaccount_type_account_edit_text:
                 showTypeAccount();
                 break;
-            case R.id.fragaccount_name_customers_edit_text:
+            case fragaccount_name_customers_edit_text:
                 break;
             case R.id.fragaccount_type_identity_edit_text:
                 showTypeIdentity();
@@ -243,7 +295,14 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
     }
 
     private void showOpenAccount() {
+        List<String> listItems = new ArrayList<String>();
+        listItems.add(getResources().getString(R.string.itemtypeopenaccountdeposit));
+        listItems.add(getResources().getString(R.string.itemtypeopenaccountSalary));
+        listItems.add(getResources().getString(R.string.itemtypeopenaccountTransaction));
+        final CharSequence[] itemTypeOpenAccount = listItems.toArray(new CharSequence[listItems.size()]);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
         builder.setSingleChoiceItems(itemTypeOpenAccount, whichTypeOpenAccount, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
@@ -252,13 +311,18 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
                 dialogInterface.dismiss();
             }
         });
-        builder.setTitle("Tujuan Pembukaan");
+        builder.setTitle(R.string.purpose_of_account_opening);
         builder.setCancelable(false);
-        builder.setNegativeButton("Batal", null);
+        builder.setNegativeButton(R.string.cancel, null);
         builder.create().show();
     }
 
     private void showSourceFunds() {
+        List<String> listItems = new ArrayList<String>();
+        listItems.add(getResources().getString(R.string.itemtypesourcefundsPersonal));
+        listItems.add(getResources().getString(R.string.itemtypesourcefundsSalary));
+        listItems.add(getResources().getString(R.string.itemtypesourcefundsCompanyResults));
+        final CharSequence[] itemTypeSourceFunds = listItems.toArray(new CharSequence[listItems.size()]);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setSingleChoiceItems(itemTypeSourceFunds, whichTypeSourceFunds, new DialogInterface.OnClickListener() {
             @Override
@@ -268,13 +332,17 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
                 dialogInterface.dismiss();
             }
         });
-        builder.setTitle("Sumber Dana");
+        builder.setTitle(R.string.source_of_funds);
         builder.setCancelable(false);
-        builder.setNegativeButton("Batal", null);
+        builder.setNegativeButton(R.string.cancel, null);
         builder.create().show();
     }
 
     private void showTypeIdentity() {
+        List<String> listItems = new ArrayList<String>();
+        listItems.add(getResources().getString(R.string.itemtypeKTP));
+        listItems.add(getResources().getString(R.string.itemtypePassport));
+        final CharSequence[] itemType = listItems.toArray(new CharSequence[listItems.size()]);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setSingleChoiceItems(itemType, whichType, new DialogInterface.OnClickListener() {
             @Override
@@ -284,13 +352,17 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
                 dialogInterface.dismiss();
             }
         });
-        builder.setTitle("Tipe Identitas");
+        builder.setTitle(R.string.type);
         builder.setCancelable(false);
-        builder.setNegativeButton("Batal", null);
+        builder.setNegativeButton(R.string.cancel, null);
         builder.create().show();
     }
 
     private void showTypeAccount() {
+        List<String> listItems = new ArrayList<String>();
+        listItems.add(getResources().getString(R.string.itemtypeAccountRupiah));
+        listItems.add(getResources().getString(R.string.itemTypeAccountDollar));
+        final CharSequence[] itemTypeAccount = listItems.toArray(new CharSequence[listItems.size()]);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setSingleChoiceItems(itemTypeAccount, whichTypeAccount, new DialogInterface.OnClickListener() {
             @Override
@@ -300,13 +372,21 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
                 dialogInterface.dismiss();
             }
         });
-        builder.setTitle("Jenis Rekening");
+        builder.setTitle(R.string.type_of_account);
         builder.setCancelable(false);
-        builder.setNegativeButton("Batal", null);
+        builder.setNegativeButton(R.string.cancel, null);
         builder.create().show();
     }
 
     private void showProductType() {
+        List<String> listItems = new ArrayList<String>();
+        listItems.add(getResources().getString(R.string.itemproductsTypeOrdinary));
+        listItems.add(getResources().getString(R.string.itemproductsTypePeriod));
+        listItems.add(getResources().getString(R.string.itemproductsTypeJunior));
+        listItems.add(getResources().getString(R.string.itemproductsTypeDeposit));
+
+        final CharSequence[] itemProductsType = listItems.toArray(new CharSequence[listItems.size()]);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setSingleChoiceItems(itemProductsType, whichProductsType, new DialogInterface.OnClickListener() {
             @Override
@@ -316,14 +396,18 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
                 dialogInterface.dismiss();
             }
         });
-        builder.setTitle("Jenis Produk");
+        builder.setTitle(R.string.type_of_products);
         builder.setCancelable(false);
-        builder.setNegativeButton("Batal", null);
+        builder.setNegativeButton(R.string.cancel, null);
         builder.create().show();
 
     }
 
     private void showTypeCustomers() {
+        List<String> listItems = new ArrayList<String>();
+        listItems.add(getResources().getString(R.string.individual));
+        listItems.add(getResources().getString(R.string.corporate));
+        final CharSequence[] itemTypeCustomers = listItems.toArray(new CharSequence[listItems.size()]);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setSingleChoiceItems(itemTypeCustomers, whichTypeCustomers, new DialogInterface.OnClickListener() {
             @Override
@@ -333,9 +417,9 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
                 dialogInterface.dismiss();
             }
         });
-        builder.setTitle("Tipe Nasabah");
+        builder.setTitle(R.string.type_of_customers);
         builder.setCancelable(false);
-        builder.setNegativeButton("Batal", null);
+        builder.setNegativeButton(R.string.cancel, null);
         builder.create().show();
 
     }

@@ -29,7 +29,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center_horizontal"
-                    android:text="Rekening"
+                    android:text="@string/account_"
                     android:textColor="@color/colorTextIcons"
                     android:textStyle="bold"
                     />
@@ -57,7 +57,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/colorPrimary"
-                        android:hint="Tipe Nasabah"
+                        android:hint="@string/type_of_customers"
                         android:inputType="text"
                         android:maxLines="1"/>
                 </android.support.design.widget.TextInputLayout>
@@ -74,7 +74,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/colorPrimary"
-                        android:hint="Jenis Produk"
+                        android:hint="@string/type_of_products"
                         android:inputType="text"
                         android:maxLines="1"/>
                 </android.support.design.widget.TextInputLayout>
@@ -91,7 +91,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/colorPrimary"
-                        android:hint="Jenis Rekening"
+                        android:hint="@string/type_of_account"
                         android:inputType="text"
                         android:maxLines="1"/>
                 </android.support.design.widget.TextInputLayout>
@@ -108,7 +108,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/colorPrimary"
-                        android:hint="Nama Calon Nasabah"
+                        android:hint="@string/customer_name"
+                        android:imeOptions="actionDone"
                         android:inputType="text"
                         android:maxLines="1"/>
                 </android.support.design.widget.TextInputLayout>
@@ -129,7 +130,7 @@
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorPrimary"
-                            android:hint="Tipe "
+                            android:hint="@string/type"
                             android:inputType="text"
                             android:maxLines="1"/>
                     </android.support.design.widget.TextInputLayout>
@@ -147,7 +148,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorPrimary"
-                            android:hint="No. Identitas"
+                            android:hint="@string/no_identitiy"
+                            android:imeOptions="actionDone"
                             android:inputType="number"
                             android:maxLength="30"
                             android:maxLines="1"/>
@@ -174,7 +176,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center_horizontal"
-                    android:text="Detail Data Rekening"
+                    android:text="@string/detailed_account_data"
                     android:textColor="@color/colorTextIcons"
                     android:textStyle="bold"
                     />
@@ -201,7 +203,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/colorPrimary"
-                        android:hint="Sumber Dana"
+                        android:hint="@string/source_of_funds"
                         android:inputType="text"
                         android:maxLines="1"/>
                 </android.support.design.widget.TextInputLayout>
@@ -218,7 +220,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/colorPrimary"
-                        android:hint="Tujuan Pembukaan"
+                        android:hint="@string/purpose_of_account_opening"
                         android:inputType="text"
                         android:maxLines="1"/>
                 </android.support.design.widget.TextInputLayout>
@@ -235,8 +237,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/colorPrimary"
-                        android:hint="Setoran Awal"
-                        android:inputType="number"
+                        android:hint="@string/initial_deposit"
+                        android:imeOptions="actionDone"
+                        android:inputType="numberDecimal"
                         android:maxLength="30"
                         android:maxLines="1"/>
                 </android.support.design.widget.TextInputLayout>
@@ -245,7 +248,7 @@
                     android:id="@+id/fragaccount_data_matches_check_box"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Data Sudah Sesuai"
+                    android:text="@string/data_mathes"
                     android:textColor="@color/colorDivide"/>
             </LinearLayout>
         </android.support.v7.widget.CardView>
@@ -254,9 +257,9 @@
             android:id="@+id/fragaccount_process_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
-            android:text="Proses"
+            android:layout_marginTop="20dp"
+            android:text="@string/process"
             android:textStyle="bold"
             android:theme="@style/ButtonTheme"/>
     </LinearLayout>
