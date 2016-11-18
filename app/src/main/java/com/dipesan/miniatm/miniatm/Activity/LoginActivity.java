@@ -55,8 +55,11 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
         merchantTextView.setVisibility(View.INVISIBLE);
-        loginLogoImageView.setEnabled(false);
+
+//        loginLogoImageView.setEnabled(false);
+
         overridePendingTransition(0, R.anim.fade_out);
         youcubeService = new YoucubeService(this);
 
