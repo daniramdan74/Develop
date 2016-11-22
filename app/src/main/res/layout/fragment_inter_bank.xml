@@ -278,7 +278,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/interbankDataMatches"
-                            android:textColor="@color/colorDivide"/>
+                            android:textColor="@color/colorPrimaryDark"
+                            />
 
                         <Button
                             android:id="@+id/fraginterbank_send_button"

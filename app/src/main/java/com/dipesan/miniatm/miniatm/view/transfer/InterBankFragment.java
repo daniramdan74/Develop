@@ -162,6 +162,7 @@ public class InterBankFragment extends Fragment implements CompoundButton.OnChec
     }
 
     private void showDetail() {
+        fraginterbankDataMatchesCheckBox.setChecked(true);
         if (fraginterBankDestinationAccountEditText.getText().toString().isEmpty()) {
             fraginterBankDestinationAccountTextInputLayout.setError("Tidak Boleh Kosong");
         }else {
@@ -185,7 +186,9 @@ public class InterBankFragment extends Fragment implements CompoundButton.OnChec
             fraginterbankFromBankTextView.setText("Bank Mandiri");
             fraginterbankFromAccountNumberTextView.setText("1234-567-890");
             fraginterbankFromAccountNameTextView.setText("Dani Ramdan");
-            fraginterbankSendButton.setEnabled(false);
+            editDataDisabled();
+        }else {
+            editDataEnabled();
         }
     }
 
@@ -210,7 +213,6 @@ public class InterBankFragment extends Fragment implements CompoundButton.OnChec
             fraginterbankSendButton.setEnabled(true);
             fraginterbankSendButton.setHighlightColor(getResources().getColor(R.color.colorPrimaryDark));
             fraginterbankSendButton.setTextColor(getResources().getColor(R.color.colorTextIcons));
-
             editDataDisabled();
         }
         else {

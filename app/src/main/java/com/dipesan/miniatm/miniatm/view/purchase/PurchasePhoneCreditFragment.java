@@ -173,10 +173,14 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
             youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
                 @Override
                 public void onApproved() {
+                    editDataDisabled();
                     //print();
                     Toast.makeText(getActivity(), "Print", Toast.LENGTH_SHORT).show();
                 }
             });
+        }else {
+            editDataEnabled();
+            fragmentPhoneCreditDataMatchesCheckBox.setChecked(false);
         }
 
     }

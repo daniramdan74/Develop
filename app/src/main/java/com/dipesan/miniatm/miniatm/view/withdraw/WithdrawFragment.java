@@ -35,6 +35,7 @@ public class WithdrawFragment extends Fragment {
     @BindView(R.id.withdraw_fragment_process_button) Button withdrawFragmentProcessButton;
     @BindView(R.id.withdraw_fragment_amount_others_text_input_layout) TextInputLayout withdrawFragmentAmountOthersTextInputLayout;
     @BindView(R.id.withdraw_fragment_amount_others_text_relative_layout) RelativeLayout withdrawFragmentAmountOthersTextRelativeLayout;
+    @BindView(R.id.withdraw_fragment_amount_text_input_layout) TextInputLayout withdrawFragmentAmountTextInputLayout;
     private int whichItemsNominal = 0;
 
     public WithdrawFragment() {
@@ -82,7 +83,30 @@ public class WithdrawFragment extends Fragment {
     }
 
     private void showProcess() {
-
+        if (withdrawFragmentAmountEditText.getText().toString().isEmpty()) {
+            withdrawFragmentAmountTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            withdrawFragmentAmountTextInputLayout.setErrorEnabled(false);
+        }
+        if (withdrawFragmentAmountEditText.getText().toString().equals("Lainnya")&&
+                withdrawFragmentAmountOthersEditText.getText().toString().isEmpty()){
+            withdrawFragmentAmountOthersTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            withdrawFragmentAmountOthersTextInputLayout.setErrorEnabled(false);
+        }
+        if (withdrawFragmentAmountEditText.getText().toString().equals("Lainnya")&&
+                withdrawFragmentAmountOthersEditText.getText().toString().length()>0) {
+            withdrawFragmentAmountEditText.setEnabled(false);
+            withdrawFragmentAmountOthersEditText.setEnabled(false);
+        }else {
+            withdrawFragmentAmountEditText.setEnabled(true);
+            withdrawFragmentAmountOthersEditText.setEnabled(true);
+        }
+        if (withdrawFragmentAmountEditText.getText().toString().length()>0){
+            withdrawFragmentAmountEditText.setEnabled(false);
+        }else {
+            withdrawFragmentAmountEditText.setEnabled(true);
+        }
     }
 
     private void showNominal() {
@@ -100,22 +124,25 @@ public class WithdrawFragment extends Fragment {
 
         builder.setSingleChoiceItems(itemsNominal, whichItemsNominal, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int which ) {
+            public void onClick(DialogInterface dialogInterface, int which) {
                 whichItemsNominal = which;
-                if (itemsNominal[which]=="Lainnya"){
+                if (itemsNominal[which] == "Lainnya") {
                     withdrawFragmentAmountOthersTextInputLayout.setVisibility(View.VISIBLE);
-                }else {
+                }
+                else {
                     withdrawFragmentAmountOthersTextInputLayout.setVisibility(View.GONE);
+                    withdrawFragmentAmountOthersEditText.setText(null);
                 }
                 withdrawFragmentAmountEditText.setText(itemsNominal[which]);
                 dialogInterface.dismiss();
             }
         });
-        builder.setTitle(R.string.interbankAmount);
+        builder.setTitle(R.string.phonecreditAmount);
         builder.setCancelable(false);
         builder.setNegativeButton(R.string.cancel, null);
         builder.create().show();
     }
+
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);

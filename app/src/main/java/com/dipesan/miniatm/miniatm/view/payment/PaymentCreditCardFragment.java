@@ -4,6 +4,7 @@ package com.dipesan.miniatm.miniatm.view.payment;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -44,6 +45,8 @@ public class PaymentCreditCardFragment extends Fragment implements CompoundButto
     @BindView(R.id.fragpayment_credit_data_matches_check_box) CheckBox fragpaymentCreditDataMatchesCheckBox;
     @BindView(R.id.fragpayment_credit_send_button) Button fragpaymentCreditSendButton;
     @BindView(R.id.fragpayment_credit_card_detail_linear_layout) LinearLayout fragpaymentCreditCardDetailLinearLayout;
+    @BindView(R.id.fragpayment_credit_card_providers_text_input_layout) TextInputLayout fragpaymentCreditCardProvidersTextInputLayout;
+    @BindView(R.id.fragpayment_credit_card_customer_number_text_input_layout) TextInputLayout fragpaymentCreditCardCustomerNumberTextInputLayout;
     private int whichItemBanks = 0;
     @BindView(fragpayment_credit_card_providers_edit_text) EditText fragpaymentCreditCardProvidersEditText;
     private boolean checkflag;
@@ -77,39 +80,50 @@ public class PaymentCreditCardFragment extends Fragment implements CompoundButto
                 break;
             case R.id.fragpayment_credit_card_process_button:
                 showDetails();
-
                 break;
         }
     }
 
     private void showDetails() {
-        fragpaymentCreditSendButton.setEnabled(false);
-        fragpaymentCreditCardDetailLinearLayout.setVisibility(View.VISIBLE);
-        fragpaymentCreditCardBankTextView.setText(fragpaymentCreditCardProvidersEditText.getText().toString());
-        fragpaymentCardNumberTextView.setText(fragpaymentCreditCardCustomerNumberEditText.getText().toString());
-        fragpaymentTypeCardBankTextView.setText("MASTER CARD");
-        fragpaymentCreditAccountNameTextView.setText("Dani Ramdan");
-        fragpaymentAmountTransferTextView.setText("1,000,000");
-        fragpaymentCreditFromBankTextView.setText("Mandiri");
-        fragpaymentCreditFromAccountNumberTextView.setText("1234-5678-90");
-        fragpaymentCreditFromAccountNameTextView.setText("Maulana Yusuf");
-        disabledData();
-
-
+        if (fragpaymentCreditCardProvidersEditText.getText().toString().isEmpty()) {
+            fragpaymentCreditCardProvidersTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fragpaymentCreditCardProvidersTextInputLayout.setErrorEnabled(false);
+        }
+        if (fragpaymentCreditCardCustomerNumberEditText.getText().toString().isEmpty()) {
+            fragpaymentCreditCardCustomerNumberTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fragpaymentCreditCardCustomerNumberTextInputLayout.setErrorEnabled(false);
+        }
+        if (fragpaymentCreditCardProvidersEditText.getText().toString().length()>0
+                && fragpaymentCreditCardCustomerNumberEditText.getText().toString().length()>0
+                ){
+            fragpaymentCreditSendButton.setEnabled(false);
+            fragpaymentCreditCardDetailLinearLayout.setVisibility(View.VISIBLE);
+            fragpaymentCreditCardBankTextView.setText(fragpaymentCreditCardProvidersEditText.getText().toString());
+            fragpaymentCardNumberTextView.setText(fragpaymentCreditCardCustomerNumberEditText.getText().toString());
+            fragpaymentTypeCardBankTextView.setText("MASTER CARD");
+            fragpaymentCreditAccountNameTextView.setText("Dani Ramdan");
+            fragpaymentAmountTransferTextView.setText("1,000,000");
+            fragpaymentCreditFromBankTextView.setText("Mandiri");
+            fragpaymentCreditFromAccountNumberTextView.setText("1234-5678-90");
+            fragpaymentCreditFromAccountNameTextView.setText("Maulana Yusuf");
+            fragpaymentCreditDataMatchesCheckBox.setChecked(true);
+            disabledData();
+        }
     }
-    private void enabledData(){
+
+    private void enabledData() {
         fragpaymentCreditCardProvidersEditText.setEnabled(true);
         fragpaymentCreditCardCustomerNumberEditText.setEnabled(true);
         fragpaymentCreditCardProcessButton.setEnabled(true);
     }
-    private void disabledData(){
+
+    private void disabledData() {
         fragpaymentCreditCardProvidersEditText.setEnabled(false);
         fragpaymentCreditCardCustomerNumberEditText.setEnabled(false);
         fragpaymentCreditCardProcessButton.setEnabled(false);
     }
-
-
-
 
 
     private void showProviders() {

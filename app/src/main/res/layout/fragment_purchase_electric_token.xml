@@ -199,7 +199,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/data_mathes"
-                        android:textColor="@color/colorDivide"
+                        android:textColor="@color/colorPrimaryDark"
                         />
 
                     <Button

@@ -69,14 +69,23 @@ public class PaymentElectricFragment extends Fragment implements CompoundButton.
 
     }
     private void showDetails() {
-        fragpaymentElectricDetailLinearLayout.setVisibility(View.VISIBLE);
-        disabledData();
-        fragpaymentElectricDataMatchesCheckButton.setChecked(true);
-        fragpaymentElectricAccountNumberTextView.setText(fragpaymentElectricIdcustomerEditText.getText().toString());
-        fragpaymentElectricAccountNameTextView.setText("Riani");
-        fragpaymentElectricAccountPowerTextView.setText("R1/900");
-        fragpaymentElectricMonthTextView.setText("Nov 2016");
-        fragpaymentElectricAmountTextView.setText("1,200,000");
+        if (fragpaymentElectricIdcustomerEditText.getText().toString().isEmpty()){
+            fragpaymentElectricIdcustomerTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fragpaymentElectricIdcustomerTextInputLayout.setErrorEnabled(false);
+        }
+        if (fragpaymentElectricIdcustomerEditText.getText().toString().length()>0){
+            fragpaymentElectricDetailLinearLayout.setVisibility(View.VISIBLE);
+            fragpaymentElectricDataMatchesCheckButton.setChecked(true);
+            fragpaymentElectricAccountNumberTextView.setText(fragpaymentElectricIdcustomerEditText.getText().toString());
+            fragpaymentElectricAccountNameTextView.setText("Riani");
+            fragpaymentElectricAccountPowerTextView.setText("R1/900");
+            fragpaymentElectricMonthTextView.setText("Nov 2016");
+            fragpaymentElectricAmountTextView.setText("1,200,000");
+            disabledData();
+        }else {
+            enabledData();
+        }
     }
     private void enabledData(){
         fragpaymentElectricIdcustomerEditText.setEnabled(true);

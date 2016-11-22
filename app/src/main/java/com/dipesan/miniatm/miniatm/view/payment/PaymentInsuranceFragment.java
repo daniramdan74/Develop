@@ -4,6 +4,7 @@ package com.dipesan.miniatm.miniatm.view.payment;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -38,6 +39,8 @@ public class PaymentInsuranceFragment extends Fragment implements CompoundButton
     @BindView(R.id.fragpayment_insurance_data_matches_check_box) CheckBox fragpaymentInsuranceDataMatchesCheckBox;
     @BindView(R.id.fragpayment_insurance_pay_button) Button fragpaymentInsurancePayButton;
     @BindView(R.id.fragpayment_insurance_details_linear_layout) LinearLayout fragpaymentInsuranceDetailsLinearLayout;
+    @BindView(R.id.fragpayment_insurance_provider_text_input_layout) TextInputLayout fragpaymentInsuranceProviderTextInputLayout;
+    @BindView(R.id.fragpayment_insurance_customer_number_text_input_layout) TextInputLayout fragpaymentInsuranceCustomerNumberTextInputLayout;
     private int whichitemsInsurance = 0;
     @BindView(R.id.fragpayment_insurance_provider_edit_text) EditText fragpaymentInsuranceProviderEditText;
     @BindView(R.id.fragpayment_insurance_process_button) Button fragpaymentInsuranceProcessButton;
@@ -78,14 +81,29 @@ public class PaymentInsuranceFragment extends Fragment implements CompoundButton
     }
 
     private void showDetails() {
-        fragpaymentInsuranceDataMatchesCheckBox.setChecked(true);
-        fragpaymentInsuranceDetailsLinearLayout.setVisibility(View.VISIBLE);
-        disabledData();
-        fragpaymentInsuranceProvidersTextView.setText(fragpaymentInsuranceProviderEditText.getText().toString());
-        fragpaymentInsuranceCustomerNumberTextView.setText(fragpaymentInsuranceCustomerNumberEditText.getText().toString());
-        fragpaymentInsuranceCustomerNameTextView.setText("Rendy Maulana");
-        fragpaymentInsuranceAmountTextView.setText("500,000");
+        if (fragpaymentInsuranceProviderEditText.getText().toString().isEmpty()){
+            fragpaymentInsuranceProviderTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fragpaymentInsuranceProviderTextInputLayout.setErrorEnabled(false);
+        }
+        if (fragpaymentInsuranceCustomerNumberEditText.getText().toString().isEmpty()){
+            fragpaymentInsuranceCustomerNumberTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fragpaymentInsuranceCustomerNumberTextInputLayout.setErrorEnabled(false);
+        }
+        if (fragpaymentInsuranceProviderEditText.getText().toString().length()>0&&
+                fragpaymentInsuranceCustomerNumberEditText.getText().toString().length()>0){
+            fragpaymentInsuranceDataMatchesCheckBox.setChecked(true);
+            fragpaymentInsuranceDetailsLinearLayout.setVisibility(View.VISIBLE);
+            disabledData();
+            fragpaymentInsuranceProvidersTextView.setText(fragpaymentInsuranceProviderEditText.getText().toString());
+            fragpaymentInsuranceCustomerNumberTextView.setText(fragpaymentInsuranceCustomerNumberEditText.getText().toString());
+            fragpaymentInsuranceCustomerNameTextView.setText("Rendy Maulana");
+            fragpaymentInsuranceAmountTextView.setText("500,000");
 
+        } else{
+            enabledData();
+        }
     }
 
     private void showProvider() {
@@ -127,12 +145,14 @@ public class PaymentInsuranceFragment extends Fragment implements CompoundButton
             enabledData();
         }
     }
-    private void enabledData(){
+
+    private void enabledData() {
         fragpaymentInsuranceProviderEditText.setEnabled(true);
         fragpaymentInsuranceCustomerNumberEditText.setEnabled(true);
         fragpaymentInsuranceProcessButton.setEnabled(true);
     }
-    private void disabledData(){
+
+    private void disabledData() {
         fragpaymentInsuranceProviderEditText.setEnabled(false);
         fragpaymentInsuranceCustomerNumberEditText.setEnabled(false);
         fragpaymentInsuranceProcessButton.setEnabled(false);

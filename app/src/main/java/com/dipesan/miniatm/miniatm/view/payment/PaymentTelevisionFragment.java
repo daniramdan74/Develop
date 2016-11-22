@@ -4,6 +4,7 @@ package com.dipesan.miniatm.miniatm.view.payment;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -37,6 +38,8 @@ public class PaymentTelevisionFragment extends Fragment implements CompoundButto
     @BindView(R.id.fragpayment_television_data_matches_check_box) CheckBox fragpaymentTelevisionDataMatchesCheckBox;
     @BindView(R.id.fragpayment_television_pay_button) Button fragpaymentTelevisionPayButton;
     @BindView(R.id.fragpayment_television_details_linear_layout) LinearLayout fragpaymentTelevisionDetailsLinearLayout;
+    @BindView(R.id.fragpayment_television_providers_text_input_layout) TextInputLayout fragpaymentTelevisionProvidersTextInputLayout;
+    @BindView(R.id.fragpayment_television_customer_number_text_input_layout) TextInputLayout fragpaymentTelevisionCustomerNumberTextInputLayout;
     private int whichitemProviders = 0;
     private boolean checkFlag;
     @BindView(R.id.fragpayment_television_providers_edit_text) EditText fragpaymentTelevisionProvidersEditText;
@@ -74,12 +77,28 @@ public class PaymentTelevisionFragment extends Fragment implements CompoundButto
     }
 
     private void showDetails() {
-        fragpaymentTelevisionDataMatchesCheckBox.setChecked(true);
-        fragpaymentTelevisionDetailsLinearLayout.setVisibility(View.VISIBLE);
-        fragpaymentTelevisionProvidersTextView.setText(fragpaymentTelevisionProvidersEditText.getText().toString());
-        fragpaymentTelevisionCustomerIdTextView.setText(fragpaymentTelevisionCustomerNumberEditText.getText().toString());
-        fragpaymentTelevisionAmountTextView.setText("240,000");
-        fragpaymentTelevisionCustomerNameTextView.setText("Rina");
+        if (fragpaymentTelevisionProvidersEditText.getText().toString().isEmpty()){
+            fragpaymentTelevisionProvidersTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fragpaymentTelevisionProvidersTextInputLayout.setErrorEnabled(false);
+        }
+        if (fragpaymentTelevisionCustomerNumberEditText.getText().toString().isEmpty()){
+            fragpaymentTelevisionCustomerNumberTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fragpaymentTelevisionCustomerNumberTextInputLayout.setErrorEnabled(false);
+        }
+        if (fragpaymentTelevisionProvidersEditText.getText().toString().length()>0&&
+                fragpaymentTelevisionCustomerNumberEditText.getText().toString().length()>0){
+            disabledData();
+            fragpaymentTelevisionDataMatchesCheckBox.setChecked(true);
+            fragpaymentTelevisionDetailsLinearLayout.setVisibility(View.VISIBLE);
+            fragpaymentTelevisionProvidersTextView.setText(fragpaymentTelevisionProvidersEditText.getText().toString());
+            fragpaymentTelevisionCustomerIdTextView.setText(fragpaymentTelevisionCustomerNumberEditText.getText().toString());
+            fragpaymentTelevisionAmountTextView.setText("240,000");
+            fragpaymentTelevisionCustomerNameTextView.setText("Rina");
+        }else {
+            enabledData();
+        }
     }
 
     private void showProviders() {
@@ -123,13 +142,14 @@ public class PaymentTelevisionFragment extends Fragment implements CompoundButto
             enabledData();
         }
     }
-    private void enabledData(){
+
+    private void enabledData() {
         fragpaymentTelevisionCustomerNumberEditText.setEnabled(true);
         fragpaymentTelevisionProvidersEditText.setEnabled(true);
         fragpaymentTelevisionProcessButton.setEnabled(true);
     }
 
-    private void disabledData(){
+    private void disabledData() {
         fragpaymentTelevisionCustomerNumberEditText.setEnabled(false);
         fragpaymentTelevisionProvidersEditText.setEnabled(false);
         fragpaymentTelevisionProcessButton.setEnabled(false);

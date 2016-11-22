@@ -13,6 +13,7 @@
         android:orientation="vertical">
 
     <android.support.design.widget.TextInputLayout
+        android:id="@+id/fragpayment_internet_providers_text_input_layout"
         style="@style/TextInputLayoutForm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,6 +32,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
+        android:id="@+id/fragpayment_internet_account_number_text_input_layout"
         style="@style/TextInputLayoutForm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

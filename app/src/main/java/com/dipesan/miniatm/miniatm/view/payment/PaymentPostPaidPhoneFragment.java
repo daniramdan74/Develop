@@ -4,6 +4,7 @@ package com.dipesan.miniatm.miniatm.view.payment;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -27,6 +28,8 @@ import butterknife.OnClick;
  */
 public class PaymentPostPaidPhoneFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
     private final CharSequence[] itemProviders = {"Telkomsel", "Indosat", "XL/Axis", "3 (TRI)", "Flexi", "Esia", "Smartfren"};
+    @BindView(R.id.fragpayment_post_paid_phone_provider_text_input_layout) TextInputLayout fragpaymentPostPaidPhoneProviderTextInputLayout;
+    @BindView(R.id.fragpayment_post_paid_phone_number_text_input_layout) TextInputLayout fragpaymentPostPaidPhoneNumberTextInputLayout;
     private int whichItemProviders = 0;
     @BindView(R.id.fragpayment_post_paid_phone_number_edit_text) EditText fragpaymentPostPaidPhoneNumberEditText;
     @BindView(R.id.fragpayment_post_paid_phone_process_button) Button fragpaymentPostPaidPhoneProcessButton;
@@ -75,13 +78,30 @@ public class PaymentPostPaidPhoneFragment extends Fragment implements CompoundBu
     }
 
     private void showDetails() {
-        fragpaymentPostPaidPhoneDetailLinearLayout.setVisibility(View.VISIBLE);
-        fragpaymentPostPaidPhoneProviderTextView.setText(fragpaymentPostPaidPhoneProviderEidtText.getText().toString());
-        fragpaymentPostPaidPhoneNumberTextView.setText(fragpaymentPostPaidPhoneNumberEditText.getText().toString());
-        fragpaymentPostPaidPhoneCustomerNameTextView.setText("Dani Ramdan");
-        fragpaymentPostPaidPhoneAmountTextView.setText("850,000");
-        fragpaymentPostPaidPhoneDataMatchesCheckBox.setChecked(true);
-        disabledData();
+        if (fragpaymentPostPaidPhoneProviderEidtText.getText().toString().isEmpty()) {
+            fragpaymentPostPaidPhoneProviderTextInputLayout.setError("Tidak Boleh Kosong");
+        }
+        else {
+            fragpaymentPostPaidPhoneProviderTextInputLayout.setErrorEnabled(false);
+        }
+        if (fragpaymentPostPaidPhoneNumberEditText.getText().toString().isEmpty()) {
+            fragpaymentPostPaidPhoneNumberTextInputLayout.setError("Tidak Boleh Kosong");
+        }
+        else {
+            fragpaymentPostPaidPhoneNumberTextInputLayout.setErrorEnabled(false);
+        }
+        if (fragpaymentPostPaidPhoneProviderEidtText.getText().toString().length() > 0
+                && fragpaymentPostPaidPhoneNumberEditText.getText().toString().length() > 0
+                ) {
+
+            fragpaymentPostPaidPhoneDetailLinearLayout.setVisibility(View.VISIBLE);
+            fragpaymentPostPaidPhoneProviderTextView.setText(fragpaymentPostPaidPhoneProviderEidtText.getText().toString());
+            fragpaymentPostPaidPhoneNumberTextView.setText(fragpaymentPostPaidPhoneNumberEditText.getText().toString());
+            fragpaymentPostPaidPhoneCustomerNameTextView.setText("Dani Ramdan");
+            fragpaymentPostPaidPhoneAmountTextView.setText("850,000");
+            fragpaymentPostPaidPhoneDataMatchesCheckBox.setChecked(true);
+            disabledData();
+        }
     }
 
     private void showProviders() {
@@ -104,13 +124,15 @@ public class PaymentPostPaidPhoneFragment extends Fragment implements CompoundBu
     public void onClickPay() {
 
     }
-    private void endabledData(){
+
+    private void endabledData() {
         fragpaymentPostPaidPhoneNumberEditText.setEnabled(true);
         fragpaymentPostPaidPhoneProviderEidtText.setEnabled(true);
         fragpaymentPostPaidPhoneProcessButton.setEnabled(true);
 
     }
-    private void disabledData(){
+
+    private void disabledData() {
         fragpaymentPostPaidPhoneNumberEditText.setEnabled(false);
         fragpaymentPostPaidPhoneProviderEidtText.setEnabled(false);
         fragpaymentPostPaidPhoneProcessButton.setEnabled(false);

@@ -121,7 +121,12 @@ public class FellowBankFragment extends Fragment implements CompoundButton.OnChe
         youcubeService = new YoucubeService(getActivity());
         printer.setCallback(iCallback);
         fragfellowBankAmountTransferEditText.addTextChangedListener(new MoneyTextWatcher(fragfellowBankAmountTransferEditText));
+        visibleKeyboardDestination();
         return view;
+    }
+
+    private void visibleKeyboardDestination() {
+        fragfellowBankDestinationBankEditText.setCursorVisible(false);
     }
 
     @OnClick({R.id.fragfellow_bank_destination_bank_edit_text, R.id.fragfellow_bank_process_button})
@@ -129,6 +134,7 @@ public class FellowBankFragment extends Fragment implements CompoundButton.OnChe
         switch (view.getId()) {
             case R.id.fragfellow_bank_destination_bank_edit_text:
                 showDestinationBank();
+                hideKeyboard(getView());
                 break;
             case R.id.fragfellow_bank_process_button:
                 hideKeyboard(view);
@@ -136,8 +142,8 @@ public class FellowBankFragment extends Fragment implements CompoundButton.OnChe
                 break;
         }
     }
-
     private void showDetail() {
+        fragfellowbankDataMatchesCheckBox.setChecked(true);
         if (fragfellowBankDestinationBankEditText.getText().toString().isEmpty()){
             fragfellowBankDestinationBankTextInputLayout.setError("Tidak Boleh Kosong");
         }else {
@@ -163,10 +169,12 @@ public class FellowBankFragment extends Fragment implements CompoundButton.OnChe
             fragfellowbankDestinationBankTextView.setText(fragfellowBankDestinationBankEditText.getText().toString());
             fragfellowbankNumberAccountTextView.setText(fragfellowBankDestinationAccountEditText.getText().toString());
             fragfellowbankNominalTextView.setText(fragfellowBankAmountTransferEditText.getText().toString());
-            fragfellowbankSendButton.setEnabled(false);
             fragfellowbankFromBankTextView.setText("BANK MANDIRI");
             fragfellowbankFromAccountNumberTextView.setText("1234-567-890");
             fragfellowbankFromAccountNameTextView.setText("Dani Ramdan");
+            editDataDisabled();
+        }else {
+            editDataEnabled();
         }
     }
 

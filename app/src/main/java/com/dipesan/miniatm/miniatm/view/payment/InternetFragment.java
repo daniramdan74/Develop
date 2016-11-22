@@ -4,6 +4,7 @@ package com.dipesan.miniatm.miniatm.view.payment;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -26,7 +27,9 @@ import butterknife.OnClick;
  * A simple {@link Fragment} subclass.
  */
 public class InternetFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
-    private final CharSequence[] itemProviders = {"Indovision","Telkom","Indosat"};
+    private final CharSequence[] itemProviders = {"Indovision", "Telkom", "Indosat"};
+    @BindView(R.id.fragpayment_internet_providers_text_input_layout) TextInputLayout fragpaymentInternetProvidersTextInputLayout;
+    @BindView(R.id.fragpayment_internet_account_number_text_input_layout) TextInputLayout fragpaymentInternetAccountNumberTextInputLayout;
     private int whichItemProviders = 0;
     @BindView(R.id.fragpayment_internet_providers_edit_text) EditText fragpaymentInternetProvidersEditText;
     @BindView(R.id.fragpayment_internet_account_number_edit_text) EditText fragpaymentInternetAccountNumberEditText;
@@ -64,6 +67,7 @@ public class InternetFragment extends Fragment implements CompoundButton.OnCheck
 
         return view;
     }
+
     @OnClick({R.id.fragpayment_internet_providers_edit_text, R.id.fragpayment_internet_process_button, R.id.fragpayment_internet_pay_button})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -80,26 +84,46 @@ public class InternetFragment extends Fragment implements CompoundButton.OnCheck
 
     private void showDetails() {
         fragpaymentInternetDataMatchesCheckBox.setChecked(true);
-        fragpaymentInternetDetailsLinearLayout.setVisibility(View.VISIBLE);
-        disabledData();
-        fragpaymentInternetProvidersTextView.setText(fragpaymentInternetProvidersEditText.getText().toString());
-        fragpaymentInternetAccountNumberTextView.setText(fragpaymentInternetAccountNumberEditText.getText().toString());
-        fragpaymentInternetAccountNameTextView.setText("Dani Ramdan");
-        fragpaymentInternetAmountTextView.setText("450,000");
+        if (fragpaymentInternetProvidersEditText.getText().toString().isEmpty()) {
+        fragpaymentInternetProvidersTextInputLayout.setError("Tidak Boleh Kosong");
+        }
+        else {
+            fragpaymentInternetProvidersTextInputLayout.setErrorEnabled(false);
+
+        }
+        if (fragpaymentInternetAccountNumberEditText.getText().toString().isEmpty()) {
+            fragpaymentInternetAccountNumberTextInputLayout.setError("Tidak Boleh Kosong");
+        }
+        else {
+            fragpaymentInternetAccountNumberTextInputLayout.setErrorEnabled(false);
+
+        }
+        if (fragpaymentInternetProvidersEditText.getText().toString().length()>0&&
+                fragpaymentInternetAccountNumberEditText.getText().toString().length()>0){
+            fragpaymentInternetDetailsLinearLayout.setVisibility(View.VISIBLE);
+            disabledData();
+            fragpaymentInternetProvidersTextView.setText(fragpaymentInternetProvidersEditText.getText().toString());
+            fragpaymentInternetAccountNumberTextView.setText(fragpaymentInternetAccountNumberEditText.getText().toString());
+            fragpaymentInternetAccountNameTextView.setText("Dani Ramdan");
+            fragpaymentInternetAmountTextView.setText("450,000");
+        }else {
+            enabledData();
+        }
     }
-    private void enabledData(){
+
+    private void enabledData() {
         fragpaymentInternetProvidersEditText.setEnabled(true);
         fragpaymentInternetAccountNumberEditText.setEnabled(true);
         fragpaymentInternetProcessButton.setEnabled(true);
 
     }
-    private void disabledData(){
+
+    private void disabledData() {
         fragpaymentInternetProvidersEditText.setEnabled(false);
         fragpaymentInternetAccountNumberEditText.setEnabled(false);
         fragpaymentInternetProcessButton.setEnabled(false);
 
     }
-
 
 
     private void showProviders() {

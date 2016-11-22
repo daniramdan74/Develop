@@ -4,6 +4,7 @@ package com.dipesan.miniatm.miniatm.view.payment;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -42,6 +43,8 @@ public class PaymentWaterFragment extends Fragment implements CompoundButton.OnC
     @BindView(R.id.fragpayment_water_data_matches_check_box) CheckBox fragpaymentWaterDataMatchesCheckBox;
     @BindView(R.id.fragpayment_water_pay_button) Button fragpaymentWaterPayButton;
     @BindView(R.id.fragpayment_water_detail_linear_layout) LinearLayout fragpaymentWaterDetailLinearLayout;
+    @BindView(R.id.fragpayment_water_territory_text_input_layout) TextInputLayout fragpaymentWaterTerritoryTextInputLayout;
+    @BindView(R.id.fragpayment_water_customer_id_text_input_layout) TextInputLayout fragpaymentWaterCustomerIdTextInputLayout;
     private int whichItemTerritory = 0;
     private boolean checkFlag;
 
@@ -97,24 +100,41 @@ public class PaymentWaterFragment extends Fragment implements CompoundButton.OnC
     }
 
     private void showDetails() {
-        fragpaymentWaterDetailLinearLayout.setVisibility(View.VISIBLE);
-        disabledData();
-        fragpaymentWaterCustomerIdTextView.setText(fragpaymentWaterCustomerIdEditText.getText().toString());
-        fragpaymentWaterTerritoryTextView.setText(fragpaymentWaterTerritoryEditText.getText().toString());
-        fragpaymentWaterCustomerNameTextView.setText("Maulana");
-        fragpaymentWaterAddressTextView.setText("Jl. Holis No. 25 Bandung");
-        fragpaymentWaterPeriodTextView.setText("Nov 2016");
-        fragpaymentWaterGroupTextView.setText("R2");
-        fragpaymentWaterUsageTextView.setText("5 M3");
-        fragpaymentWaterAmountTextView.setText("240,000");
-        fragpaymentWaterDataMatchesCheckBox.setChecked(true);
+        if (fragpaymentWaterTerritoryEditText.getText().toString().isEmpty()){
+            fragpaymentWaterTerritoryTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fragpaymentWaterTerritoryTextInputLayout.setErrorEnabled(false);
+        }
+        if (fragpaymentWaterCustomerIdEditText.getText().toString().isEmpty()){
+            fragpaymentWaterCustomerIdTextInputLayout.setError("Tidak Boleh Kosong");
+        }else {
+            fragpaymentWaterCustomerIdTextInputLayout.setErrorEnabled(false);
+        }
+        if (fragpaymentWaterTerritoryEditText.getText().toString().length()>0&&
+                fragpaymentWaterCustomerIdEditText.getText().toString().length()>0){
+            fragpaymentWaterDetailLinearLayout.setVisibility(View.VISIBLE);
+            disabledData();
+            fragpaymentWaterCustomerIdTextView.setText(fragpaymentWaterCustomerIdEditText.getText().toString());
+            fragpaymentWaterTerritoryTextView.setText(fragpaymentWaterTerritoryEditText.getText().toString());
+            fragpaymentWaterCustomerNameTextView.setText("Maulana");
+            fragpaymentWaterAddressTextView.setText("Jl. Holis No. 25 Bandung");
+            fragpaymentWaterPeriodTextView.setText("Nov 2016");
+            fragpaymentWaterGroupTextView.setText("R2");
+            fragpaymentWaterUsageTextView.setText("5 M3");
+            fragpaymentWaterAmountTextView.setText("240,000");
+            fragpaymentWaterDataMatchesCheckBox.setChecked(true);
+        }else {
+            enabledData();
+        }
     }
-    private void enabledData(){
+
+    private void enabledData() {
         fragpaymentWaterTerritoryEditText.setEnabled(true);
         fragpaymentWaterCustomerIdEditText.setEnabled(true);
         fragpaymentWaterProcessButton.setEnabled(true);
     }
-    private void disabledData(){
+
+    private void disabledData() {
         fragpaymentWaterTerritoryEditText.setEnabled(false);
         fragpaymentWaterCustomerIdEditText.setEnabled(false);
         fragpaymentWaterProcessButton.setEnabled(false);

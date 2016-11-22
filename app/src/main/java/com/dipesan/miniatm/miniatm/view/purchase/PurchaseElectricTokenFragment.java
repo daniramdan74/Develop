@@ -94,6 +94,7 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
         printer = new V1Printer(getActivity());
         printer.setCallback(iCallback);
         fragpurchaseElectricDetailDataLinearLayout.setVisibility(View.INVISIBLE);
+        fragpurchaseElectricDataMatchesCheckbox.setOnCheckedChangeListener(this);
         youcubeService = new YoucubeService(getActivity());
 
         return view;
@@ -139,8 +140,7 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
     }
 
     private void showDetail() {
-        fragpurchaseElectricSendButton.setEnabled(false);
-        fragpurchaseElectricDataMatchesCheckbox.setOnCheckedChangeListener(this);
+        fragpurchaseElectricDataMatchesCheckbox.setChecked(true);
         hideKeyboard(getView());
         if (fragmentElectricNominalEditText.getText().toString().isEmpty()) {
             fragelectricTextInputLayoutNominal.setError("Tidak Boleh Kosong");
@@ -161,6 +161,9 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
             fragpurchaseElectricNominalTextView.setText(fragmentElectricNominalEditText.getText().toString());
             fragpurchaseElectricNameCustomerTextView.setText("Randy Riawan");
             fragpurchaseElectricFareTextView.setText("R1/900");
+            editDataDisabled();
+        }else {
+            editDataEnabled();
         }
     }
 
@@ -235,7 +238,6 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
             fragpurchaseElectricSendButton.setEnabled(true);
             fragpurchaseElectricSendButton.setHighlightColor(getResources().getColor(R.color.colorPrimaryDark));
             fragpurchaseElectricSendButton.setTextColor(getResources().getColor(R.color.colorTextIcons));
-
             editDataDisabled();
         }
         else {
@@ -253,6 +255,7 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
     private void editDataEnabled() {
         fragmentElectricMeterNumberEditText.setEnabled(true);
         fragmentElectricNominalEditText.setEnabled(true);
+        fragmentElectricProcessButton.setEnabled(true);
     }
 
     private void editDataDisabled() {
