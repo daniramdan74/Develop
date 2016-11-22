@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,14 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dipesan.miniatm.miniatm.R;
+import com.dipesan.miniatm.miniatm.services.YoucubeService;
+import com.dipesan.miniatm.miniatm.utils.AppConstant;
+import com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager;
+import com.sunmi.controller.ICallback;
+import com.sunmi.impl.V1Printer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +52,28 @@ public class PaymentInsuranceFragment extends Fragment implements CompoundButton
     @BindView(R.id.fragpayment_insurance_provider_edit_text) EditText fragpaymentInsuranceProviderEditText;
     @BindView(R.id.fragpayment_insurance_process_button) Button fragpaymentInsuranceProcessButton;
     private boolean checkFlag;
+    private YoucubeService youcubeService;
+    private static final String TAG = "InsuranceFragment";
+    private V1Printer printer;
+    private ICallback iCallback = new ICallback() {
+
+        @Override
+        public void onRunResult(boolean isSuccess) {
+            Log.i(TAG, "onRunResult:" + isSuccess);
+        }
+
+        @Override
+        public void onReturnString(String result) {
+            Log.i(TAG, "onReturnString:" + result);
+        }
+
+        @Override
+        public void onRaiseException(int code, String msg) {
+            Log.i(TAG, "onRaiseException:" + code + ":" + msg);
+        }
+
+    };
+
 
 
     public PaymentInsuranceFragment() {
@@ -65,6 +94,9 @@ public class PaymentInsuranceFragment extends Fragment implements CompoundButton
         fragpaymentInsuranceDataMatchesCheckBox.setOnCheckedChangeListener(this);
         fragpaymentInsuranceDetailsLinearLayout.setVisibility(View.INVISIBLE);
         fragpaymentInsuranceProviderEditText.setInputType(InputType.TYPE_NULL);
+        youcubeService = new YoucubeService(getActivity());
+        printer = new V1Printer(getActivity());
+        printer.setCallback(iCallback);
         return view;
     }
 
@@ -126,6 +158,51 @@ public class PaymentInsuranceFragment extends Fragment implements CompoundButton
 
     @OnClick(R.id.fragpayment_insurance_pay_button)
     public void onClickPay() {
+        youcubeService.setIsMessage(true);
+        youcubeService.setMessage(getString(R.string.insertCard));
+        youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
+            @Override
+            public void onApproved() {
+                Print();
+            }
+        });
+    }
+
+    private void Print() {
+        ThreadPoolManager.getInstance().executeTask(new Runnable() {
+
+            @Override
+            public void run() {
+                printer.beginTransaction();
+                printer.printerInit();
+                printer.setFontSize(24);
+                printer.printText("===============================");
+                printer.printText("\nPembayaran Asuransi");
+                printer.printText("\n===============================");
+                printer.printText("\nPenyedia Layanan :");
+                printer.printText("\n"+fragpaymentInsuranceProvidersTextView.getText().toString());
+                printer.printText("\nNama : ");
+                printer.printText("\n"+fragpaymentInsuranceCustomerNameTextView.getText().toString());
+                printer.printText("\nNo Keanggotaan : ");
+                printer.printText("\n"+fragpaymentInsuranceCustomerNumberTextView.getText().toString());
+                printer.printText("\nJumlah Tagihan : ");
+                printer.printText("\n"+fragpaymentInsuranceAmountTextView.getText().toString());
+                printer.printText("\n");
+                printer.printText("\nMerchant :");
+                printer.printText("\n" + AppConstant.NAME_MERCHANT);
+                printer.printText("\nID " + AppConstant.ID_MERCHANT);
+                printer.lineWrap(4);
+                printer.commitTransaction();
+            }
+        });
+
+        fragpaymentInsuranceDetailsLinearLayout.setVisibility(View.INVISIBLE);
+        fragpaymentInsuranceCustomerNumberEditText.setText(null);
+        fragpaymentInsuranceProviderEditText.setText(null);
+        fragpaymentInsuranceProcessButton.setEnabled(true);
+        Toast.makeText(getActivity(), "Pembayaran Asuransi\n Berhasil dilakukan", Toast.LENGTH_SHORT).show();
+        fragpaymentInsuranceDataMatchesCheckBox.setChecked(false);
+
     }
 
     @Override

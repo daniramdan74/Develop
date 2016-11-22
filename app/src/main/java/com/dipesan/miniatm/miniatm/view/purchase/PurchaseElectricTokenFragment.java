@@ -179,12 +179,9 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
         youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
             @Override
             public void onApproved() {
-                //print();
-                Toast.makeText(getActivity(), "Print", Toast.LENGTH_SHORT).show();
+                Print();
             }
         });
-//        Print();
-
     }
 
     private void Print() {

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,14 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dipesan.miniatm.miniatm.R;
+import com.dipesan.miniatm.miniatm.services.YoucubeService;
+import com.dipesan.miniatm.miniatm.utils.AppConstant;
+import com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager;
+import com.sunmi.controller.ICallback;
+import com.sunmi.impl.V1Printer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +49,27 @@ public class InternetFragment extends Fragment implements CompoundButton.OnCheck
     @BindView(R.id.fragpayment_internet_pay_button) Button fragpaymentInternetPayButton;
     @BindView(R.id.fragpayment_internet_details_linear_layout) LinearLayout fragpaymentInternetDetailsLinearLayout;
     private boolean checkflag;
+    private YoucubeService youcubeService;
+    private static final String TAG = "InternetFragment";
+    private V1Printer printer;
+    private ICallback iCallback = new ICallback() {
+
+        @Override
+        public void onRunResult(boolean isSuccess) {
+            Log.i(TAG, "onRunResult:" + isSuccess);
+        }
+
+        @Override
+        public void onReturnString(String result) {
+            Log.i(TAG, "onReturnString:" + result);
+        }
+
+        @Override
+        public void onRaiseException(int code, String msg) {
+            Log.i(TAG, "onRaiseException:" + code + ":" + msg);
+        }
+
+    };
 
     public InternetFragment() {
         // Required empty public constructor
@@ -64,7 +92,9 @@ public class InternetFragment extends Fragment implements CompoundButton.OnCheck
         fragpaymentInternetProvidersEditText.setInputType(InputType.TYPE_NULL);
         fragpaymentInternetDetailsLinearLayout.setVisibility(View.INVISIBLE);
         fragpaymentInternetDataMatchesCheckBox.setOnCheckedChangeListener(this);
-
+        youcubeService = new YoucubeService(getActivity());
+        printer = new V1Printer(getActivity());
+        printer.setCallback(iCallback);
         return view;
     }
 
@@ -78,8 +108,52 @@ public class InternetFragment extends Fragment implements CompoundButton.OnCheck
                 showDetails();
                 break;
             case R.id.fragpayment_internet_pay_button:
+                youcubeService.setIsMessage(true);
+                youcubeService.setMessage(getString(R.string.insertCard));
+                youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
+                    @Override
+                    public void onApproved() {
+                        Print();
+                    }
+                });
                 break;
         }
+    }
+
+    private void Print() {
+        ThreadPoolManager.getInstance().executeTask(new Runnable() {
+
+            @Override
+            public void run() {
+                printer.beginTransaction();
+                printer.printerInit();
+                printer.setFontSize(24);
+                printer.printText("===============================");
+                printer.printText("\nPembayaran Internet");
+                printer.printText("\n===============================");
+                printer.printText("\nPenyedia : ");
+                printer.printText("\n"+fragpaymentInternetProvidersTextView.getText().toString());
+                printer.printText("\nID PEL/No Referensi : ");
+                printer.printText("\n"+fragpaymentInternetAccountNumberTextView.getText().toString());
+                printer.printText("\nNama : ");
+                printer.printText("\n"+fragpaymentInternetAccountNameTextView.getText().toString());
+                printer.printText("\nJumlah Tagihan : ");
+                printer.printText("\n"+fragpaymentInternetAmountTextView.getText().toString());
+                printer.printText("\n");
+                printer.printText("\nMerchant :");
+                printer.printText("\n" + AppConstant.NAME_MERCHANT);
+                printer.printText("\nID " + AppConstant.ID_MERCHANT);
+                printer.lineWrap(4);
+                printer.commitTransaction();
+            }
+        });
+
+        fragpaymentInternetDetailsLinearLayout.setVisibility(View.INVISIBLE);
+        fragpaymentInternetAccountNumberEditText.setText(null);
+        fragpaymentInternetProvidersEditText.setText(null);
+        fragpaymentInternetProcessButton.setEnabled(true);
+        Toast.makeText(getActivity(), "Pembayaran Telepon Prabayar\n Berhasil dilakukan", Toast.LENGTH_SHORT).show();
+        fragpaymentInternetDataMatchesCheckBox.setChecked(false);
     }
 
     private void showDetails() {

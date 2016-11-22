@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,14 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dipesan.miniatm.miniatm.R;
+import com.dipesan.miniatm.miniatm.services.YoucubeService;
+import com.dipesan.miniatm.miniatm.utils.AppConstant;
+import com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager;
+import com.sunmi.controller.ICallback;
+import com.sunmi.impl.V1Printer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +50,27 @@ public class PaymentPostPaidPhoneFragment extends Fragment implements CompoundBu
 
     @BindView(R.id.fragpayment_post_paid_phone_provider_eidt_text) EditText fragpaymentPostPaidPhoneProviderEidtText;
     private boolean checkflag;
+    private YoucubeService youcubeService;
+    private static final String TAG = "PostPaidPhoneFragment";
+    private V1Printer printer;
+    private ICallback iCallback = new ICallback() {
+
+        @Override
+        public void onRunResult(boolean isSuccess) {
+            Log.i(TAG, "onRunResult:" + isSuccess);
+        }
+
+        @Override
+        public void onReturnString(String result) {
+            Log.i(TAG, "onReturnString:" + result);
+        }
+
+        @Override
+        public void onRaiseException(int code, String msg) {
+            Log.i(TAG, "onRaiseException:" + code + ":" + msg);
+        }
+
+    };
 
     public PaymentPostPaidPhoneFragment() {
         // Required empty public constructor
@@ -62,6 +90,9 @@ public class PaymentPostPaidPhoneFragment extends Fragment implements CompoundBu
         fragpaymentPostPaidPhoneProviderEidtText.setInputType(InputType.TYPE_NULL);
         fragpaymentPostPaidPhoneDetailLinearLayout.setVisibility(View.INVISIBLE);
         fragpaymentPostPaidPhoneDataMatchesCheckBox.setOnCheckedChangeListener(this);
+        youcubeService = new YoucubeService(getActivity());
+        printer = new V1Printer(getActivity());
+        printer.setCallback(iCallback);
         return view;
     }
 
@@ -122,7 +153,50 @@ public class PaymentPostPaidPhoneFragment extends Fragment implements CompoundBu
 
     @OnClick(R.id.fragpayment_post_paid_phone_pay_button)
     public void onClickPay() {
+        youcubeService.setIsMessage(true);
+        youcubeService.setMessage(getString(R.string.insertCard));
+        youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
+            @Override
+            public void onApproved() {
+                Print();
+            }
+        });
+    }
 
+    private void Print() {
+        ThreadPoolManager.getInstance().executeTask(new Runnable() {
+
+            @Override
+            public void run() {
+                printer.beginTransaction();
+                printer.printerInit();
+                printer.setFontSize(24);
+                printer.printText("===============================");
+                printer.printText("\nPembayaran Telepon Prabayar");
+                printer.printText("\n===============================");
+                printer.printText("\nPenyedia : ");
+                printer.printText("\n"+fragpaymentPostPaidPhoneProviderTextView.getText().toString());
+                printer.printText("\nNomor Telepon : ");
+                printer.printText("\n"+fragpaymentPostPaidPhoneNumberTextView.getText().toString());
+                printer.printText("\nNama : ");
+                printer.printText("\n"+fragpaymentPostPaidPhoneCustomerNameTextView.getText().toString());
+                printer.printText("\nJumlah Tagihan : ");
+                printer.printText("\n"+fragpaymentPostPaidPhoneAmountTextView.getText().toString());
+                printer.printText("\n");
+                printer.printText("\nMerchant :");
+                printer.printText("\n" + AppConstant.NAME_MERCHANT);
+                printer.printText("\nID " + AppConstant.ID_MERCHANT);
+                printer.lineWrap(4);
+                printer.commitTransaction();
+            }
+        });
+
+        fragpaymentPostPaidPhoneDetailLinearLayout.setVisibility(View.INVISIBLE);
+        fragpaymentPostPaidPhoneProviderEidtText.setText(null);
+        fragpaymentPostPaidPhoneNumberEditText.setText(null);
+        fragpaymentPostPaidPhoneProcessButton.setEnabled(true);
+        Toast.makeText(getActivity(), "Pembayaran Telepon Prabayar\n Berhasil dilakukan", Toast.LENGTH_SHORT).show();
+        fragpaymentPostPaidPhoneDataMatchesCheckBox.setChecked(false);
     }
 
     private void endabledData() {

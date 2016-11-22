@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,14 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dipesan.miniatm.miniatm.R;
+import com.dipesan.miniatm.miniatm.services.YoucubeService;
+import com.dipesan.miniatm.miniatm.utils.AppConstant;
+import com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager;
+import com.sunmi.controller.ICallback;
+import com.sunmi.impl.V1Printer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +54,28 @@ public class PaymentWaterFragment extends Fragment implements CompoundButton.OnC
     @BindView(R.id.fragpayment_water_customer_id_text_input_layout) TextInputLayout fragpaymentWaterCustomerIdTextInputLayout;
     private int whichItemTerritory = 0;
     private boolean checkFlag;
+    private YoucubeService youcubeService;
+    private static final String TAG = "WaterFragment";
+    private V1Printer printer;
+    private ICallback iCallback = new ICallback() {
+
+        @Override
+        public void onRunResult(boolean isSuccess) {
+            Log.i(TAG, "onRunResult:" + isSuccess);
+        }
+
+        @Override
+        public void onReturnString(String result) {
+            Log.i(TAG, "onReturnString:" + result);
+        }
+
+        @Override
+        public void onRaiseException(int code, String msg) {
+            Log.i(TAG, "onRaiseException:" + code + ":" + msg);
+        }
+
+    };
+
 
     public PaymentWaterFragment() {
         // Required empty public constructor
@@ -65,6 +94,9 @@ public class PaymentWaterFragment extends Fragment implements CompoundButton.OnC
         fragpaymentWaterTerritoryEditText.setInputType(InputType.TYPE_NULL);
         fragpaymentWaterDetailLinearLayout.setVisibility(View.INVISIBLE);
         fragpaymentWaterDataMatchesCheckBox.setOnCheckedChangeListener(this);
+        youcubeService = new YoucubeService(getActivity());
+        printer = new V1Printer(getActivity());
+        printer.setCallback(iCallback);
         return view;
     }
 
@@ -78,8 +110,61 @@ public class PaymentWaterFragment extends Fragment implements CompoundButton.OnC
                 showDetails();
                 break;
             case R.id.fragpayment_water_pay_button:
+                youcubeService.setIsMessage(true);
+                youcubeService.setMessage(getString(R.string.insertCard));
+                youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
+                    @Override
+                    public void onApproved() {
+                        Print();
+                    }
+                });
                 break;
         }
+    }
+
+    private void Print() {
+        ThreadPoolManager.getInstance().executeTask(new Runnable() {
+
+            @Override
+            public void run() {
+                printer.beginTransaction();
+                printer.printerInit();
+                printer.setFontSize(24);
+                printer.printText("===============================");
+                printer.printText("\nPembayaran PDAM");
+                printer.printText("\n===============================");
+                printer.printText("\nWilayah : ");
+                printer.printText("\n"+fragpaymentWaterTerritoryTextView.getText().toString());
+                printer.printText("\nID PEL/No Referensi : ");
+                printer.printText("\n"+fragpaymentWaterCustomerIdTextView.getText().toString());
+                printer.printText("\nNama : ");
+                printer.printText("\n"+fragpaymentWaterCustomerNameTextView.getText().toString());
+                printer.printText("\nAlamat : ");
+                printer.printText("\n"+fragpaymentWaterAddressTextView.getText().toString());
+                printer.printText("\nPeriode : ");
+                printer.printText("\n"+fragpaymentWaterPeriodTextView.getText().toString());
+                printer.printText("\nGolongan : ");
+                printer.printText("\n"+fragpaymentWaterGroupTextView.getText().toString());
+                printer.printText("\nPemakaian : ");
+                printer.printText("\n"+fragpaymentWaterUsageTextView.getText().toString());
+                printer.printText("\nJumlah Tagihan : ");
+                printer.printText("\n"+fragpaymentWaterAmountTextView.getText().toString());
+                printer.printText("\n");
+                printer.printText("\nMerchant :");
+                printer.printText("\n" + AppConstant.NAME_MERCHANT);
+                printer.printText("\nID " + AppConstant.ID_MERCHANT);
+                printer.lineWrap(4);
+                printer.commitTransaction();
+            }
+        });
+
+        fragpaymentWaterDetailLinearLayout.setVisibility(View.INVISIBLE);
+        fragpaymentWaterTerritoryEditText.setText(null);
+        fragpaymentWaterCustomerIdEditText.setText(null);
+        fragpaymentWaterProcessButton.setEnabled(true);
+        Toast.makeText(getActivity(), "Pembayaran PDAM\n Berhasil dilakukan", Toast.LENGTH_SHORT).show();
+        fragpaymentWaterDataMatchesCheckBox.setChecked(false);
+
     }
 
     private void showTerritory() {

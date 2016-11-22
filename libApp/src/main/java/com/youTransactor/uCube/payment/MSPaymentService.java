@@ -18,8 +18,6 @@ import com.youTransactor.uCube.rpc.command.GetPlainTagCommand;
 import com.youTransactor.uCube.rpc.command.GetSecuredTagCommand;
 import com.youTransactor.uCube.rpc.command.SimplifiedOnlinePINCommand;
 
-import java.text.MessageFormat;
-
 /**
  * @author gbillard on 5/11/16.
  */
@@ -119,7 +117,8 @@ public class MSPaymentService extends AbstractPaymentService {
 		LogManager.debug(this.getClass().getSimpleName(), "onlinePIN");
 
 		final SimplifiedOnlinePINCommand cmd = new SimplifiedOnlinePINCommand(context.getAmount(), context.getCurrency(), context.getOnlinePinBlockFormat());
-		cmd.setPINRequestLabel(MessageFormat.format(context.getString("MSG_wait_card"), context.getCurrency().getLabel(), context.getAmount()));
+		cmd.setPINRequestLabel("Masukkan PIN : ");
+//		cmd.setPINRequestLabel(MessageFormat.format(context.getString("MSG_wait_card"), context.getCurrency().getLabel(), context.getAmount()));
 		cmd.setWaitLabel(context.getString("LBL_wait"));
 		cmd.execute(new ITaskMonitor() {
 			@Override

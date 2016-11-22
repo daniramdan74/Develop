@@ -20,6 +20,7 @@ import com.youTransactor.uCube.rpc.command.DisplayChoiceCommand;
 import com.youTransactor.uCube.rpc.command.DisplayMessageCommand;
 import com.youTransactor.uCube.rpc.command.GetInfosCommand;
 import com.youTransactor.uCube.rpc.command.InitTransactionCommand;
+import com.youTransactor.uCube.rpc.command.SimplifiedOnlinePINCommand;
 import com.youTransactor.uCube.rpc.command.TransactionFinalizationCommand;
 import com.youTransactor.uCube.rpc.command.TransactionProcessCommand;
 import com.youTransactor.uCube.rpc.command.WaitCardRemovalCommand;
@@ -31,6 +32,7 @@ import java.util.List;
 /**
  * @author gbillard on 5/18/16.
  */
+
 public class ICCPaymentService extends AbstractPaymentService {
 
 	private boolean running;
@@ -57,18 +59,18 @@ public class ICCPaymentService extends AbstractPaymentService {
 			@Override
 			public void handleEvent(TaskEvent event, Object... params) {
 				switch (event) {
-				case FAILED:
-					if (cmd.getResponseStatus() == Constants.EMV_NOT_SUPPORT) {
-						end(PaymentState.UNSUPPORTED_CARD);
-					} else {
-						end(PaymentState.ERROR);
-					}
-					break;
+					case FAILED:
+						if (cmd.getResponseStatus() == Constants.EMV_NOT_SUPPORT) {
+							end(PaymentState.UNSUPPORTED_CARD);
+						} else {
+							end(PaymentState.ERROR);
+						}
+						break;
 
-				case SUCCESS:
-					candidateList = cmd.getCandidateList();
-					selectApplication();
-					break;
+					case SUCCESS:
+						candidateList = cmd.getCandidateList();
+						selectApplication();
+						break;
 				}
 			}
 		});
@@ -88,23 +90,23 @@ public class ICCPaymentService extends AbstractPaymentService {
 			@Override
 			public void handleEvent(TaskEvent event, Object... params) {
 				switch (event) {
-				case FAILED:
-					failedTask = applicationSelectionProcessor;
-					notifyMonitor(TaskEvent.FAILED);
-					break;
+					case FAILED:
+						failedTask = applicationSelectionProcessor;
+						notifyMonitor(TaskEvent.FAILED);
+						break;
 
-				case SUCCESS:
-					List<EMVApplicationDescriptor> appList = applicationSelectionProcessor.getSelection();
+					case SUCCESS:
+						List<EMVApplicationDescriptor> appList = applicationSelectionProcessor.getSelection();
 
-					if (appList.size() == 0) {
-						end(PaymentState.UNSUPPORTED_CARD);
+						if (appList.size() == 0) {
+							end(PaymentState.UNSUPPORTED_CARD);
 
-					} else if (appList.size() == 1) {
-						initTransaction(appList.get(0));
+						} else if (appList.size() == 1) {
+							initTransaction(appList.get(0));
 
-					} else {
-						userApplicationSelection(appList);
-					}
+						} else {
+							userApplicationSelection(appList);
+						}
 				}
 			}
 		});
@@ -123,16 +125,16 @@ public class ICCPaymentService extends AbstractPaymentService {
 			@Override
 			public void handleEvent(TaskEvent event, Object... params) {
 				switch (event) {
-				case FAILED:
-					end(PaymentState.ERROR);
-					break;
+					case FAILED:
+						end(PaymentState.ERROR);
+						break;
 
-				case SUCCESS:
-					int index = ((DisplayChoiceCommand) params[0]).getSelectedIndex();
+					case SUCCESS:
+						int index = ((DisplayChoiceCommand) params[0]).getSelectedIndex();
 
-					EMVApplicationDescriptor selected = appList.get(index);
-					initTransaction(selected);
-					break;
+						EMVApplicationDescriptor selected = appList.get(index);
+						initTransaction(selected);
+						break;
 				}
 			}
 		});
@@ -149,15 +151,16 @@ public class ICCPaymentService extends AbstractPaymentService {
 			@Override
 			public void handleEvent(TaskEvent event, Object... params) {
 				switch (event) {
-				case FAILED:
-					candidateList.remove(app);
-					selectApplication();
-					break;
+					case FAILED:
+						candidateList.remove(app);
+						selectApplication();
+						break;
 
-				case SUCCESS:
-					context.setSelectedApplication(app);
-					riskManagement();
-					break;
+					case SUCCESS:
+						context.setSelectedApplication(app);
+						onlinePIN();
+//					riskManagement();
+						break;
 				}
 			}
 		});
@@ -177,13 +180,13 @@ public class ICCPaymentService extends AbstractPaymentService {
 			@Override
 			public void handleEvent(TaskEvent event, Object... params) {
 				switch (event) {
-				case FAILED:
-					end(cmd.getResponseStatus() == Constants.EMV_NOT_ACCEPT ? PaymentState.REFUSED_CARD : PaymentState.ERROR);
-					break;
+					case FAILED:
+						end(cmd.getResponseStatus() == Constants.EMV_NOT_ACCEPT ? PaymentState.REFUSED_CARD : PaymentState.ERROR);
+						break;
 
-				case SUCCESS:
-					doAuthorization();
-					break;
+					case SUCCESS:
+						doAuthorization();
+						break;
 				}
 			}
 		});
@@ -203,14 +206,14 @@ public class ICCPaymentService extends AbstractPaymentService {
 			@Override
 			public void handleEvent(TaskEvent event, Object... params) {
 				switch (event) {
-				case FAILED:
-					end(PaymentState.ERROR);
-					break;
+					case FAILED:
+						end(PaymentState.ERROR);
+						break;
 
-				case SUCCESS:
-					context.setTransactionData(cmd.getResponseData());
-					end(cmd.getResponseStatus() == 0x07 ? PaymentState.APPROVED : PaymentState.DECLINED);
-					break;
+					case SUCCESS:
+						context.setTransactionData(cmd.getResponseData());
+						end(cmd.getResponseStatus() == 0x07 ? PaymentState.APPROVED : PaymentState.DECLINED);
+						break;
 				}
 			}
 		});
@@ -269,32 +272,32 @@ public class ICCPaymentService extends AbstractPaymentService {
 			@Override
 			public void handleEvent(TaskEvent event, Object... params) {
 				switch (event) {
-				case PROGRESS:
-					return;
+					case PROGRESS:
+						return;
 
-				case FAILED:
-					LogManager.debug(AbstractPaymentService.class.getSimpleName(), "retrieve transaction logs 1 errors");
-					break;
+					case FAILED:
+						LogManager.debug(AbstractPaymentService.class.getSimpleName(), "retrieve transaction logs 1 errors");
+						break;
 
-				case SUCCESS:
-					logs[0] = ((GetInfosCommand) params[0]).getResponseData();
-					break;
+					case SUCCESS:
+						logs[0] = ((GetInfosCommand) params[0]).getResponseData();
+						break;
 				}
 
 				new GetInfosCommand(Constants.TAG_SYSTEM_FAILURE_LOG_RECORD_2).execute(new ITaskMonitor() {
 					@Override
 					public void handleEvent(final TaskEvent event, final Object... params) {
 						switch (event) {
-						case PROGRESS:
-							return;
+							case PROGRESS:
+								return;
 
-						case FAILED:
-							LogManager.debug(AbstractPaymentService.class.getSimpleName(), "retrieve transaction logs 2 errors");
-							break;
+							case FAILED:
+								LogManager.debug(AbstractPaymentService.class.getSimpleName(), "retrieve transaction logs 2 errors");
+								break;
 
-						case SUCCESS:
-							logs[1] =((GetInfosCommand) params[0]).getResponseData();
-							break;
+							case SUCCESS:
+								logs[1] =((GetInfosCommand) params[0]).getResponseData();
+								break;
 						}
 
 						LogManager.storeTransactionLog(logs[0], logs[1]);
@@ -307,5 +310,32 @@ public class ICCPaymentService extends AbstractPaymentService {
 			}
 		});
 	}
+
+
+	private void onlinePIN() {
+		LogManager.debug(this.getClass().getSimpleName(), "onlinePIN");
+
+		final SimplifiedOnlinePINCommand cmd = new SimplifiedOnlinePINCommand(context.getAmount(), context.getCurrency(), context.getOnlinePinBlockFormat());
+		cmd.setPINRequestLabel("Masukkan PIN : ");
+		//cmd.setPINRequestLabel(MessageFormat.format(context.getString("MSG_wait_card"), context.getCurrency().getLabel(), context.getAmount()));
+		cmd.setWaitLabel(context.getString("LBL_wait"));
+		cmd.execute(new ITaskMonitor() {
+			@Override
+			public void handleEvent(TaskEvent event, Object... params) {
+				switch(event) {
+					case FAILED:
+						end(PaymentState.ERROR);
+						break;
+
+					case SUCCESS:
+						context.setOnlinePinBlock(cmd.getResponseData());
+						doAuthorization();
+						break;
+				}
+			}
+		});
+	}
+
+
 
 }

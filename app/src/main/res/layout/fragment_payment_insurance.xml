@@ -128,7 +128,7 @@
                             android:id="@+id/textview3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/textview2"
+                            android:layout_below="@+id/fragpayment_insurance_providers_text_view"
                             android:layout_alignRight="@+id/textview2"
                             android:layout_marginTop="5dp"
                             android:text="Nama : "

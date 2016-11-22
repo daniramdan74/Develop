@@ -112,7 +112,7 @@ public class InterBankFragment extends Fragment implements CompoundButton.OnChec
                 youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
                     @Override
                     public void onApproved() {
-                        //print();
+                        print();
                         Toast.makeText(getActivity(), "Print", Toast.LENGTH_SHORT).show();
                     }
                 });

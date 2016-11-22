@@ -64,6 +64,7 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
     private int whichItemNominal = 0;
     private YoucubeService youcubeService;
     private V1Printer printer;
+    private String amount = null;
     private ICallback iCallback = new ICallback() {
 
         @Override
@@ -107,7 +108,7 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
         fragmentPhoneCreditDataMatchesCheckBox.setOnCheckedChangeListener(this);
         youcubeService = new YoucubeService(getActivity());
         fragpurchaseElectricRegulerRadioButton.setChecked(true);
-       choicesRadioGroup();
+        choicesRadioGroup();
         return view;
     }
 
@@ -117,15 +118,15 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
             public void onCheckedChanged(RadioGroup radioGroup, int chechkedId) {
                 int state;
                 state = fragpurchaseElectricChoicesRadioGroup.indexOfChild(getActivity().findViewById(chechkedId));
-                    switch (state){
-                        case 0:
-                            fragmentPhoneCreditNominalEditText.setText(null);
-                            break;
-                        case 1:
-                            fragmentPhoneCreditNominalEditText.setText(null);
-                            break;
-                    }
+                switch (state) {
+                    case 0:
+                        fragmentPhoneCreditNominalEditText.setText(null);
+                        break;
+                    case 1:
+                        fragmentPhoneCreditNominalEditText.setText(null);
+                        break;
                 }
+            }
         });
     }
 
@@ -174,53 +175,20 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
                 @Override
                 public void onApproved() {
                     editDataDisabled();
-                    //print();
-                    Toast.makeText(getActivity(), "Print", Toast.LENGTH_SHORT).show();
+                    print();
                 }
             });
-        }else {
+        }
+        else {
             editDataEnabled();
             fragmentPhoneCreditDataMatchesCheckBox.setChecked(false);
         }
 
     }
 
-    private void print() {
-        ThreadPoolManager.getInstance().executeTask(new Runnable() {
-
-            @Override
-            public void run() {
-                printer.beginTransaction();
-                printer.printerInit();
-                printer.setFontSize(24);
-                printer.printText("===============================");
-                printer.printText("\nPembelian Pulsa");
-                printer.printText("\n===============================");
-                printer.printText("\nProvider :");
-                printer.printText("\n" + itemProviders[whichItemProvider]);
-                printer.printText("\nNominal :");
-                printer.printText("\n" + itemsNominal[whichItemNominal]);
-                printer.printText("\nNomor Telpon : \n" + fragmentPhoneNumberEditText.getText().toString());
-                printer.printText("\n");
-                printer.printText("\n");
-                printer.printText("\nMerchant :");
-                printer.printText("\n" + AppConstant.NAME_MERCHANT);
-                printer.printText("\nID" + AppConstant.ID_MERCHANT);
-                printer.lineWrap(4);
-                printer.commitTransaction();
-            }
-        });
-        fragmentPhoneCreditProviderEditText.setText(null);
-        fragmentPhoneCreditNominalEditText.setText(null);
-        fragmentPhoneNumberEditText.setText(null);
-        fragmentPhoneCreditProcessButton.setEnabled(false);
-        editDataEnabled();
-        Toast.makeText(getActivity(), "Pembelian Pulsa \n Berhasil dilakukan", Toast.LENGTH_SHORT).show();
-        fragmentPhoneCreditDataMatchesCheckBox.setChecked(false);
-    }
 
     private void showNominal() {
-        if (fragpurchaseElectricRegulerRadioButton.isChecked()){
+        if (fragpurchaseElectricRegulerRadioButton.isChecked()) {
             List<String> listItems = new ArrayList<String>();
             listItems.add("25.000");
             listItems.add("50.000");
@@ -233,6 +201,7 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
                 public void onClick(DialogInterface dialogInterface, int which) {
                     whichItemNominal = which;
                     fragmentPhoneCreditNominalEditText.setText(itemsNominal[which]);
+                    amount = fragmentPhoneCreditNominalEditText.getText().toString();
                     dialogInterface.dismiss();
                 }
             });
@@ -241,20 +210,21 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
             builder.setNegativeButton(R.string.cancel, null);
             builder.create().show();
         }
-        if (fragpurchaseElectricDataRadioButton.isChecked()){
+        else if (fragpurchaseElectricDataRadioButton.isChecked()) {
             List<String> listItems1 = new ArrayList<String>();
             listItems1.add("1.5 GB");
             listItems1.add("2 GB");
             listItems1.add("5 GB");
             listItems1.add("20 GB");
             listItems1.add("50 GB");
-            final CharSequence[] itemsNominal1 = listItems1.toArray(new CharSequence[listItems1.size()]);
+            final CharSequence[] itemsNominal = listItems1.toArray(new CharSequence[listItems1.size()]);
             AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
-            builder1.setSingleChoiceItems(itemsNominal1, whichItemNominal, new DialogInterface.OnClickListener() {
+            builder1.setSingleChoiceItems(itemsNominal, whichItemNominal, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int which) {
                     whichItemNominal = which;
-                    fragmentPhoneCreditNominalEditText.setText(itemsNominal1[which]);
+                    fragmentPhoneCreditNominalEditText.setText(itemsNominal[which]);
+                    amount = fragmentPhoneCreditNominalEditText.getText().toString();
                     dialogInterface.dismiss();
                 }
             });
@@ -321,5 +291,52 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
         fragpurchaseElectricRegulerRadioButton.setEnabled(false);
         fragpurchaseElectricDataRadioButton.setEnabled(false);
     }
+
+    private void print() {
+        String type = null;
+        if (fragpurchaseElectricDataRadioButton.isChecked()) {
+            type = fragpurchaseElectricDataRadioButton.getText().toString();
+        }
+        else if (fragpurchaseElectricRegulerRadioButton.isChecked()) {
+            type = fragpurchaseElectricRegulerRadioButton.getText().toString();
+        }
+
+        final String finalType = type;
+        final String finalAmount = amount;
+        ThreadPoolManager.getInstance().executeTask(new Runnable() {
+
+            @Override
+            public void run() {
+                printer.beginTransaction();
+                printer.printerInit();
+                printer.setFontSize(24);
+                printer.printText("===============================");
+                printer.printText("\nPembelian Pulsa");
+                printer.printText("\n===============================");
+                printer.printText("\nProvider :");
+                printer.printText("\n" + itemProviders[whichItemProvider]);
+                printer.printText("\nJenis Paket : ");
+                printer.printText("\n" + finalType);
+                printer.printText("\nNominal :");
+                printer.printText("\n" + finalAmount);
+                printer.printText("\nNomor Telpon : \n" + fragmentPhoneNumberEditText.getText().toString());
+                printer.printText("\n");
+                printer.printText("\n");
+                printer.printText("\nMerchant :");
+                printer.printText("\n" + AppConstant.NAME_MERCHANT);
+                printer.printText("\nID" + AppConstant.ID_MERCHANT);
+                printer.lineWrap(4);
+                printer.commitTransaction();
+            }
+        });
+        fragmentPhoneCreditProviderEditText.setText(null);
+        fragmentPhoneCreditNominalEditText.setText(null);
+        fragmentPhoneNumberEditText.setText(null);
+        fragmentPhoneCreditProcessButton.setEnabled(false);
+        editDataEnabled();
+        Toast.makeText(getActivity(), "Pembelian Pulsa \n Berhasil dilakukan", Toast.LENGTH_SHORT).show();
+        fragmentPhoneCreditDataMatchesCheckBox.setChecked(false);
+    }
+
 }
 

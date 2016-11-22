@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,14 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dipesan.miniatm.miniatm.R;
+import com.dipesan.miniatm.miniatm.services.YoucubeService;
+import com.dipesan.miniatm.miniatm.utils.AppConstant;
+import com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager;
+import com.sunmi.controller.ICallback;
+import com.sunmi.impl.V1Printer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,6 +57,27 @@ public class PaymentCreditCardFragment extends Fragment implements CompoundButto
     private int whichItemBanks = 0;
     @BindView(fragpayment_credit_card_providers_edit_text) EditText fragpaymentCreditCardProvidersEditText;
     private boolean checkflag;
+    private YoucubeService youcubeService;
+    private static final String TAG = "CreditCardFragment";
+    private V1Printer printer;
+    private ICallback iCallback = new ICallback() {
+
+        @Override
+        public void onRunResult(boolean isSuccess) {
+            Log.i(TAG, "onRunResult:" + isSuccess);
+        }
+
+        @Override
+        public void onReturnString(String result) {
+            Log.i(TAG, "onReturnString:" + result);
+        }
+
+        @Override
+        public void onRaiseException(int code, String msg) {
+            Log.i(TAG, "onRaiseException:" + code + ":" + msg);
+        }
+
+    };
 
     public PaymentCreditCardFragment() {
         // Required empty public constructor
@@ -69,6 +97,9 @@ public class PaymentCreditCardFragment extends Fragment implements CompoundButto
         fragpaymentCreditCardProvidersEditText.setInputType(InputType.TYPE_NULL);
         fragpaymentCreditCardDetailLinearLayout.setVisibility(View.INVISIBLE);
         fragpaymentCreditDataMatchesCheckBox.setOnCheckedChangeListener(this);
+        youcubeService = new YoucubeService(getActivity());
+        printer = new V1Printer(getActivity());
+        printer.setCallback(iCallback);
         return view;
     }
 
@@ -144,6 +175,53 @@ public class PaymentCreditCardFragment extends Fragment implements CompoundButto
 
     @OnClick(R.id.fragpayment_credit_send_button)
     public void onClick() {
+        youcubeService.setIsMessage(true);
+        youcubeService.setMessage(getString(R.string.insertCard));
+        youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
+            @Override
+            public void onApproved() {
+                Print();
+            }
+        });
+    }
+
+    private void Print() {
+        ThreadPoolManager.getInstance().executeTask(new Runnable() {
+
+            @Override
+            public void run() {
+                printer.beginTransaction();
+                printer.printerInit();
+                printer.setFontSize(24);
+                printer.printText("===============================");
+                printer.printText("\nPembayaran Kartu Kredit");
+                printer.printText("\n===============================");
+                printer.printText("\n");
+                printer.printText("\nBank : "+fragpaymentCreditCardBankTextView.getText().toString());
+                printer.printText("\nNo Kartu : "+fragpaymentCardNumberTextView.getText().toString());
+                printer.printText("\nJenis Kartu : "+fragpaymentTypeCardBankTextView.getText().toString());
+                printer.printText("\nNama Pemilik : "+fragpaymentCreditAccountNameTextView.getText().toString());
+                printer.printText("\nJumlah : "+fragpaymentAmountTransferTextView.getText().toString());
+                printer.printText("\n");
+                printer.printText("\nDari ");
+                printer.printText("\nBank : "+fragpaymentCreditFromBankTextView.getText().toString());
+                printer.printText("\nNo Rekening : "+fragpaymentCreditFromAccountNumberTextView.getText().toString());
+                printer.printText("\nNama Pemilik : "+fragpaymentCreditFromAccountNameTextView.getText().toString());
+                printer.printText("\n");
+                printer.printText("\nMerchant :");
+                printer.printText("\n" + AppConstant.NAME_MERCHANT);
+                printer.printText("\nID " + AppConstant.ID_MERCHANT);
+                printer.lineWrap(4);
+                printer.commitTransaction();
+            }
+        });
+
+        fragpaymentCreditCardDetailLinearLayout.setVisibility(View.INVISIBLE);
+        fragpaymentCreditCardProvidersEditText.setText(null);
+        fragpaymentCreditCardCustomerNumberEditText.setText(null);
+        fragpaymentCreditCardProcessButton.setEnabled(true);
+        Toast.makeText(getActivity(), "Pembayaran Kartu Kredit\n Berhasil dilakukan", Toast.LENGTH_SHORT).show();
+        fragpaymentCreditDataMatchesCheckBox.setChecked(false);
     }
 
     @Override

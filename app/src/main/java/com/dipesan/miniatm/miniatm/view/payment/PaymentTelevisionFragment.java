@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,14 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dipesan.miniatm.miniatm.R;
+import com.dipesan.miniatm.miniatm.services.YoucubeService;
+import com.dipesan.miniatm.miniatm.utils.AppConstant;
+import com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager;
+import com.sunmi.controller.ICallback;
+import com.sunmi.impl.V1Printer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +50,28 @@ public class PaymentTelevisionFragment extends Fragment implements CompoundButto
     private int whichitemProviders = 0;
     private boolean checkFlag;
     @BindView(R.id.fragpayment_television_providers_edit_text) EditText fragpaymentTelevisionProvidersEditText;
+    private YoucubeService youcubeService;
+    private static final String TAG = "InsuranceFragment";
+    private V1Printer printer;
+    private ICallback iCallback = new ICallback() {
+
+        @Override
+        public void onRunResult(boolean isSuccess) {
+            Log.i(TAG, "onRunResult:" + isSuccess);
+        }
+
+        @Override
+        public void onReturnString(String result) {
+            Log.i(TAG, "onReturnString:" + result);
+        }
+
+        @Override
+        public void onRaiseException(int code, String msg) {
+            Log.i(TAG, "onRaiseException:" + code + ":" + msg);
+        }
+
+    };
+
 
     public PaymentTelevisionFragment() {
         // Required empty public constructor
@@ -61,6 +90,9 @@ public class PaymentTelevisionFragment extends Fragment implements CompoundButto
         fragpaymentTelevisionDetailsLinearLayout.setVisibility(View.INVISIBLE);
         fragpaymentTelevisionDataMatchesCheckBox.setOnCheckedChangeListener(this);
         fragpaymentTelevisionProvidersEditText.setInputType(InputType.TYPE_NULL);
+        youcubeService = new YoucubeService(getActivity());
+        printer = new V1Printer(getActivity());
+        printer.setCallback(iCallback);
         return view;
     }
 
@@ -121,8 +153,53 @@ public class PaymentTelevisionFragment extends Fragment implements CompoundButto
     public void onClickPay(View view) {
         switch (view.getId()) {
             case R.id.fragpayment_television_pay_button:
+                youcubeService.setIsMessage(true);
+                youcubeService.setMessage(getString(R.string.insertCard));
+                youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
+                    @Override
+                    public void onApproved() {
+                        Print();
+                    }
+                });
                 break;
         }
+    }
+
+    private void Print() {
+        ThreadPoolManager.getInstance().executeTask(new Runnable() {
+
+            @Override
+            public void run() {
+                printer.beginTransaction();
+                printer.printerInit();
+                printer.setFontSize(24);
+                printer.printText("===============================");
+                printer.printText("\nPembayaran Televisi");
+                printer.printText("\n===============================");
+                printer.printText("\nPenyedia Layanan :");
+                printer.printText("\n"+fragpaymentTelevisionProvidersTextView.getText().toString());
+                printer.printText("\nNama : ");
+                printer.printText("\n"+fragpaymentTelevisionCustomerNameTextView.getText().toString());
+                printer.printText("\nID PEL/No Referensi : ");
+                printer.printText("\n"+fragpaymentTelevisionCustomerIdTextView.getText().toString());
+                printer.printText("\nJumlah Tagihan : ");
+                printer.printText("\n"+fragpaymentTelevisionAmountTextView.getText().toString());
+                printer.printText("\n");
+                printer.printText("\nMerchant :");
+                printer.printText("\n" + AppConstant.NAME_MERCHANT);
+                printer.printText("\nID " + AppConstant.ID_MERCHANT);
+                printer.lineWrap(4);
+                printer.commitTransaction();
+            }
+        });
+
+        fragpaymentTelevisionDetailsLinearLayout.setVisibility(View.INVISIBLE);
+        fragpaymentTelevisionCustomerNumberEditText.setText(null);
+        fragpaymentTelevisionProvidersEditText.setText(null);
+        fragpaymentTelevisionProcessButton.setEnabled(true);
+        Toast.makeText(getActivity(), "Pembayaran Televisi\n Berhasil dilakukan", Toast.LENGTH_SHORT).show();
+        fragpaymentTelevisionDataMatchesCheckBox.setChecked(false);
+
     }
 
     @Override

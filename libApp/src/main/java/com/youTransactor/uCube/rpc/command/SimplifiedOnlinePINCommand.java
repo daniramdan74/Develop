@@ -27,7 +27,7 @@ public class SimplifiedOnlinePINCommand extends RPCCommand {
 	private Currency currency;
 	private String PINRequestLabel = "PIN ?";
 	private String waitLabel = "...";
-	private int minKey = 4;
+	private int minKey = 6;
 	private int maxKey = 12;
 	private int firstDigitTimeout = 24;
 	private int interDigitTimeout = 24;
