@@ -113,12 +113,12 @@ public class BalanceFragment extends Fragment {
                 printer.printerInit();
                 printer.setFontSize(24);
                 printer.printText("===============================\n");
-                printer.printText("           CEK SALDO \n");
-                printer.printText("===============================\n");
+                printer.printText("\n"+getString(R.string.balance));
+                printer.printText("\n===============================\n");
                 printer.printText("\n");
-                printer.printText("Saldo Anda : \n");
+                printer.printText("\n"+getString(R.string.balanceYourBalance));
                 printer.setFontSize(30);
-                printer.printText(""+balanceTextView.getText().toString()+"\n");
+                printer.printText("\n"+balanceTextView.getText().toString()+"\n");
                 printer.printText("\n");
                 printer.printText("\n");
                 printer.printText("-------------------------\n");

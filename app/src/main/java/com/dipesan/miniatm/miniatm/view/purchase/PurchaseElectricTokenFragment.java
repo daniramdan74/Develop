@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.text.Html;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,7 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dipesan.miniatm.miniatm.R;
+import com.dipesan.miniatm.miniatm.services.YoucubeService;
 import com.dipesan.miniatm.miniatm.utils.AppConstant;
+import com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager;
 import com.sunmi.controller.ICallback;
 import com.sunmi.impl.V1Printer;
 
@@ -34,6 +35,7 @@ import butterknife.OnClick;
  * A simple {@link Fragment} subclass.
  */
 public class PurchaseElectricTokenFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
+
     private boolean checkflag;
     private static final String TAG = "electricTokenFragment";
     private final CharSequence[] itemsNominal = {"25.000", "50.000", "100.000", "500.000"};
@@ -51,6 +53,7 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
     @BindView(R.id.fragpurchase_electric_detail_data_linear_layout) LinearLayout fragpurchaseElectricDetailDataLinearLayout;
     private int whichItemNominal = 0;
 
+    private YoucubeService youcubeService;
     private V1Printer printer;
     private ICallback iCallback = new ICallback() {
 
@@ -72,8 +75,6 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
     };
 
 
-
-
     public PurchaseElectricTokenFragment() {
         // Required empty public constructor
     }
@@ -93,14 +94,14 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
         printer = new V1Printer(getActivity());
         printer.setCallback(iCallback);
         fragpurchaseElectricDetailDataLinearLayout.setVisibility(View.INVISIBLE);
+        youcubeService = new YoucubeService(getActivity());
 
         return view;
     }
 
     private void showNominal() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-                //               .setTitle("Pilih Provider")
-                .setTitle(Html.fromHtml("<font color='#303f9f'>Nominal</font>"));
+                .setTitle(getString(R.string.phonecreditAmount));
         builder.setSingleChoiceItems(itemsNominal, whichItemNominal, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
@@ -110,7 +111,7 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
             }
         });
         builder.setCancelable(false);
-        builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -138,20 +139,23 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
     }
 
     private void showDetail() {
+        fragpurchaseElectricSendButton.setEnabled(false);
         fragpurchaseElectricDataMatchesCheckbox.setOnCheckedChangeListener(this);
         hideKeyboard(getView());
-        if (fragmentElectricNominalEditText.getText().toString().isEmpty()){
+        if (fragmentElectricNominalEditText.getText().toString().isEmpty()) {
             fragelectricTextInputLayoutNominal.setError("Tidak Boleh Kosong");
-        }else {
+        }
+        else {
             fragelectricTextInputLayoutNominal.setErrorEnabled(false);
         }
-        if (fragmentElectricMeterNumberEditText.getText().toString().isEmpty()){
+        if (fragmentElectricMeterNumberEditText.getText().toString().isEmpty()) {
             fragpelectricTextInputLayoutMeterNumber.setError("Tidak Boleh Kosong");
-        }else {
+        }
+        else {
             fragpelectricTextInputLayoutMeterNumber.setErrorEnabled(false);
         }
-        if (fragmentElectricNominalEditText.getText().toString().length()>0 &&
-        fragmentElectricMeterNumberEditText.getText().toString().length()>0){
+        if (fragmentElectricNominalEditText.getText().toString().length() > 0 &&
+                fragmentElectricMeterNumberEditText.getText().toString().length() > 0) {
             fragpurchaseElectricDetailDataLinearLayout.setVisibility(View.VISIBLE);
             fragpurchaseElectricIdCustomerTextView.setText(fragmentElectricMeterNumberEditText.getText().toString());
             fragpurchaseElectricNominalTextView.setText(fragmentElectricNominalEditText.getText().toString());
@@ -167,12 +171,21 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
 
     @OnClick(R.id.fragpurchase_electric_send_button)
     public void onClickSend() {
-        Print();
+        youcubeService.setIsMessage(true);
+        youcubeService.setMessage(getString(R.string.insertCard));
+        youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
+            @Override
+            public void onApproved() {
+                //print();
+                Toast.makeText(getActivity(), "Print", Toast.LENGTH_SHORT).show();
+            }
+        });
+//        Print();
 
     }
 
     private void Print() {
-        com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager.getInstance().executeTask(new Runnable() {
+        ThreadPoolManager.getInstance().executeTask(new Runnable() {
 
             @Override
             public void run() {
@@ -183,10 +196,10 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
                 printer.printText("\nPembelian Token Listrik");
                 printer.printText("\n===============================");
                 printer.printText("\n");
-                printer.printText("\nID PEL     : "+fragpurchaseElectricIdCustomerTextView.getText().toString());
-                printer.printText("\nNAMA       : "+fragpurchaseElectricNameCustomerTextView.getText().toString());
-                printer.printText("\nTARIF/DAYA : "+fragpurchaseElectricFareTextView.getText().toString());
-                printer.printText("\nRP BAYAR   : "+fragpurchaseElectricNominalTextView.getText().toString());
+                printer.printText("\nID PEL     : " + fragpurchaseElectricIdCustomerTextView.getText().toString());
+                printer.printText("\nNAMA       : " + fragpurchaseElectricNameCustomerTextView.getText().toString());
+                printer.printText("\nTARIF/DAYA : " + fragpurchaseElectricFareTextView.getText().toString());
+                printer.printText("\nRP BAYAR   : " + fragpurchaseElectricNominalTextView.getText().toString());
                 printer.printText("\nADMIN BANK : 1.600");
                 printer.printText("\nPPn        : 0");
                 printer.printText("\nPPj        : 707");
@@ -198,8 +211,8 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
                 printer.printText("\n");
                 printer.printText("\n");
                 printer.printText("\nMerchant :");
-                printer.printText("\n"+ AppConstant.NAME_MERCHANT);
-                printer.printText("\nID "+ AppConstant.ID_MERCHANT);
+                printer.printText("\n" + AppConstant.NAME_MERCHANT);
+                printer.printText("\nID " + AppConstant.ID_MERCHANT);
                 printer.lineWrap(4);
                 printer.commitTransaction();
             }

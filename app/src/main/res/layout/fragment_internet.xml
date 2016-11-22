@@ -19,11 +19,11 @@
         android:layout_marginTop="5dp">
 
         <EditText
-            android:id="@+id/fragment_electric_meter_number_edit_text"
+            android:id="@+id/fragpayment_internet_providers_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorPrimary"
-            android:hint="Provider"
+            android:hint="@string/postpaidphoneProvider"
             android:inputType="number"
             android:maxLength="12"
             android:maxLines="1"
@@ -37,11 +37,11 @@
         android:layout_marginTop="5dp">
 
         <EditText
-            android:id="@+id/fragment_electric_nominal_edit_text"
+            android:id="@+id/fragpayment_internet_account_number_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorPrimary"
-            android:hint="ID Pelanggan"
+            android:hint="@string/puurchaseelectrictokenIdCust"
             android:inputType="number"
             android:maxLines="1"
             />
@@ -49,14 +49,176 @@
 
 
     <Button
+        android:id="@+id/fragpayment_internet_process_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
-        android:text="Proses"
+        android:text="@string/process"
         android:theme="@style/ButtonTheme"/>
-</LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fragpayment_internet_details_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginTop="2dp"
+                            android:gravity="center_horizontal"
+                            android:text="Detail Informasi"
+                            android:textColor="@color/colorTextIcons"
+                            android:textStyle="bold"
+                            />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="5dp">
+
+                        <TextView
+                            android:id="@+id/textview1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Pembayaran Internet"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/textview2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textview1"
+                            android:layout_marginLeft="63dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Penyedia : "
+                            />
+
+                        <TextView
+                            android:id="@+id/textview3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignRight="@+id/textview2"
+                            android:layout_below="@+id/textview2"
+                            android:layout_marginTop="5dp"
+                            android:text="ID PEL/No.Referensi: "
+                            />
+
+                        <TextView
+                            android:id="@+id/textview4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignRight="@+id/textview2"
+                            android:layout_below="@+id/textview3"
+                            android:layout_marginTop="5dp"
+                            android:text="Nama : "
+                            />
+
+                        <TextView
+                            android:id="@+id/textview5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignRight="@+id/textview2"
+                            android:layout_below="@+id/textview4"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Jumlah Tagihan : "
+                            />
+
+                        <TextView
+                            android:id="@+id/fragpayment_internet_providers_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="internet"
+                            android:textStyle="bold"
+                            android:layout_alignBaseline="@+id/textview2"
+                            android:layout_alignBottom="@+id/textview2"
+                            android:layout_toRightOf="@+id/textview2"
+                            android:layout_toEndOf="@+id/textview2"/>
+
+
+                        <TextView
+                            android:id="@+id/fragpayment_internet_account_number_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/textview3"
+                            android:layout_marginBottom="10dp"
+                            android:layout_toRightOf="@+id/textview2"
+                            android:text="internet"
+                            android:textStyle="bold"
+                            />
+
+                        <TextView
+                            android:id="@+id/fragpayment_internet_account_name_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/textview4"
+                            android:layout_marginBottom="10dp"
+                            android:layout_toRightOf="@+id/textview2"
+                            android:text="internet"
+                            android:textStyle="bold"
+                            />
+
+                        <TextView
+                            android:id="@+id/fragpayment_internet_amount_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/textview5"
+                            android:layout_marginBottom="10dp"
+                            android:layout_toRightOf="@+id/textview2"
+                            android:text="internet"
+                            android:textStyle="bold"
+                            />
+                    </RelativeLayout>
+
+                    <CheckBox
+                        android:id="@+id/fragpayment_internet_data_matches_check_box"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/data_mathes"
+                        android:textColor="@color/colorDivide"
+                        />
+                    <Button
+                        android:id="@+id/fragpayment_internet_pay_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bayar"
+                        android:textStyle="bold"
+                        android:theme="@style/ButtonTheme"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </FrameLayout>

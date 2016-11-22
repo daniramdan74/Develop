@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.text.Html;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +16,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,8 +25,12 @@ import com.dipesan.miniatm.miniatm.R;
 import com.dipesan.miniatm.miniatm.SQLiteDatabase.DatabaseHelper;
 import com.dipesan.miniatm.miniatm.services.YoucubeService;
 import com.dipesan.miniatm.miniatm.utils.AppConstant;
+import com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager;
 import com.sunmi.controller.ICallback;
 import com.sunmi.impl.V1Printer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,13 +53,16 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
     @BindView(R.id.fragphone_text_input_layout_credit_provider) TextInputLayout fragphoneTextInputLayoutCreditProvider;
     @BindView(R.id.fragphone_text_input_layout_nominal) TextInputLayout fragphoneTextInputLayoutNominal;
     @BindView(R.id.fragphone_text_input_layout_phone_number) TextInputLayout fragphoneTextInputLayoutPhoneNumber;
-    private YoucubeService youcubeService;
+    @BindView(R.id.fragpurchase_electric_choices_radio_group) RadioGroup fragpurchaseElectricChoicesRadioGroup;
+    @BindView(R.id.fragpurchase_electric_reguler_radio_button) RadioButton fragpurchaseElectricRegulerRadioButton;
+    @BindView(R.id.fragpurchase_electric_data_radio_button) RadioButton fragpurchaseElectricDataRadioButton;
     private TextView ProviderTextView, NominalTextView, NumberTextView;
     private CheckBox ConfirmCheckbox;
     private Button cancelButton, confirmButton;
     private boolean checkflag;
     private int whichItemProvider = 0;
     private int whichItemNominal = 0;
+    private YoucubeService youcubeService;
     private V1Printer printer;
     private ICallback iCallback = new ICallback() {
 
@@ -97,7 +105,28 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
         printer.setCallback(iCallback);
         fragmentPhoneCreditProcessButton.setEnabled(false);
         fragmentPhoneCreditDataMatchesCheckBox.setOnCheckedChangeListener(this);
+        youcubeService = new YoucubeService(getActivity());
+        fragpurchaseElectricRegulerRadioButton.setChecked(true);
+       choicesRadioGroup();
         return view;
+    }
+
+    private void choicesRadioGroup() {
+        fragpurchaseElectricChoicesRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int chechkedId) {
+                int state;
+                state = fragpurchaseElectricChoicesRadioGroup.indexOfChild(getActivity().findViewById(chechkedId));
+                    switch (state){
+                        case 0:
+                            fragmentPhoneCreditNominalEditText.setText(null);
+                            break;
+                        case 1:
+                            fragmentPhoneCreditNominalEditText.setText(null);
+                            break;
+                    }
+                }
+        });
     }
 
     @OnClick({R.id.fragment_phone_credit_provider_edit_text, R.id.fragment_phone_credit_nominal_edit_text, R.id.fragment_phone_credit_process_button})
@@ -118,31 +147,42 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
     }
 
     private void showProcess() {
-        if (fragmentPhoneCreditProviderEditText.getText().toString().isEmpty()){
+        if (fragmentPhoneCreditProviderEditText.getText().toString().isEmpty()) {
             fragphoneTextInputLayoutCreditProvider.setError("Tidak Boleh Kosong");
-        }else {
+        }
+        else {
             fragphoneTextInputLayoutCreditProvider.setErrorEnabled(false);
         }
-        if (fragmentPhoneCreditNominalEditText.getText().toString().isEmpty()){
+        if (fragmentPhoneCreditNominalEditText.getText().toString().isEmpty()) {
             fragphoneTextInputLayoutNominal.setError("Tidak Boleh Kosong");
-        }else {
+        }
+        else {
             fragphoneTextInputLayoutNominal.setErrorEnabled(false);
         }
-        if (fragmentPhoneNumberEditText.getText().toString().isEmpty()){
+        if (fragmentPhoneNumberEditText.getText().toString().isEmpty()) {
             fragphoneTextInputLayoutPhoneNumber.setError("Tidak Boleh Kosong");
-        }else {
+        }
+        else {
             fragphoneTextInputLayoutPhoneNumber.setErrorEnabled(false);
         }
-        if (fragmentPhoneCreditProviderEditText.getText().toString().length()>0&&
-        fragmentPhoneCreditNominalEditText.getText().toString().length()>0&&
-                fragmentPhoneNumberEditText.getText().toString().length()>0){
-            print();
+        if (fragmentPhoneCreditProviderEditText.getText().toString().length() > 0 &&
+                fragmentPhoneCreditNominalEditText.getText().toString().length() > 0 &&
+                fragmentPhoneNumberEditText.getText().toString().length() > 0) {
+            youcubeService.setIsMessage(true);
+            youcubeService.setMessage(getString(R.string.insertCard));
+            youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
+                @Override
+                public void onApproved() {
+                    //print();
+                    Toast.makeText(getActivity(), "Print", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
     }
 
     private void print() {
-        com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager.getInstance().executeTask(new Runnable() {
+        ThreadPoolManager.getInstance().executeTask(new Runnable() {
 
             @Override
             public void run() {
@@ -153,15 +193,15 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
                 printer.printText("\nPembelian Pulsa");
                 printer.printText("\n===============================");
                 printer.printText("\nProvider :");
-                printer.printText("\n"+itemProviders[whichItemProvider]);
+                printer.printText("\n" + itemProviders[whichItemProvider]);
                 printer.printText("\nNominal :");
-                printer.printText("\n"+itemsNominal[whichItemNominal]);
+                printer.printText("\n" + itemsNominal[whichItemNominal]);
                 printer.printText("\nNomor Telpon : \n" + fragmentPhoneNumberEditText.getText().toString());
                 printer.printText("\n");
                 printer.printText("\n");
                 printer.printText("\nMerchant :");
-                printer.printText("\n"+ AppConstant.NAME_MERCHANT);
-                printer.printText("\nID"+AppConstant.ID_MERCHANT);
+                printer.printText("\n" + AppConstant.NAME_MERCHANT);
+                printer.printText("\nID" + AppConstant.ID_MERCHANT);
                 printer.lineWrap(4);
                 printer.commitTransaction();
             }
@@ -176,27 +216,55 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
     }
 
     private void showNominal() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-                //               .setTitle("Pilih Provider")
-                .setTitle(Html.fromHtml("<font color='#303f9f'>Nominal Pulsa</font>"));
-        builder.setSingleChoiceItems(itemsNominal, whichItemNominal, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int which) {
-                whichItemNominal = which;
-                fragmentPhoneCreditNominalEditText.setText(itemsNominal[which]);
-                dialogInterface.dismiss();
-            }
-        });
-        builder.setCancelable(false);
-        builder.setNegativeButton("Batal", null);
-        builder.create().show();
+        if (fragpurchaseElectricRegulerRadioButton.isChecked()){
+            List<String> listItems = new ArrayList<String>();
+            listItems.add("25.000");
+            listItems.add("50.000");
+            listItems.add("100.000");
+            listItems.add("500.000");
+            final CharSequence[] itemsNominal = listItems.toArray(new CharSequence[listItems.size()]);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setSingleChoiceItems(itemsNominal, whichItemNominal, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int which) {
+                    whichItemNominal = which;
+                    fragmentPhoneCreditNominalEditText.setText(itemsNominal[which]);
+                    dialogInterface.dismiss();
+                }
+            });
+            builder.setTitle(R.string.phoneCreditRegular);
+            builder.setCancelable(false);
+            builder.setNegativeButton(R.string.cancel, null);
+            builder.create().show();
+        }
+        if (fragpurchaseElectricDataRadioButton.isChecked()){
+            List<String> listItems1 = new ArrayList<String>();
+            listItems1.add("1.5 GB");
+            listItems1.add("2 GB");
+            listItems1.add("5 GB");
+            listItems1.add("20 GB");
+            listItems1.add("50 GB");
+            final CharSequence[] itemsNominal1 = listItems1.toArray(new CharSequence[listItems1.size()]);
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+            builder1.setSingleChoiceItems(itemsNominal1, whichItemNominal, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int which) {
+                    whichItemNominal = which;
+                    fragmentPhoneCreditNominalEditText.setText(itemsNominal1[which]);
+                    dialogInterface.dismiss();
+                }
+            });
+            builder1.setTitle(R.string.phonecreditData);
+            builder1.setCancelable(false);
+            builder1.setNegativeButton(R.string.cancel, null);
+            builder1.create().show();
+        }
 
     }
 
     private void showProvider() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-                //               .setTitle("Pilih Provider")
-                .setTitle(Html.fromHtml("<font color='#303f9f'>Pilih Provider</font>"));
+                .setTitle(getString(R.string.phonecreditProvider));
         builder.setSingleChoiceItems(itemProviders, whichItemProvider, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
@@ -206,7 +274,7 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
             }
         });
         builder.setCancelable(false);
-        builder.setNegativeButton("Batal", null);
+        builder.setNegativeButton(getString(R.string.cancel), null);
         builder.create().show();
 
     }
@@ -236,6 +304,9 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
         fragmentPhoneCreditProviderEditText.setEnabled(true);
         fragmentPhoneCreditNominalEditText.setEnabled(true);
         fragmentPhoneNumberEditText.setEnabled(true);
+        fragpurchaseElectricRegulerRadioButton.setEnabled(true);
+        fragpurchaseElectricDataRadioButton.setEnabled(true);
+
 
     }
 
@@ -243,7 +314,8 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
         fragmentPhoneCreditProviderEditText.setEnabled(false);
         fragmentPhoneCreditNominalEditText.setEnabled(false);
         fragmentPhoneNumberEditText.setEnabled(false);
-
+        fragpurchaseElectricRegulerRadioButton.setEnabled(false);
+        fragpurchaseElectricDataRadioButton.setEnabled(false);
     }
 }
 

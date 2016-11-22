@@ -1,7 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             xmlns:app="http://schemas.android.com/apk/res-auto">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,32 +23,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                android:hint="Nominal"
+                android:hint="@string/phonecreditAmount"
                 android:inputType="number"
                 android:maxLines="1"
                 />
         </android.support.design.widget.TextInputLayout>
+
         <android.support.design.widget.TextInputLayout
             android:id="@+id/fragpelectric_text_input_layout_meter_number"
             style="@style/TextInputLayoutForm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
->
+            >
 
             <EditText
                 android:id="@+id/fragment_electric_meter_number_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                android:hint="ID PEL / No Referensi"
+                android:hint="@string/puurchaseelectrictokenIdCust"
+                android:imeOptions="actionDone"
                 android:inputType="number"
                 android:maxLength="15"
                 android:maxLines="1"
                 />
         </android.support.design.widget.TextInputLayout>
-
-
 
         <Button
             android:id="@+id/fragment_electric_process_button"
@@ -58,8 +58,9 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
-            android:text="Proses"
+            android:text="@string/process"
             android:theme="@style/ButtonTheme"/>
+
         <LinearLayout
             android:id="@+id/fragpurchase_electric_detail_data_linear_layout"
             android:layout_width="match_parent"
@@ -91,7 +92,7 @@
                             android:layout_marginBottom="2dp"
                             android:layout_marginTop="2dp"
                             android:gravity="center_horizontal"
-                            android:text="Detail Pembelian Listrik"
+                            android:text="@string/purchaseelectrictokendetails"
                             android:textColor="@color/colorTextIcons"
                             android:textStyle="bold"
                             />
@@ -121,7 +122,7 @@
                             android:layout_marginBottom="5dp"
                             android:layout_marginLeft="10dp"
                             android:layout_toLeftOf="@+id/fragpurchase_electric_id_customer_text_view"
-                            android:text="ID PEL : "/>
+                            android:text="@string/puurchaseelectrictokenIdCust"/>
 
                         <TextView
                             android:id="@+id/textview3"
@@ -131,7 +132,7 @@
                             android:layout_marginBottom="5dp"
                             android:layout_marginLeft="10dp"
                             android:layout_toLeftOf="@+id/fragpurchase_electric_id_customer_text_view"
-                            android:text="Nama : "/>
+                            android:text="@string/name"/>
 
                         <TextView
                             android:id="@+id/textview4"
@@ -140,7 +141,7 @@
                             android:layout_below="@id/textview3"
                             android:layout_marginBottom="5dp"
                             android:layout_toLeftOf="@+id/fragpurchase_electric_id_customer_text_view"
-                            android:text="Tarif/Daya : "/>
+                            android:text="@string/purchaseelectrictokenFarePower"/>
 
                         <TextView
                             android:id="@+id/textview5"
@@ -150,7 +151,8 @@
                             android:layout_marginBottom="5dp"
                             android:layout_marginLeft="10dp"
                             android:layout_toLeftOf="@+id/fragpurchase_electric_id_customer_text_view"
-                            android:text="RP Bayar  : "/>
+                            android:text="@string/phonecreditAmount"/>
+
                         <TextView
                             android:id="@+id/fragpurchase_electric_id_customer_text_view"
                             android:layout_width="match_parent"
@@ -160,6 +162,7 @@
                             android:layout_toRightOf="@id/textview1"
                             android:text="PLN"
                             android:textStyle="bold"/>
+
                         <TextView
                             android:id="@+id/fragpurchase_electric_name_customer_text_view"
                             android:layout_width="match_parent"
@@ -169,6 +172,7 @@
                             android:layout_toRightOf="@id/textview1"
                             android:text="PLN"
                             android:textStyle="bold"/>
+
                         <TextView
                             android:id="@+id/fragpurchase_electric_fare_text_view"
                             android:layout_width="match_parent"
@@ -178,6 +182,7 @@
                             android:layout_toRightOf="@id/textview1"
                             android:text="PLN"
                             android:textStyle="bold"/>
+
                         <TextView
                             android:id="@+id/fragpurchase_electric_nominal_text_view"
                             android:layout_width="match_parent"
@@ -193,14 +198,15 @@
                         android:id="@+id/fragpurchase_electric_data_matches_checkbox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Data sudah sesuai"
+                        android:text="@string/data_mathes"
                         android:textColor="@color/colorDivide"
                         />
+
                     <Button
                         android:id="@+id/fragpurchase_electric_send_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Beli"
+                        android:text="@string/buy"
                         android:textStyle="bold"
                         android:theme="@style/ButtonTheme"/>
                 </LinearLayout>

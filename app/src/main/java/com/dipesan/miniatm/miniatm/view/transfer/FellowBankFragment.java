@@ -1,11 +1,11 @@
 package com.dipesan.miniatm.miniatm.view.transfer;
 
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,9 +21,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dipesan.miniatm.miniatm.R;
+import com.dipesan.miniatm.miniatm.services.YoucubeService;
 import com.dipesan.miniatm.miniatm.utils.AppConstant;
+import com.dipesan.miniatm.miniatm.utils.MoneyTextWatcher;
 import com.sunmi.controller.ICallback;
 import com.sunmi.impl.V1Printer;
+import com.youTransactor.uCube.payment.PaymentContext;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,6 +53,7 @@ public class FellowBankFragment extends Fragment implements CompoundButton.OnChe
             , "BANK UOB INDONESIA", "BANK BUMI ARTA", "BANK JABAR", "BANK DKI", "BANK BTN"
             , "BANK MEGA", "BANK BUKOPIN", "BANK SYARIAH MANDIRI"
     };
+    private int whichitemsBanks = 0;
 
 
     @BindView(R.id.fragfellow_bank_destination_bank_edit_text) EditText fragfellowBankDestinationBankEditText;
@@ -70,7 +74,8 @@ public class FellowBankFragment extends Fragment implements CompoundButton.OnChe
     @BindView(R.id.fragfellowbank_detail_linear_layout) LinearLayout fragfellowbankDetailLinearLayout;
     @BindView(fragfellowbank_send_button) Button fragfellowbankSendButton;
 
-
+    private PaymentContext paymentContext;
+    private YoucubeService youcubeService;
     private V1Printer printer;
     private ICallback iCallback = new ICallback() {
 
@@ -113,7 +118,9 @@ public class FellowBankFragment extends Fragment implements CompoundButton.OnChe
         fragfellowbankDetailLinearLayout.setVisibility(View.INVISIBLE);
         fragfellowbankDataMatchesCheckBox.setOnCheckedChangeListener(this);
         printer = new V1Printer(getActivity());
+        youcubeService = new YoucubeService(getActivity());
         printer.setCallback(iCallback);
+        fragfellowBankAmountTransferEditText.addTextChangedListener(new MoneyTextWatcher(fragfellowBankAmountTransferEditText));
         return view;
     }
 
@@ -178,25 +185,33 @@ public class FellowBankFragment extends Fragment implements CompoundButton.OnChe
     }
 
     private void showDestinationBank() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Daftar Bank");
-        builder.setItems(itemsBank, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                // Do something with the selection
-                fragfellowBankDestinationBankEditText.setText(itemsBank[item]);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                .setTitle(getString(R.string.phonecreditAmount));
+        builder.setSingleChoiceItems(itemsBank, whichitemsBanks, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                whichitemsBanks = which;
+                fragfellowBankDestinationBankEditText.setText(itemsBank[which]);
+                dialogInterface.dismiss();
             }
         });
         builder.setCancelable(false);
-        builder.setNegativeButton("Batal", null);
-        AlertDialog alert = builder.create();
-        alert.show();
-
-
+        builder.setNegativeButton(getString(R.string.cancel), null);
+        builder.create().show();
     }
 
     @OnClick(fragfellowbank_send_button)
     public void onClickSend() {
-        print();
+        youcubeService.setIsMessage(true);
+        youcubeService.setMessage(getString(R.string.insertCard));
+        youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
+            @Override
+            public void onApproved() {
+                //print();
+                Toast.makeText(getActivity(), "Print", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override

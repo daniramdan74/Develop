@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                android:hint="No Rekening Tujuan"
+                android:hint="@string/interbankDestinationAccountNumber"
                 android:inputType="number"
                 android:maxLines="1"
                 />
@@ -43,8 +43,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                android:hint="Jumlah Transfer"
-                android:inputType="number"
+                android:hint="@string/interbankTransferAmount"
+                android:inputType="numberDecimal"
                 android:maxLength="12"
                 android:maxLines="1"
                 />
@@ -59,7 +59,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
-            android:text="Proses"
+            android:text="@string/process"
             android:theme="@style/ButtonTheme"/>
 
         <ScrollView
@@ -96,7 +96,7 @@
                                 android:layout_marginBottom="2dp"
                                 android:layout_marginTop="2dp"
                                 android:gravity="center_horizontal"
-                                android:text="Detail Data Transfer"
+                                android:text="@string/interbankDetailData"
                                 android:textColor="@color/colorTextIcons"
                                 android:textStyle="bold"
                                 />
@@ -115,7 +115,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5dp"
-                                android:text="Tujuan Transfer"
+                                android:text="@string/interbankDestination"
                                 android:textStyle="bold"/>
 
                             <TextView
@@ -127,7 +127,7 @@
                                 android:layout_marginBottom="5dp"
                                 android:layout_marginLeft="10dp"
                                 android:layout_toLeftOf="@+id/fraginterbank_destination_bank_text_view"
-                                android:text="Bank Tujuan : "/>
+                                android:text="@string/interbankDestinationBank"/>
 
                             <TextView
                                 android:id="@+id/textview3"
@@ -137,7 +137,7 @@
                                 android:layout_marginBottom="5dp"
                                 android:layout_marginLeft="10dp"
                                 android:layout_toLeftOf="@+id/fraginterbank_destination_bank_text_view"
-                                android:text="No Rekening : "/>
+                                android:text="@string/interbankAccountNumber"/>
 
                             <TextView
                                 android:id="@+id/textview4"
@@ -146,7 +146,7 @@
                                 android:layout_below="@id/textview3"
                                 android:layout_marginBottom="5dp"
                                 android:layout_toLeftOf="@+id/fraginterbank_destination_bank_text_view"
-                                android:text="Nama Pemilik : "/>
+                                android:text="@string/interbankAccountName"/>
 
                             <TextView
                                 android:id="@+id/textview5"
@@ -156,7 +156,7 @@
                                 android:layout_marginBottom="5dp"
                                 android:layout_marginLeft="10dp"
                                 android:layout_toLeftOf="@+id/fraginterbank_destination_bank_text_view"
-                                android:text="Nominal : "/>
+                                android:text="@string/interbankAmount"/>
 
 
                             <TextView
@@ -166,7 +166,7 @@
                                 android:layout_below="@+id/textview5"
                                 android:layout_marginBottom="5dp"
                                 android:layout_marginTop="10dp"
-                                android:text="Dari"
+                                android:text="@string/interbankFrom"
                                 android:textStyle="bold"/>
 
                             <TextView
@@ -177,7 +177,7 @@
                                 android:layout_marginBottom="5dp"
                                 android:layout_marginLeft="10dp"
                                 android:layout_toLeftOf="@+id/fraginterbank_destination_bank_text_view"
-                                android:text="Bank : "/>
+                                android:text="@string/interbankBank"/>
 
                             <TextView
                                 android:id="@+id/textview8"
@@ -187,7 +187,7 @@
                                 android:layout_marginBottom="5dp"
                                 android:layout_marginLeft="10dp"
                                 android:layout_toLeftOf="@+id/fraginterbank_destination_bank_text_view"
-                                android:text="No Rekening : "/>
+                                android:text="@string/interbankAccountNumber"/>
 
                             <TextView
                                 android:id="@+id/textview9"
@@ -196,7 +196,7 @@
                                 android:layout_below="@+id/textview8"
                                 android:layout_marginBottom="5dp"
                                 android:layout_toLeftOf="@+id/fraginterbank_destination_bank_text_view"
-                                android:text="Nama Pemilik : "/>
+                                android:text="@string/interbankAccountName"/>
 
                             <TextView
                                 android:id="@+id/fraginterbank_destination_bank_text_view"
@@ -277,14 +277,14 @@
                             android:id="@+id/fraginterbank_data_matches_check_box"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Data sudah sesuai"
+                            android:text="@string/interbankDataMatches"
                             android:textColor="@color/colorDivide"/>
 
                         <Button
                             android:id="@+id/fraginterbank_send_button"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Kirim"
+                            android:text="@string/send"
                             android:textStyle="bold"
                             android:theme="@style/ButtonTheme"/>
                     </LinearLayout>

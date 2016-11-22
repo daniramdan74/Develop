@@ -18,7 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dipesan.miniatm.miniatm.R;
+import com.dipesan.miniatm.miniatm.services.YoucubeService;
 import com.dipesan.miniatm.miniatm.utils.AppConstant;
+import com.dipesan.miniatm.miniatm.utils.MoneyTextWatcher;
 import com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager;
 import com.sunmi.controller.ICallback;
 import com.sunmi.impl.V1Printer;
@@ -49,7 +51,7 @@ public class InterBankFragment extends Fragment implements CompoundButton.OnChec
     @BindView(R.id.fraginterbank_data_matches_check_box) CheckBox fraginterbankDataMatchesCheckBox;
     @BindView(R.id.fraginterbank_send_button) Button fraginterbankSendButton;
     @BindView(R.id.fraginterbank_detail_linear_layout) LinearLayout fraginterbankDetailLinearLayout;
-
+    private YoucubeService youcubeService;
     private V1Printer printer;
     private ICallback iCallback = new ICallback() {
 
@@ -90,6 +92,10 @@ public class InterBankFragment extends Fragment implements CompoundButton.OnChec
         fraginterbankDetailLinearLayout.setVisibility(View.INVISIBLE);
         printer = new V1Printer(getActivity());
         printer.setCallback(iCallback);
+        youcubeService = new YoucubeService(getActivity());
+
+        fraginterBankAmountTransferEditText.addTextChangedListener(new MoneyTextWatcher(fraginterBankAmountTransferEditText));
+
         return view;
     }
 
@@ -101,7 +107,17 @@ public class InterBankFragment extends Fragment implements CompoundButton.OnChec
                 showDetail();
                 break;
             case R.id.fraginterbank_send_button:
-                print();
+                youcubeService.setIsMessage(true);
+                youcubeService.setMessage(getString(R.string.insertCard));
+                youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
+                    @Override
+                    public void onApproved() {
+                        //print();
+                        Toast.makeText(getActivity(), "Print", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
                 break;
         }
     }

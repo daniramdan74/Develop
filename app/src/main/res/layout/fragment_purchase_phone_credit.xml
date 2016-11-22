@@ -24,41 +24,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                android:hint="Provider"
+                android:hint="@string/phonecreditProvider"
                 />
         </android.support.design.widget.TextInputLayout>
 
-        <!--<LinearLayout-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="vertical">-->
-            <!--<TextView-->
-                <!--android:textColor="@color/colorPrimary"-->
-                <!--android:textSize="15sp"-->
-                <!--android:textStyle="bold"-->
-                <!--android:text="Jenis Pulsa"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"/>-->
-            <!--<RadioGroup-->
-                <!--android:layout_marginTop="5dp"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="horizontal">-->
-                <!--<RadioButton-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:layout_marginRight="10dp"-->
-                    <!--android:text="Regular"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"/>-->
-                <!--<RadioButton-->
-                    <!--android:text="Paket Data"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:id="@+id/radioButton"/>-->
-            <!--</RadioGroup>-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
 
-        <!--</LinearLayout>-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/phonecreditType"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+            <RadioGroup
+                android:id="@+id/fragpurchase_electric_choices_radio_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/fragpurchase_electric_reguler_radio_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/phoneCreditRegular"/>
+
+                <RadioButton
+                    android:id="@+id/fragpurchase_electric_data_radio_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/phonecreditData"
+                    />
+            </RadioGroup>
+
+        </LinearLayout>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/fragphone_text_input_layout_nominal"
@@ -72,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                android:hint="Nominal"
+                android:hint="@string/phonecreditAmount"
                 android:inputType="number"
                 android:maxLines="1"
                 />
@@ -91,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                android:hint="Nomor Telepon"
+                android:hint="@string/phonecreditPhoneNumber"
                 android:inputType="number"
                 android:maxLength="12"
                 android:maxLines="1"
@@ -100,10 +107,11 @@
 
         <CheckBox
             android:id="@+id/fragment_phone_credit_data_matches_check_box"
-            android:textColor="@color/colorDivide"
-            android:text="Data sudah sesuai"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="@string/data_mathes"
+            android:textColor="@color/colorDivide"/>
+
         <Button
             android:id="@+id/fragment_phone_credit_process_button"
             android:layout_width="match_parent"
@@ -112,7 +120,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
-            android:text="Proses"
+            android:text="@string/process"
             android:theme="@style/ButtonTheme"/>
     </LinearLayout>
 
