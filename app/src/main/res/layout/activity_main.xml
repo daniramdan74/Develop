@@ -110,7 +110,7 @@
             android:text="@string/cash"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/ButtonTheme2"
+            android:theme="@style/ButtonTheme"
             />
 
     </LinearLayout>

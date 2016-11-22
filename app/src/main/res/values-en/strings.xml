@@ -93,4 +93,5 @@
     <string name="phoneCreditRegular">Regular</string>
     <string name="phonecreditData">Data Packets</string>
     <string name="phonecreditType">Type</string>
+    <string name="withdrawfragment">Cash Withdrawal</string>
 </resources>

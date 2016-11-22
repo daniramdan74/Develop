@@ -92,4 +92,5 @@
     <string name="phoneCreditRegular">Regular</string>
     <string name="phonecreditData">Paket Data</string>
     <string name="phonecreditType">Jenis Pulsa</string>
+    <string name="withdrawfragment">Tarik Tunai</string>
 </resources>

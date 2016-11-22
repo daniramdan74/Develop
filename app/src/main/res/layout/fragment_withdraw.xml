@@ -1,0 +1,62 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.dipesan.miniatm.miniatm.view.withdraw.WithdrawFragment">
+<LinearLayout
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <android.support.design.widget.TextInputLayout
+        style="@style/TextInputLayoutForm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <EditText
+            android:layout_marginTop="5dp"
+            android:id="@+id/withdraw_fragment_amount_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="Jumlah Penarikan"
+            android:inputType="number"
+            android:maxLines="1"
+            />
+    </android.support.design.widget.TextInputLayout>
+    <RelativeLayout
+        android:id="@+id/withdraw_fragment_amount_others_text_relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/withdraw_fragment_amount_others_text_input_layout"
+        style="@style/TextInputLayoutForm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="5dp">
+        <EditText
+            android:id="@+id/withdraw_fragment_amount_others_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="Jumlah Lainnya"
+            android:inputType="number"
+            android:maxLines="1"
+            />
+    </android.support.design.widget.TextInputLayout>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/withdraw_fragment_process_button"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/process"
+        android:textStyle="bold"
+        android:theme="@style/ButtonTheme"/>
+</LinearLayout>
+</FrameLayout>

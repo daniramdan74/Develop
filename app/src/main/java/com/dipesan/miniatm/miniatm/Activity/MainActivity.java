@@ -27,10 +27,12 @@ import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_PAYMENT;
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_PURCHASE;
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_SETTINGS;
 import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_TRANSFER;
+import static com.dipesan.miniatm.miniatm.utils.AppConstant.MENU_WITHDRAW;
 
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.main_activity_payment_button) Button mainActivityPaymentButton;
+    @BindView(R.id.main_activity_cash_button) Button mainActivityCashButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,4 +111,11 @@ public class MainActivity extends AppCompatActivity {
         RPCManager.getInstance().setConnexionManager(BluetoothConnexionManager.getInstance());
     }
 
+    @OnClick(R.id.main_activity_cash_button)
+    public void onClick() {
+        Intent intentSettings = new Intent(this, MainSubActivity.class);
+        intentSettings.putExtra(MENU, MENU_WITHDRAW);
+        startActivity(intentSettings);
+        overridePendingTransition(0, R.anim.fade_out);
+    }
 }

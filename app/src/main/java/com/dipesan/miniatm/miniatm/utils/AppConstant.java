@@ -26,6 +26,7 @@ import com.dipesan.miniatm.miniatm.view.settings.SettingsFragment;
 import com.dipesan.miniatm.miniatm.view.transfer.FellowBankFragment;
 import com.dipesan.miniatm.miniatm.view.transfer.InterBankFragment;
 import com.dipesan.miniatm.miniatm.view.transfer.TransferFragment;
+import com.dipesan.miniatm.miniatm.view.withdraw.WithdrawFragment;
 
 /**
  * Created by Dani Ramdan on 02/11/2016.
@@ -52,6 +53,7 @@ public class AppConstant {
     public static final int MENU_ABOUT=7;
     public static final int MENU_ACCOUNT=8;
     public static final int MENU_MERCHANT=9;
+    public static final int MENU_WITHDRAW=10;
 
 //SUbMenu
 
@@ -92,6 +94,7 @@ public class AppConstant {
             case MENU_ABOUT:return R.string.about;
             case MENU_ACCOUNT:return R.string.account;
             case MENU_MERCHANT:return R.string.register_merchant;
+            case MENU_WITHDRAW:return R.string.withdrawfragment;
 
 
             //sub menu
@@ -132,6 +135,7 @@ public class AppConstant {
             case MENU_ABOUT:return AboutFragment.newInstance();
             case MENU_ACCOUNT:return AccountFragment.newInstance();
             case MENU_MERCHANT:return MerchantFragment.newIstance();
+            case MENU_WITHDRAW:return WithdrawFragment.newInstance();
 
             //submenu
             //balance
