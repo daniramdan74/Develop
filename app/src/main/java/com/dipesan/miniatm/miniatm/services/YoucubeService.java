@@ -91,6 +91,11 @@ public class YoucubeService {
         paymentContext.setForceOnlinePIN(true);
 
         readerList.add(CardReaderType.ICC);
+
+        paymentContext.setRequestedSecuredTagList(new int[]{Constants.TAG_CARD_DATA_BLOCK});
+        paymentContext.setRequestedPlainTagList(new int[]{Constants.TAG_MSR_BIN});
+        paymentContext.setForceOnlinePIN(true);
+
         List<byte[]> tagList = new ArrayList<>();
         tagList.add(new byte[]{(byte) 0x95}); /* TVR */
         tagList.add(new byte[]{(byte) 0x9B}); /* TSI */
