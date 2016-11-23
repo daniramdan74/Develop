@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,15 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.dipesan.miniatm.miniatm.R;
+import com.dipesan.miniatm.miniatm.services.YoucubeService;
+import com.dipesan.miniatm.miniatm.utils.AppConstant;
 import com.dipesan.miniatm.miniatm.utils.MoneyTextWatcher;
+import com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager;
+import com.sunmi.controller.ICallback;
+import com.sunmi.impl.V1Printer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +37,7 @@ import butterknife.OnClick;
  */
 public class WithdrawFragment extends Fragment {
 
+    private static final String TAG = "WithdrawFragment";
     @BindView(R.id.withdraw_fragment_amount_edit_text) EditText withdrawFragmentAmountEditText;
     @BindView(R.id.withdraw_fragment_amount_others_edit_text) EditText withdrawFragmentAmountOthersEditText;
     @BindView(R.id.withdraw_fragment_process_button) Button withdrawFragmentProcessButton;
@@ -37,6 +45,28 @@ public class WithdrawFragment extends Fragment {
     @BindView(R.id.withdraw_fragment_amount_others_text_relative_layout) RelativeLayout withdrawFragmentAmountOthersTextRelativeLayout;
     @BindView(R.id.withdraw_fragment_amount_text_input_layout) TextInputLayout withdrawFragmentAmountTextInputLayout;
     private int whichItemsNominal = 0;
+    private YoucubeService youcubeService;
+    private V1Printer printer;
+    private String amount;
+    private String text;
+    private ICallback iCallback = new ICallback() {
+
+        @Override
+        public void onRunResult(boolean isSuccess) {
+            Log.i(TAG, "onRunResult:" + isSuccess);
+        }
+
+        @Override
+        public void onReturnString(String result) {
+            Log.i(TAG, "onReturnString:" + result);
+        }
+
+        @Override
+        public void onRaiseException(int code, String msg) {
+            Log.i(TAG, "onRaiseException:" + code + ":" + msg);
+        }
+
+    };
 
     public WithdrawFragment() {
         // Required empty public constructor
@@ -59,6 +89,9 @@ public class WithdrawFragment extends Fragment {
         withdrawFragmentAmountEditText.setInputType(InputType.TYPE_NULL);
         withdrawFragmentAmountOthersEditText.addTextChangedListener(new MoneyTextWatcher(withdrawFragmentAmountOthersEditText));
         visibleKeyboardAmount();
+        printer = new V1Printer(getActivity());
+        printer.setCallback(iCallback);
+        youcubeService = new YoucubeService(getActivity());
         return view;
     }
 
@@ -67,7 +100,6 @@ public class WithdrawFragment extends Fragment {
         withdrawFragmentAmountEditText.setFocusableInTouchMode(false);
         withdrawFragmentAmountEditText.setFocusable(false);
     }
-
 
     @OnClick({R.id.withdraw_fragment_amount_edit_text, R.id.withdraw_fragment_process_button})
     public void onClick(View view) {
@@ -83,30 +115,92 @@ public class WithdrawFragment extends Fragment {
     }
 
     private void showProcess() {
+        text = withdrawFragmentAmountEditText.getText().toString();
         if (withdrawFragmentAmountEditText.getText().toString().isEmpty()) {
             withdrawFragmentAmountTextInputLayout.setError("Tidak Boleh Kosong");
-        }else {
+        }
+        else {
             withdrawFragmentAmountTextInputLayout.setErrorEnabled(false);
         }
-        if (withdrawFragmentAmountEditText.getText().toString().equals("Lainnya")&&
-                withdrawFragmentAmountOthersEditText.getText().toString().isEmpty()){
+        if (withdrawFragmentAmountEditText.getText().toString().equals("Lainnya") &&
+                withdrawFragmentAmountOthersEditText.getText().toString().isEmpty()) {
             withdrawFragmentAmountOthersTextInputLayout.setError("Tidak Boleh Kosong");
-        }else {
+        }
+        else {
             withdrawFragmentAmountOthersTextInputLayout.setErrorEnabled(false);
         }
-        if (withdrawFragmentAmountEditText.getText().toString().equals("Lainnya")&&
-                withdrawFragmentAmountOthersEditText.getText().toString().length()>0) {
+        if (withdrawFragmentAmountEditText.getText().toString().equals("Lainnya") &&
+                withdrawFragmentAmountOthersEditText.getText().toString().length() > 0) {
             withdrawFragmentAmountEditText.setEnabled(false);
             withdrawFragmentAmountOthersEditText.setEnabled(false);
-        }else {
+            amount = withdrawFragmentAmountOthersEditText.getText().toString();
+//            Toast.makeText(getActivity(), "Cash"+amount, Toast.LENGTH_SHORT).show();
+            insertCard();
+        }else if (!text.matches("Lainnya")&&withdrawFragmentAmountEditText.getText().toString().length() > 0) {
+            withdrawFragmentAmountEditText.setEnabled(false);
+            withdrawFragmentAmountOthersEditText.setEnabled(false);
+            amount = withdrawFragmentAmountEditText.getText().toString();
+//            Toast.makeText(getActivity(), "Cash"+amount, Toast.LENGTH_SHORT).show();
+            insertCard();
+        }
+        else {
             withdrawFragmentAmountEditText.setEnabled(true);
             withdrawFragmentAmountOthersEditText.setEnabled(true);
         }
-        if (withdrawFragmentAmountEditText.getText().toString().length()>0){
-            withdrawFragmentAmountEditText.setEnabled(false);
-        }else {
-            withdrawFragmentAmountEditText.setEnabled(true);
-        }
+
+
+//        if (withdrawFragmentAmountEditText.getText().toString().equals("Lainnya")&&
+//                withdrawFragmentAmountOthersEditText.getText().toString().length()>0) {
+//            withdrawFragmentAmountEditText.setEnabled(false);
+//            withdrawFragmentAmountOthersEditText.setEnabled(false);
+//        }else {
+//            withdrawFragmentAmountEditText.setEnabled(true);
+//            withdrawFragmentAmountOthersEditText.setEnabled(true);
+//        }
+//        if (withdrawFragmentAmountEditText.getText().toString().length()>0){
+//            withdrawFragmentAmountEditText.setEnabled(false);
+//        }else {
+//            withdrawFragmentAmountEditText.setEnabled(true);
+//        }
+    }
+
+    private void insertCard() {
+        youcubeService.setIsMessage(true);
+        youcubeService.setMessage(getString(R.string.insertCard));
+        youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
+            @Override
+            public void onApproved() {
+                print();
+                Toast.makeText(getActivity(), "Print", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void print() {
+        ThreadPoolManager.getInstance().executeTask(new Runnable() {
+
+            @Override
+            public void run() {
+                printer.beginTransaction();
+                printer.printerInit();
+                printer.setFontSize(24);
+                printer.printText("===============================");
+                printer.printText("\nTarik Tunai");
+                printer.printText("\n===============================");
+                printer.printText("\nJumlah : "+amount);
+                                printer.printText("\n");
+                printer.printText("\nMerchant :");
+                printer.printText("\n" + AppConstant.NAME_MERCHANT);
+                printer.printText("\nID " + AppConstant.ID_MERCHANT);
+                printer.lineWrap(4);
+                printer.commitTransaction();
+            }
+        });
+        Toast.makeText(getActivity(), "Print", Toast.LENGTH_SHORT).show();
+        withdrawFragmentAmountEditText.setText(null);
+        withdrawFragmentAmountOthersEditText.setText(null);
+        withdrawFragmentAmountEditText.setEnabled(true);
+        withdrawFragmentAmountOthersEditText.setEnabled(true);
     }
 
     private void showNominal() {
