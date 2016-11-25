@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.dipesan.miniatm.miniatm.R;
 import com.dipesan.miniatm.miniatm.services.YoucubeService;
 import com.dipesan.miniatm.miniatm.utils.AppConstant;
-import com.dipesan.miniatm.miniatm.utils.MoneyTextWatcher;
 import com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager;
 import com.sunmi.controller.ICallback;
 import com.sunmi.impl.V1Printer;
@@ -94,7 +93,7 @@ public class InterBankFragment extends Fragment implements CompoundButton.OnChec
         printer.setCallback(iCallback);
         youcubeService = new YoucubeService(getActivity());
 
-        fraginterBankAmountTransferEditText.addTextChangedListener(new MoneyTextWatcher(fraginterBankAmountTransferEditText));
+//        fraginterBankAmountTransferEditText.addTextChangedListener(new MoneyTextWatcher(fraginterBankAmountTransferEditText));
 
         return view;
     }
@@ -107,6 +106,7 @@ public class InterBankFragment extends Fragment implements CompoundButton.OnChec
                 showDetail();
                 break;
             case R.id.fraginterbank_send_button:
+                youcubeService.setAmount(Double.parseDouble(fraginterBankAmountTransferEditText.getText().toString()));
                 youcubeService.setIsMessage(true);
                 youcubeService.setMessage(getString(R.string.insertCard));
                 youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
@@ -116,7 +116,6 @@ public class InterBankFragment extends Fragment implements CompoundButton.OnChec
                         Toast.makeText(getActivity(), "Print", Toast.LENGTH_SHORT).show();
                     }
                 });
-
 
                 break;
         }
@@ -164,12 +163,12 @@ public class InterBankFragment extends Fragment implements CompoundButton.OnChec
     private void showDetail() {
         fraginterbankDataMatchesCheckBox.setChecked(true);
         if (fraginterBankDestinationAccountEditText.getText().toString().isEmpty()) {
-            fraginterBankDestinationAccountTextInputLayout.setError("Tidak Boleh Kosong");
+            fraginterBankDestinationAccountTextInputLayout.setError(getString(R.string.canNotEmpty));
         }else {
             fraginterBankDestinationAccountTextInputLayout.setErrorEnabled(false);
         }
         if (fraginterBankAmountTransferEditText.getText().toString().isEmpty()){
-            fraginterBankAmountTransferTextInputLayout.setError("Tidak Boleh Kosong");
+            fraginterBankAmountTransferTextInputLayout.setError(getString(R.string.canNotEmpty));
         }else {
             fraginterBankAmountTransferTextInputLayout.setErrorEnabled(false);
         }

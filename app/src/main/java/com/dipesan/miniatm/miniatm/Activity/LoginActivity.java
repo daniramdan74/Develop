@@ -150,6 +150,7 @@ public class LoginActivity extends AppCompatActivity {
         res.updateConfiguration(conf, dm);
         Intent refresh = new Intent(this, LoginActivity.class);
         startActivity(refresh);
+        finish();
     }
 
 }

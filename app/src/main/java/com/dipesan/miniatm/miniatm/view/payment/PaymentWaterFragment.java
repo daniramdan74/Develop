@@ -110,6 +110,7 @@ public class PaymentWaterFragment extends Fragment implements CompoundButton.OnC
                 showDetails();
                 break;
             case R.id.fragpayment_water_pay_button:
+                youcubeService.setAmount(Double.parseDouble(fragpaymentWaterAmountTextView.getText().toString()));
                 youcubeService.setIsMessage(true);
                 youcubeService.setMessage(getString(R.string.insertCard));
                 youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
@@ -186,12 +187,12 @@ public class PaymentWaterFragment extends Fragment implements CompoundButton.OnC
 
     private void showDetails() {
         if (fragpaymentWaterTerritoryEditText.getText().toString().isEmpty()){
-            fragpaymentWaterTerritoryTextInputLayout.setError("Tidak Boleh Kosong");
+            fragpaymentWaterTerritoryTextInputLayout.setError(getString(R.string.canNotEmpty));
         }else {
             fragpaymentWaterTerritoryTextInputLayout.setErrorEnabled(false);
         }
         if (fragpaymentWaterCustomerIdEditText.getText().toString().isEmpty()){
-            fragpaymentWaterCustomerIdTextInputLayout.setError("Tidak Boleh Kosong");
+            fragpaymentWaterCustomerIdTextInputLayout.setError(getString(R.string.canNotEmpty));
         }else {
             fragpaymentWaterCustomerIdTextInputLayout.setErrorEnabled(false);
         }
@@ -206,7 +207,7 @@ public class PaymentWaterFragment extends Fragment implements CompoundButton.OnC
             fragpaymentWaterPeriodTextView.setText("Nov 2016");
             fragpaymentWaterGroupTextView.setText("R2");
             fragpaymentWaterUsageTextView.setText("5 M3");
-            fragpaymentWaterAmountTextView.setText("240,000");
+            fragpaymentWaterAmountTextView.setText("240000");
             fragpaymentWaterDataMatchesCheckBox.setChecked(true);
         }else {
             enabledData();

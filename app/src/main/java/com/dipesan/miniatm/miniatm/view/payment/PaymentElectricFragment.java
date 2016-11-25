@@ -98,6 +98,7 @@ public class PaymentElectricFragment extends Fragment implements CompoundButton.
 
     @OnClick(R.id.fragpayment_electric_pay_button)
     public void onClickPay() {
+        youcubeService.setAmount(Double.parseDouble(fragpaymentElectricAmountTextView.getText().toString()));
         youcubeService.setIsMessage(true);
         youcubeService.setMessage(getString(R.string.insertCard));
         youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
@@ -149,7 +150,7 @@ public class PaymentElectricFragment extends Fragment implements CompoundButton.
 
     private void showDetails() {
         if (fragpaymentElectricIdcustomerEditText.getText().toString().isEmpty()){
-            fragpaymentElectricIdcustomerTextInputLayout.setError("Tidak Boleh Kosong");
+            fragpaymentElectricIdcustomerTextInputLayout.setError(getString(R.string.canNotEmpty));
         }else {
             fragpaymentElectricIdcustomerTextInputLayout.setErrorEnabled(false);
         }
@@ -160,7 +161,7 @@ public class PaymentElectricFragment extends Fragment implements CompoundButton.
             fragpaymentElectricAccountNameTextView.setText("Riani");
             fragpaymentElectricAccountPowerTextView.setText("R1/900");
             fragpaymentElectricMonthTextView.setText("Nov 2016");
-            fragpaymentElectricAmountTextView.setText("1,200,000");
+            fragpaymentElectricAmountTextView.setText("1200000");
             disabledData();
         }else {
             enabledData();

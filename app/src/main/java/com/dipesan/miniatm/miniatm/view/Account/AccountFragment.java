@@ -184,58 +184,58 @@ public class AccountFragment extends Fragment implements CompoundButton.OnChecke
 
     private void showProcess() {
         if (fragaccountTypeCustomersEditText.getText().toString().isEmpty()) {
-            fragaccountTypeCustomersTextInputLayout.setError("Tidak Boleh Kosong");
+            fragaccountTypeCustomersTextInputLayout.setError(getString(R.string.canNotEmpty));
             return;
         }
         else {
             fragaccountTypeCustomersTextInputLayout.setErrorEnabled(false);
         }
         if (fragaccountProductTypeEditText.getText().toString().isEmpty()) {
-            fragaccountProductTypeTextInputLayout.setError("Tidak Boleh Kosong");
+            fragaccountProductTypeTextInputLayout.setError(getString(R.string.canNotEmpty));
         }
         else {
             fragaccountProductTypeTextInputLayout.setErrorEnabled(false);
         }
         if (fragaccountTypeAccountEditText.getText().toString().isEmpty()) {
-            fragaccountTypeAccountTextInputLayout.setError("Tidak Boleh Kosong");
+            fragaccountTypeAccountTextInputLayout.setError(getString(R.string.canNotEmpty));
         }
         else {
             fragaccountTypeAccountTextInputLayout.setErrorEnabled(false);
         }
         if (fragaccountNameCustomersEditText.getText().toString().isEmpty()) {
-            fragaccountNameCustomersTextInputLayout.setError("Tidak Boleh Kosong");
+            fragaccountNameCustomersTextInputLayout.setError(getString(R.string.canNotEmpty));
         }
         else {
             fragaccountNameCustomersTextInputLayout.setErrorEnabled(false);
         }
         if (fragaccountTypeIdentityEditText.getText().toString().isEmpty()) {
-            fragaccountTypeIdentityTextInputLayout.setError("Tidak Boleh Kosong");
+            fragaccountTypeIdentityTextInputLayout.setError(getString(R.string.canNotEmpty));
         }
         else {
             fragaccountTypeIdentityTextInputLayout.setErrorEnabled(false);
         }
 
         if (fragaccountIdentityNumberEditText.getText().toString().isEmpty()) {
-            fragaccountIdentityNumberTextInputLayout.setError("Tidak Boleh Kosong");
+            fragaccountIdentityNumberTextInputLayout.setError(getString(R.string.canNotEmpty));
         }
         else {
             fragaccountIdentityNumberTextInputLayout.setErrorEnabled(false);
         }
 
         if (fragaccountSourceFundsEditText.getText().toString().isEmpty()) {
-            fragaccountSourceFundsTextInputLayout.setError("Tidak Boleh Kosong");
+            fragaccountSourceFundsTextInputLayout.setError(getString(R.string.canNotEmpty));
         }
         else {
             fragaccountSourceFundsTextInputLayout.setErrorEnabled(false);
         }
         if (fragaccountOpenAccountEditText.getText().toString().isEmpty()) {
-            fragaccountOpenAccountTextInputLayout.setError("Tidak Boleh Kosong");
+            fragaccountOpenAccountTextInputLayout.setError(getString(R.string.canNotEmpty));
         }
         else {
             fragaccountOpenAccountTextInputLayout.setErrorEnabled(false);
         }
         if (fragaccountTypeInitialDepositEditText.getText().toString().isEmpty()) {
-            fragaccountTypeInitialDepositTextInputLayout.setError("Tidak Boleh Kosong");
+            fragaccountTypeInitialDepositTextInputLayout.setError(getString(R.string.canNotEmpty));
         }
         else {
             fragaccountTypeInitialDepositTextInputLayout.setErrorEnabled(false);

@@ -117,12 +117,12 @@ public class PaymentCreditCardFragment extends Fragment implements CompoundButto
 
     private void showDetails() {
         if (fragpaymentCreditCardProvidersEditText.getText().toString().isEmpty()) {
-            fragpaymentCreditCardProvidersTextInputLayout.setError("Tidak Boleh Kosong");
+            fragpaymentCreditCardProvidersTextInputLayout.setError(getString(R.string.canNotEmpty));
         }else {
             fragpaymentCreditCardProvidersTextInputLayout.setErrorEnabled(false);
         }
         if (fragpaymentCreditCardCustomerNumberEditText.getText().toString().isEmpty()) {
-            fragpaymentCreditCardCustomerNumberTextInputLayout.setError("Tidak Boleh Kosong");
+            fragpaymentCreditCardCustomerNumberTextInputLayout.setError(getString(R.string.canNotEmpty));
         }else {
             fragpaymentCreditCardCustomerNumberTextInputLayout.setErrorEnabled(false);
         }
@@ -135,7 +135,7 @@ public class PaymentCreditCardFragment extends Fragment implements CompoundButto
             fragpaymentCardNumberTextView.setText(fragpaymentCreditCardCustomerNumberEditText.getText().toString());
             fragpaymentTypeCardBankTextView.setText("MASTER CARD");
             fragpaymentCreditAccountNameTextView.setText("Dani Ramdan");
-            fragpaymentAmountTransferTextView.setText("1,000,000");
+            fragpaymentAmountTransferTextView.setText("1000000");
             fragpaymentCreditFromBankTextView.setText("Mandiri");
             fragpaymentCreditFromAccountNumberTextView.setText("1234-5678-90");
             fragpaymentCreditFromAccountNameTextView.setText("Maulana Yusuf");
@@ -176,6 +176,7 @@ public class PaymentCreditCardFragment extends Fragment implements CompoundButto
     @OnClick(R.id.fragpayment_credit_send_button)
     public void onClick() {
         youcubeService.setIsMessage(true);
+        youcubeService.setAmount(Double.parseDouble(fragpaymentAmountTransferTextView.getText().toString()));
         youcubeService.setMessage(getString(R.string.insertCard));
         youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
             @Override

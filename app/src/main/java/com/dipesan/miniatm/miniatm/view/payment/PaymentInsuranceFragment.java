@@ -114,12 +114,12 @@ public class PaymentInsuranceFragment extends Fragment implements CompoundButton
 
     private void showDetails() {
         if (fragpaymentInsuranceProviderEditText.getText().toString().isEmpty()){
-            fragpaymentInsuranceProviderTextInputLayout.setError("Tidak Boleh Kosong");
+            fragpaymentInsuranceProviderTextInputLayout.setError(getString(R.string.canNotEmpty));
         }else {
             fragpaymentInsuranceProviderTextInputLayout.setErrorEnabled(false);
         }
         if (fragpaymentInsuranceCustomerNumberEditText.getText().toString().isEmpty()){
-            fragpaymentInsuranceCustomerNumberTextInputLayout.setError("Tidak Boleh Kosong");
+            fragpaymentInsuranceCustomerNumberTextInputLayout.setError(getString(R.string.canNotEmpty));
         }else {
             fragpaymentInsuranceCustomerNumberTextInputLayout.setErrorEnabled(false);
         }
@@ -131,7 +131,7 @@ public class PaymentInsuranceFragment extends Fragment implements CompoundButton
             fragpaymentInsuranceProvidersTextView.setText(fragpaymentInsuranceProviderEditText.getText().toString());
             fragpaymentInsuranceCustomerNumberTextView.setText(fragpaymentInsuranceCustomerNumberEditText.getText().toString());
             fragpaymentInsuranceCustomerNameTextView.setText("Rendy Maulana");
-            fragpaymentInsuranceAmountTextView.setText("500,000");
+            fragpaymentInsuranceAmountTextView.setText("500000");
 
         } else{
             enabledData();
@@ -158,6 +158,7 @@ public class PaymentInsuranceFragment extends Fragment implements CompoundButton
 
     @OnClick(R.id.fragpayment_insurance_pay_button)
     public void onClickPay() {
+        youcubeService.setAmount(Double.parseDouble(fragpaymentInsuranceAmountTextView.getText().toString()));
         youcubeService.setIsMessage(true);
         youcubeService.setMessage(getString(R.string.insertCard));
         youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {

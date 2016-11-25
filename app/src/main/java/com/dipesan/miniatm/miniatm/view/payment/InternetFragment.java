@@ -108,6 +108,7 @@ public class InternetFragment extends Fragment implements CompoundButton.OnCheck
                 showDetails();
                 break;
             case R.id.fragpayment_internet_pay_button:
+                youcubeService.setAmount(Double.parseDouble(fragpaymentInternetAmountTextView.getText().toString()));
                 youcubeService.setIsMessage(true);
                 youcubeService.setMessage(getString(R.string.insertCard));
                 youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
@@ -159,14 +160,14 @@ public class InternetFragment extends Fragment implements CompoundButton.OnCheck
     private void showDetails() {
         fragpaymentInternetDataMatchesCheckBox.setChecked(true);
         if (fragpaymentInternetProvidersEditText.getText().toString().isEmpty()) {
-        fragpaymentInternetProvidersTextInputLayout.setError("Tidak Boleh Kosong");
+        fragpaymentInternetProvidersTextInputLayout.setError(getString(R.string.canNotEmpty));
         }
         else {
             fragpaymentInternetProvidersTextInputLayout.setErrorEnabled(false);
 
         }
         if (fragpaymentInternetAccountNumberEditText.getText().toString().isEmpty()) {
-            fragpaymentInternetAccountNumberTextInputLayout.setError("Tidak Boleh Kosong");
+            fragpaymentInternetAccountNumberTextInputLayout.setError(getString(R.string.canNotEmpty));
         }
         else {
             fragpaymentInternetAccountNumberTextInputLayout.setErrorEnabled(false);
@@ -179,7 +180,7 @@ public class InternetFragment extends Fragment implements CompoundButton.OnCheck
             fragpaymentInternetProvidersTextView.setText(fragpaymentInternetProvidersEditText.getText().toString());
             fragpaymentInternetAccountNumberTextView.setText(fragpaymentInternetAccountNumberEditText.getText().toString());
             fragpaymentInternetAccountNameTextView.setText("Dani Ramdan");
-            fragpaymentInternetAmountTextView.setText("450,000");
+            fragpaymentInternetAmountTextView.setText("450000");
         }else {
             enabledData();
         }

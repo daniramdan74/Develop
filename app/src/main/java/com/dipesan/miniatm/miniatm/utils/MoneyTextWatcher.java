@@ -16,7 +16,7 @@ public class MoneyTextWatcher implements TextWatcher {
 
     public MoneyTextWatcher(EditText et)
     {
-        df = new DecimalFormat("#,###.##");
+        df = new DecimalFormat("#,###,##");
         df.setDecimalSeparatorAlwaysShown(true);
         dfnd = new DecimalFormat("#,###");
         this.et = et;

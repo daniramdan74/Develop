@@ -88,10 +88,12 @@
     <string name="paymentcreditcardCardNumber">Card Number</string>
     <string name="postpaidphoneProvider">Provider</string>
         <string name="waterTerritory">Territory</string>
-    <string name="insertCard">Insert Card</string>
+    <string name="insertCard">Insert / Swipe Card</string>
     <string name="enterPin">Enter PIN</string>
     <string name="phoneCreditRegular">Regular</string>
     <string name="phonecreditData">Data Packets</string>
     <string name="phonecreditType">Type</string>
     <string name="withdrawfragment">Cash Withdrawal</string>
+    <string name="canNotEmpty">Can\'t be empty</string>
+    <string name="hello_blank_fragment"></string>
 </resources>

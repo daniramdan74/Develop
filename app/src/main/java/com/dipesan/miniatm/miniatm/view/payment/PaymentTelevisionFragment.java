@@ -110,12 +110,12 @@ public class PaymentTelevisionFragment extends Fragment implements CompoundButto
 
     private void showDetails() {
         if (fragpaymentTelevisionProvidersEditText.getText().toString().isEmpty()){
-            fragpaymentTelevisionProvidersTextInputLayout.setError("Tidak Boleh Kosong");
+            fragpaymentTelevisionProvidersTextInputLayout.setError(getString(R.string.canNotEmpty));
         }else {
             fragpaymentTelevisionProvidersTextInputLayout.setErrorEnabled(false);
         }
         if (fragpaymentTelevisionCustomerNumberEditText.getText().toString().isEmpty()){
-            fragpaymentTelevisionCustomerNumberTextInputLayout.setError("Tidak Boleh Kosong");
+            fragpaymentTelevisionCustomerNumberTextInputLayout.setError(getString(R.string.canNotEmpty));
         }else {
             fragpaymentTelevisionCustomerNumberTextInputLayout.setErrorEnabled(false);
         }
@@ -126,7 +126,7 @@ public class PaymentTelevisionFragment extends Fragment implements CompoundButto
             fragpaymentTelevisionDetailsLinearLayout.setVisibility(View.VISIBLE);
             fragpaymentTelevisionProvidersTextView.setText(fragpaymentTelevisionProvidersEditText.getText().toString());
             fragpaymentTelevisionCustomerIdTextView.setText(fragpaymentTelevisionCustomerNumberEditText.getText().toString());
-            fragpaymentTelevisionAmountTextView.setText("240,000");
+            fragpaymentTelevisionAmountTextView.setText("240000");
             fragpaymentTelevisionCustomerNameTextView.setText("Rina");
         }else {
             enabledData();
@@ -153,6 +153,7 @@ public class PaymentTelevisionFragment extends Fragment implements CompoundButto
     public void onClickPay(View view) {
         switch (view.getId()) {
             case R.id.fragpayment_television_pay_button:
+                youcubeService.setAmount(Double.parseDouble(fragpaymentTelevisionAmountTextView.getText().toString()));
                 youcubeService.setIsMessage(true);
                 youcubeService.setMessage(getString(R.string.insertCard));
                 youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {

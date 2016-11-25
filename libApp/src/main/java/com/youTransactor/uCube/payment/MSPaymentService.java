@@ -117,7 +117,7 @@ public class MSPaymentService extends AbstractPaymentService {
 		LogManager.debug(this.getClass().getSimpleName(), "onlinePIN");
 
 		final SimplifiedOnlinePINCommand cmd = new SimplifiedOnlinePINCommand(context.getAmount(), context.getCurrency(), context.getOnlinePinBlockFormat());
-		cmd.setPINRequestLabel("Masukkan PIN : ");
+		cmd.setPINRequestLabel(context.getString("LBL_pin_prompt"));
 //		cmd.setPINRequestLabel(MessageFormat.format(context.getString("MSG_wait_card"), context.getCurrency().getLabel(), context.getAmount()));
 		cmd.setWaitLabel(context.getString("LBL_wait"));
 		cmd.execute(new ITaskMonitor() {
@@ -127,7 +127,6 @@ public class MSPaymentService extends AbstractPaymentService {
 				case FAILED:
 					end(PaymentState.ERROR);
 					break;
-
 				case SUCCESS:
 					context.setOnlinePinBlock(cmd.getResponseData());
 					doAuthorization();

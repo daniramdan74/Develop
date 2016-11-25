@@ -37,7 +37,7 @@ public class YoucubeService {
     private Activity activity;
     private OnEnterCardListener listener;
     private String message = "Login Merchant";
-    private String message2 = "ENTER PIN";
+
     private double amount = 0;
     private ResourceBundle msgBundle;
     private boolean isMessage = false;
@@ -62,14 +62,14 @@ public class YoucubeService {
     public void enterCard(final OnEnterCardListener onEnterCardListener) {
         this.listener = onEnterCardListener;
 
-        Currency currency = new Currency(360, 0, "");
+        Currency currency = new Currency(360, 0, "IDR");
         TransactionType trxType = TransactionType.DEBIT;
 
         final PaymentContext paymentContext = new PaymentContext();
 
         //paymentContext.setMessage(isMessage?message : "Login Merchant");
-
-        paymentContext.setMessage(isMessage ? message : String.format("%s %s %s", message, ""));
+        paymentContext.setMessage(isMessage ? message : String.format("%s %s %s", message, currency.getLabel(), amount));
+//        paymentContext.setMessage(isMessage ? message : String.format("%s %s %s", message, ""));
 //        paymentContext.setMessage(isMessage ? message : String.format("", message, ""));
         paymentContext.setAmount(amount);
         paymentContext.setCurrency(currency);

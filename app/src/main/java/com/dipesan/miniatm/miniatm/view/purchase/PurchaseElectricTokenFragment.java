@@ -38,7 +38,7 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
 
     private boolean checkflag;
     private static final String TAG = "electricTokenFragment";
-    private final CharSequence[] itemsNominal = {"25.000", "50.000", "100.000", "500.000"};
+    private final CharSequence[] itemsNominal = {"25000", "50000", "100000", "500000"};
     @BindView(R.id.fragment_electric_nominal_edit_text) EditText fragmentElectricNominalEditText;
     @BindView(R.id.fragelectric_text_input_layout_nominal) TextInputLayout fragelectricTextInputLayoutNominal;
     @BindView(R.id.fragment_electric_meter_number_edit_text) EditText fragmentElectricMeterNumberEditText;
@@ -96,7 +96,6 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
         fragpurchaseElectricDetailDataLinearLayout.setVisibility(View.INVISIBLE);
         fragpurchaseElectricDataMatchesCheckbox.setOnCheckedChangeListener(this);
         youcubeService = new YoucubeService(getActivity());
-
         return view;
     }
 
@@ -143,13 +142,13 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
         fragpurchaseElectricDataMatchesCheckbox.setChecked(true);
         hideKeyboard(getView());
         if (fragmentElectricNominalEditText.getText().toString().isEmpty()) {
-            fragelectricTextInputLayoutNominal.setError("Tidak Boleh Kosong");
+            fragelectricTextInputLayoutNominal.setError(getString(R.string.canNotEmpty));
         }
         else {
             fragelectricTextInputLayoutNominal.setErrorEnabled(false);
         }
         if (fragmentElectricMeterNumberEditText.getText().toString().isEmpty()) {
-            fragpelectricTextInputLayoutMeterNumber.setError("Tidak Boleh Kosong");
+            fragpelectricTextInputLayoutMeterNumber.setError(getString(R.string.canNotEmpty));
         }
         else {
             fragpelectricTextInputLayoutMeterNumber.setErrorEnabled(false);
@@ -175,6 +174,7 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
     @OnClick(R.id.fragpurchase_electric_send_button)
     public void onClickSend() {
         youcubeService.setIsMessage(true);
+        youcubeService.setAmount(Double.parseDouble(fragmentElectricNominalEditText.getText().toString()));
         youcubeService.setMessage(getString(R.string.insertCard));
         youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
             @Override

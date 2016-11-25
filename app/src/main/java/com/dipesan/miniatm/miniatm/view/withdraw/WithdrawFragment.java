@@ -20,10 +20,10 @@ import android.widget.Toast;
 import com.dipesan.miniatm.miniatm.R;
 import com.dipesan.miniatm.miniatm.services.YoucubeService;
 import com.dipesan.miniatm.miniatm.utils.AppConstant;
-import com.dipesan.miniatm.miniatm.utils.MoneyTextWatcher;
 import com.dipesan.miniatm.miniatm.utils.print.ThreadPoolManager;
 import com.sunmi.controller.ICallback;
 import com.sunmi.impl.V1Printer;
+import com.youTransactor.uCube.payment.PaymentContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +47,12 @@ public class WithdrawFragment extends Fragment {
     private int whichItemsNominal = 0;
     private YoucubeService youcubeService;
     private V1Printer printer;
+    private double amount1 = 9.0;
     private String amount;
     private String text;
+    final PaymentContext paymentContext = new PaymentContext();
+    private String msg;
+
     private ICallback iCallback = new ICallback() {
 
         @Override
@@ -87,7 +91,7 @@ public class WithdrawFragment extends Fragment {
         ButterKnife.bind(this, view);
         withdrawFragmentAmountOthersTextInputLayout.setVisibility(View.GONE);
         withdrawFragmentAmountEditText.setInputType(InputType.TYPE_NULL);
-        withdrawFragmentAmountOthersEditText.addTextChangedListener(new MoneyTextWatcher(withdrawFragmentAmountOthersEditText));
+//        withdrawFragmentAmountOthersEditText.addTextChangedListener(new MoneyTextWatcher(withdrawFragmentAmountOthersEditText));
         visibleKeyboardAmount();
         printer = new V1Printer(getActivity());
         printer.setCallback(iCallback);
@@ -163,8 +167,42 @@ public class WithdrawFragment extends Fragment {
 //            withdrawFragmentAmountEditText.setEnabled(true);
 //        }
     }
+    private void showNominal() {
+        List<String> listItems = new ArrayList<String>();
+        listItems.add("50000");
+        listItems.add("100000");
+        listItems.add("200000");
+        listItems.add("300000");
+        listItems.add("500000");
+        listItems.add("1000000");
+        listItems.add("Lainnya");
+        final CharSequence[] itemsNominal = listItems.toArray(new CharSequence[listItems.size()]);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        builder.setSingleChoiceItems(itemsNominal, whichItemsNominal, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                whichItemsNominal = which;
+                if (itemsNominal[which] == "Lainnya") {
+                    withdrawFragmentAmountOthersTextInputLayout.setVisibility(View.VISIBLE);
+                }
+                else {
+                    withdrawFragmentAmountOthersTextInputLayout.setVisibility(View.GONE);
+                    withdrawFragmentAmountOthersEditText.setText(null);
+                }
+                withdrawFragmentAmountEditText.setText(itemsNominal[which]);
+                dialogInterface.dismiss();
+            }
+        });
+        builder.setTitle(R.string.phonecreditAmount);
+        builder.setCancelable(false);
+        builder.setNegativeButton(R.string.cancel, null);
+        builder.create().show();
+    }
 
     private void insertCard() {
+        youcubeService.setAmount(Double.parseDouble(amount));
         youcubeService.setIsMessage(true);
         youcubeService.setMessage(getString(R.string.insertCard));
         youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
@@ -203,39 +241,7 @@ public class WithdrawFragment extends Fragment {
         withdrawFragmentAmountOthersEditText.setEnabled(true);
     }
 
-    private void showNominal() {
-        List<String> listItems = new ArrayList<String>();
-        listItems.add("50,000");
-        listItems.add("100,000");
-        listItems.add("200,000");
-        listItems.add("300,000");
-        listItems.add("500,000");
-        listItems.add("100,000");
-        listItems.add("Lainnya");
-        final CharSequence[] itemsNominal = listItems.toArray(new CharSequence[listItems.size()]);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-        builder.setSingleChoiceItems(itemsNominal, whichItemsNominal, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int which) {
-                whichItemsNominal = which;
-                if (itemsNominal[which] == "Lainnya") {
-                    withdrawFragmentAmountOthersTextInputLayout.setVisibility(View.VISIBLE);
-                }
-                else {
-                    withdrawFragmentAmountOthersTextInputLayout.setVisibility(View.GONE);
-                    withdrawFragmentAmountOthersEditText.setText(null);
-                }
-                withdrawFragmentAmountEditText.setText(itemsNominal[which]);
-                dialogInterface.dismiss();
-            }
-        });
-        builder.setTitle(R.string.phonecreditAmount);
-        builder.setCancelable(false);
-        builder.setNegativeButton(R.string.cancel, null);
-        builder.create().show();
-    }
 
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);

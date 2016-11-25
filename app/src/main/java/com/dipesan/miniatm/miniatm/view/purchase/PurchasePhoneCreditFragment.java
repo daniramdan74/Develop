@@ -149,19 +149,19 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
 
     private void showProcess() {
         if (fragmentPhoneCreditProviderEditText.getText().toString().isEmpty()) {
-            fragphoneTextInputLayoutCreditProvider.setError("Tidak Boleh Kosong");
+            fragphoneTextInputLayoutCreditProvider.setError(getString(R.string.canNotEmpty));
         }
         else {
             fragphoneTextInputLayoutCreditProvider.setErrorEnabled(false);
         }
         if (fragmentPhoneCreditNominalEditText.getText().toString().isEmpty()) {
-            fragphoneTextInputLayoutNominal.setError("Tidak Boleh Kosong");
+            fragphoneTextInputLayoutNominal.setError(getString(R.string.canNotEmpty));
         }
         else {
             fragphoneTextInputLayoutNominal.setErrorEnabled(false);
         }
         if (fragmentPhoneNumberEditText.getText().toString().isEmpty()) {
-            fragphoneTextInputLayoutPhoneNumber.setError("Tidak Boleh Kosong");
+            fragphoneTextInputLayoutPhoneNumber.setError(getString(R.string.canNotEmpty));
         }
         else {
             fragphoneTextInputLayoutPhoneNumber.setErrorEnabled(false);
@@ -190,10 +190,10 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
     private void showNominal() {
         if (fragpurchaseElectricRegulerRadioButton.isChecked()) {
             List<String> listItems = new ArrayList<String>();
-            listItems.add("25.000");
-            listItems.add("50.000");
-            listItems.add("100.000");
-            listItems.add("500.000");
+            listItems.add("25000");
+            listItems.add("50000");
+            listItems.add("100000");
+            listItems.add("500000");
             final CharSequence[] itemsNominal = listItems.toArray(new CharSequence[listItems.size()]);
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setSingleChoiceItems(itemsNominal, whichItemNominal, new DialogInterface.OnClickListener() {

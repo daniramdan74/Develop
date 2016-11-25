@@ -23,7 +23,6 @@ import android.widget.Toast;
 import com.dipesan.miniatm.miniatm.R;
 import com.dipesan.miniatm.miniatm.services.YoucubeService;
 import com.dipesan.miniatm.miniatm.utils.AppConstant;
-import com.dipesan.miniatm.miniatm.utils.MoneyTextWatcher;
 import com.sunmi.controller.ICallback;
 import com.sunmi.impl.V1Printer;
 import com.youTransactor.uCube.payment.PaymentContext;
@@ -120,7 +119,7 @@ public class FellowBankFragment extends Fragment implements CompoundButton.OnChe
         printer = new V1Printer(getActivity());
         youcubeService = new YoucubeService(getActivity());
         printer.setCallback(iCallback);
-        fragfellowBankAmountTransferEditText.addTextChangedListener(new MoneyTextWatcher(fragfellowBankAmountTransferEditText));
+//        fragfellowBankAmountTransferEditText.addTextChangedListener(new MoneyTextWatcher(fragfellowBankAmountTransferEditText));
         visibleKeyboardDestination();
         return view;
     }
@@ -145,18 +144,18 @@ public class FellowBankFragment extends Fragment implements CompoundButton.OnChe
     private void showDetail() {
         fragfellowbankDataMatchesCheckBox.setChecked(true);
         if (fragfellowBankDestinationBankEditText.getText().toString().isEmpty()){
-            fragfellowBankDestinationBankTextInputLayout.setError("Tidak Boleh Kosong");
+            fragfellowBankDestinationBankTextInputLayout.setError(getString(R.string.canNotEmpty));
         }else {
             fragfellowBankDestinationBankTextInputLayout.setErrorEnabled(false);
         }
         if (fragfellowBankDestinationAccountEditText.getText().toString().isEmpty()) {
-        fragfellowBankDestinationAccountTextInputLayout.setError("Tidak Boleh Kosong");
+        fragfellowBankDestinationAccountTextInputLayout.setError(getString(R.string.canNotEmpty));
         }else {
             fragfellowBankDestinationAccountTextInputLayout.setErrorEnabled(false);
 
         }
         if (fragfellowBankAmountTransferEditText.getText().toString().isEmpty()){
-            fragfellowBankAmountTransferTextInputLayout.setError("Tidak Boleh Kosong");
+            fragfellowBankAmountTransferTextInputLayout.setError(getString(R.string.canNotEmpty));
         }else {
             fragfellowBankAmountTransferTextInputLayout.setErrorEnabled(false);
         }
@@ -211,6 +210,7 @@ public class FellowBankFragment extends Fragment implements CompoundButton.OnChe
     @OnClick(fragfellowbank_send_button)
     public void onClickSend() {
         youcubeService.setIsMessage(true);
+        youcubeService.setAmount(Double.parseDouble(fragfellowBankAmountTransferEditText.getText().toString()));
         youcubeService.setMessage(getString(R.string.insertCard));
         youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
             @Override

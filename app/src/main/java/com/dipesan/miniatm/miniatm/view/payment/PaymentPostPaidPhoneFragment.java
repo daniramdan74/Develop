@@ -110,13 +110,13 @@ public class PaymentPostPaidPhoneFragment extends Fragment implements CompoundBu
 
     private void showDetails() {
         if (fragpaymentPostPaidPhoneProviderEidtText.getText().toString().isEmpty()) {
-            fragpaymentPostPaidPhoneProviderTextInputLayout.setError("Tidak Boleh Kosong");
+            fragpaymentPostPaidPhoneProviderTextInputLayout.setError(getString(R.string.canNotEmpty));
         }
         else {
             fragpaymentPostPaidPhoneProviderTextInputLayout.setErrorEnabled(false);
         }
         if (fragpaymentPostPaidPhoneNumberEditText.getText().toString().isEmpty()) {
-            fragpaymentPostPaidPhoneNumberTextInputLayout.setError("Tidak Boleh Kosong");
+            fragpaymentPostPaidPhoneNumberTextInputLayout.setError(getString(R.string.canNotEmpty));
         }
         else {
             fragpaymentPostPaidPhoneNumberTextInputLayout.setErrorEnabled(false);
@@ -129,7 +129,7 @@ public class PaymentPostPaidPhoneFragment extends Fragment implements CompoundBu
             fragpaymentPostPaidPhoneProviderTextView.setText(fragpaymentPostPaidPhoneProviderEidtText.getText().toString());
             fragpaymentPostPaidPhoneNumberTextView.setText(fragpaymentPostPaidPhoneNumberEditText.getText().toString());
             fragpaymentPostPaidPhoneCustomerNameTextView.setText("Dani Ramdan");
-            fragpaymentPostPaidPhoneAmountTextView.setText("850,000");
+            fragpaymentPostPaidPhoneAmountTextView.setText("850000");
             fragpaymentPostPaidPhoneDataMatchesCheckBox.setChecked(true);
             disabledData();
         }
@@ -153,6 +153,7 @@ public class PaymentPostPaidPhoneFragment extends Fragment implements CompoundBu
 
     @OnClick(R.id.fragpayment_post_paid_phone_pay_button)
     public void onClickPay() {
+        youcubeService.setAmount(Double.parseDouble(fragpaymentPostPaidPhoneAmountTextView.getText().toString()));
         youcubeService.setIsMessage(true);
         youcubeService.setMessage(getString(R.string.insertCard));
         youcubeService.enterCard(new YoucubeService.OnEnterCardListener() {
