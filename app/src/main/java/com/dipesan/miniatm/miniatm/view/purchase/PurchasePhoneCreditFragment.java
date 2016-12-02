@@ -3,6 +3,7 @@ package com.dipesan.miniatm.miniatm.view.purchase;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dipesan.miniatm.miniatm.Activity.LoginActivity;
+import com.dipesan.miniatm.miniatm.Activity.MainActivity;
 import com.dipesan.miniatm.miniatm.R;
 import com.dipesan.miniatm.miniatm.SQLiteDatabase.DatabaseHelper;
 import com.dipesan.miniatm.miniatm.services.YoucubeService;
@@ -336,6 +339,29 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
         editDataEnabled();
         Toast.makeText(getActivity(), ""+getString(R.string.transactionsuccess), Toast.LENGTH_SHORT).show();
         fragmentPhoneCreditDataMatchesCheckBox.setChecked(false);
+        showAlert();
+    }
+    private void showAlert(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(getString(R.string.continuetransaction))
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        startActivity(new Intent(getActivity(), MainActivity.class));
+                        getActivity().overridePendingTransition(0, R.anim.fade_out);
+                        getActivity().finish();
+                    }
+                })
+                .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        startActivity(new Intent(getActivity(), LoginActivity.class));
+                        getActivity().overridePendingTransition(0, R.anim.fade_out);
+                        getActivity().finish();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
 
 }

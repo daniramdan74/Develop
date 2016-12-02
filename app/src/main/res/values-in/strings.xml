@@ -116,4 +116,8 @@
     <string name="usage">Pemakaian</string>
     <string name="paymentinsurance">Pembayaran Asuransi</string>
     <string name="paymenttelevision">Pembayaran Televisi Prabayar</string>
+    <string name="logout">Keluar</string>
+    <string name="continuetransaction">Lanjutkan Transaksi ?</string>
+    <string name="no">Tidak</string>
+    <string name="yes">Ya</string>
 </resources>

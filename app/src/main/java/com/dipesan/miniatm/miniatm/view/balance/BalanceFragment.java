@@ -1,6 +1,9 @@
 package com.dipesan.miniatm.miniatm.view.balance;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.dipesan.miniatm.miniatm.Activity.LoginActivity;
+import com.dipesan.miniatm.miniatm.Activity.MainActivity;
 import com.dipesan.miniatm.miniatm.R;
 import com.dipesan.miniatm.miniatm.services.YoucubeService;
 import com.dipesan.miniatm.miniatm.utils.AppConstant;
@@ -132,6 +137,30 @@ public class BalanceFragment extends Fragment {
 //                show();
 //            }
         });
+        showAlert();
+    }
+
+    private void showAlert(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(getString(R.string.continuetransaction))
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        startActivity(new Intent(getActivity(), MainActivity.class));
+                        getActivity().overridePendingTransition(0, R.anim.fade_out);
+                        getActivity().finish();
+                    }
+                })
+                .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        startActivity(new Intent(getActivity(), LoginActivity.class));
+                        getActivity().overridePendingTransition(0, R.anim.fade_out);
+                        getActivity().finish();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
 
 

@@ -113,6 +113,16 @@
             android:layout_height="wrap_content"
             android:theme="@style/ButtonTheme"
             />
+        <Button
+            android:id="@+id/main_activity_log_out_button"
+            android:drawableLeft="@drawable/ic_power_settings"
+            android:textStyle="bold"
+            android:textColor="@color/colorTextIcons"
+            android:text="@string/logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ButtonTheme"
+            />
 
     </LinearLayout>
 

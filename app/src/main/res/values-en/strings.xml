@@ -118,4 +118,8 @@
     <string name="usage">Usage</string>
     <string name="paymentinsurance">Payment Insurance</string>
     <string name="paymenttelevision">Payment Television</string>
+    <string name="logout">Logout</string>
+    <string name="continuetransaction">Continue Transaction ?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 </resources>

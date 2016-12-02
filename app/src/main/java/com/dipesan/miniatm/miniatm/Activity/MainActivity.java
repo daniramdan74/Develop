@@ -81,24 +81,6 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(0, R.anim.fade_out);
     }
 
-//    @OnClick(R.id.main_activity_account_button)
-//    public void onClickAccount() {
-//        Intent intentSettings = new Intent(this, MainSubActivity.class);
-//        intentSettings.putExtra(MENU, MENU_ACCOUNT);
-//        startActivity(intentSettings);
-//        overridePendingTransition(0, R.anim.fade_out);
-//    }
-
-
-    //function button
-//    @OnClick(R.id.main_activity_function_button)
-//    public void onClickFunction() {
-//        Intent intentSettings = new Intent(this, MainSubActivity.class);
-//        intentSettings.putExtra(MENU,MENU_FUNCTION);
-//        startActivity(intentSettings);
-//        overridePendingTransition(0, R.anim.fade_out);
-//    }
-
 
     private void initBluetoothConnection() {
         IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
@@ -117,5 +99,13 @@ public class MainActivity extends AppCompatActivity {
         intentSettings.putExtra(MENU, MENU_WITHDRAW);
         startActivity(intentSettings);
         overridePendingTransition(0, R.anim.fade_out);
+    }
+
+    @OnClick(R.id.main_activity_log_out_button)
+    public void onClickLogout() {
+        Intent intentLogout = new Intent(this, LoginActivity.class);
+        startActivity(intentLogout);
+        overridePendingTransition(0, R.anim.fade_out);
+        finish();
     }
 }
