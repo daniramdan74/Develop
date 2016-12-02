@@ -223,9 +223,9 @@ public class WithdrawFragment extends Fragment {
                 printer.printerInit();
                 printer.setFontSize(24);
                 printer.printText("===============================");
-                printer.printText("\nTarik Tunai");
+                printer.printText("\n"+getString(R.string.cash));
                 printer.printText("\n===============================");
-                printer.printText("\nJumlah : "+amount);
+                printer.printText("\n"+getString(R.string.phonecreditAmount)+amount);
                                 printer.printText("\n");
                 printer.printText("\nMerchant :");
                 printer.printText("\n" + AppConstant.NAME_MERCHANT);
@@ -234,7 +234,7 @@ public class WithdrawFragment extends Fragment {
                 printer.commitTransaction();
             }
         });
-        Toast.makeText(getActivity(), "Print", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), ""+getString(R.string.transactionsuccess), Toast.LENGTH_SHORT).show();
         withdrawFragmentAmountEditText.setText(null);
         withdrawFragmentAmountOthersEditText.setText(null);
         withdrawFragmentAmountEditText.setEnabled(true);

@@ -119,17 +119,17 @@ public class PaymentElectricFragment extends Fragment implements CompoundButton.
                 printer.printerInit();
                 printer.setFontSize(24);
                 printer.printText("===============================");
-                printer.printText("\nPembayaran Listrik");
+                printer.printText("\n"+getString(R.string.electric_token));
                 printer.printText("\n===============================");
-                printer.printText("\nID PEL/No Referensi : ");
+                printer.printText("\n"+getString(R.string.puurchaseelectrictokenIdCust));
                 printer.printText("\n"+fragpaymentElectricAccountNumberTextView.getText().toString());
-                printer.printText("\nNama Pemilik :");
+                printer.printText("\n"+getString(R.string.interbankAccountName));
                 printer.printText("\n"+fragpaymentElectricAccountNameTextView.getText().toString());
-                printer.printText("\nTarif/Daya : ");
+                printer.printText("\n"+getString(R.string.purchaseelectrictokenFarePower));
                 printer.printText("\n"+fragpaymentElectricAccountPowerTextView.getText().toString());
-                printer.printText("\nBL/TH : ");
+                printer.printText("\n"+getString(R.string.month));
                 printer.printText("\n"+fragpaymentElectricMonthTextView.getText().toString());
-                printer.printText("\nJumlah Tagihan : ");
+                printer.printText("\n"+getString(R.string.phonecreditAmount));
                 printer.printText("\n"+ fragpaymentElectricAmountTextView.getText().toString());
                 printer.printText("\n");
                 printer.printText("\nMerchant :");
@@ -143,7 +143,7 @@ public class PaymentElectricFragment extends Fragment implements CompoundButton.
         fragpaymentElectricDetailLinearLayout.setVisibility(View.INVISIBLE);
         fragpaymentElectricIdcustomerEditText.setText(null);
         fragpaymentElectricProsesButton.setEnabled(true);
-        Toast.makeText(getActivity(), "Pembayaran Listrik\n Berhasil dilakukan", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), ""+getString(R.string.transactionsuccess), Toast.LENGTH_SHORT).show();
         fragpaymentElectricDataMatchesCheckButton.setChecked(false);
 
     }
@@ -160,7 +160,7 @@ public class PaymentElectricFragment extends Fragment implements CompoundButton.
             fragpaymentElectricAccountNumberTextView.setText(fragpaymentElectricIdcustomerEditText.getText().toString());
             fragpaymentElectricAccountNameTextView.setText("Riani");
             fragpaymentElectricAccountPowerTextView.setText("R1/900");
-            fragpaymentElectricMonthTextView.setText("Nov 2016");
+            fragpaymentElectricMonthTextView.setText("Jan 2017");
             fragpaymentElectricAmountTextView.setText("1200000");
             disabledData();
         }else {

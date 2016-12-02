@@ -173,15 +173,15 @@ public class PaymentPostPaidPhoneFragment extends Fragment implements CompoundBu
                 printer.printerInit();
                 printer.setFontSize(24);
                 printer.printText("===============================");
-                printer.printText("\nPembayaran Telepon Prabayar");
+                printer.printText("\n"+getString(R.string.post_paid_phone));
                 printer.printText("\n===============================");
-                printer.printText("\nPenyedia : ");
+                printer.printText("\n"+getString(R.string.phonecreditProvider));
                 printer.printText("\n"+fragpaymentPostPaidPhoneProviderTextView.getText().toString());
-                printer.printText("\nNomor Telepon : ");
+                printer.printText("\n"+getString(R.string.phonecreditPhoneNumber));
                 printer.printText("\n"+fragpaymentPostPaidPhoneNumberTextView.getText().toString());
-                printer.printText("\nNama : ");
+                printer.printText("\n"+getString(R.string.name));
                 printer.printText("\n"+fragpaymentPostPaidPhoneCustomerNameTextView.getText().toString());
-                printer.printText("\nJumlah Tagihan : ");
+                printer.printText("\n"+getString(R.string.interbankAmount));
                 printer.printText("\n"+fragpaymentPostPaidPhoneAmountTextView.getText().toString());
                 printer.printText("\n");
                 printer.printText("\nMerchant :");
@@ -196,7 +196,7 @@ public class PaymentPostPaidPhoneFragment extends Fragment implements CompoundBu
         fragpaymentPostPaidPhoneProviderEidtText.setText(null);
         fragpaymentPostPaidPhoneNumberEditText.setText(null);
         fragpaymentPostPaidPhoneProcessButton.setEnabled(true);
-        Toast.makeText(getActivity(), "Pembayaran Telepon Prabayar\n Berhasil dilakukan", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), ""+getString(R.string.transactionsuccess), Toast.LENGTH_SHORT).show();
         fragpaymentPostPaidPhoneDataMatchesCheckBox.setChecked(false);
     }
 

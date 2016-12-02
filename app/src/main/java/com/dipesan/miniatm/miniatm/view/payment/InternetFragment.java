@@ -134,11 +134,11 @@ public class InternetFragment extends Fragment implements CompoundButton.OnCheck
                 printer.printText("\n===============================");
                 printer.printText("\n"+getString(R.string.phonecreditProvider));
                 printer.printText("\n"+fragpaymentInternetProvidersTextView.getText().toString());
-                printer.printText("\nID PEL/No Referensi : ");
+                printer.printText("\n"+getString(R.string.puurchaseelectrictokenIdCust));
                 printer.printText("\n"+fragpaymentInternetAccountNumberTextView.getText().toString());
-                printer.printText("\nNama : ");
+                printer.printText("\n"+getString(R.string.name));
                 printer.printText("\n"+fragpaymentInternetAccountNameTextView.getText().toString());
-                printer.printText("\nJumlah Tagihan : ");
+                printer.printText("\n"+getString(R.string.phonecreditAmount));
                 printer.printText("\n"+fragpaymentInternetAmountTextView.getText().toString());
                 printer.printText("\n");
                 printer.printText("\nMerchant :");

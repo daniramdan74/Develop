@@ -31,6 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.dipesan.miniatm.miniatm.R.id.fragpayment_credit_card_providers_edit_text;
+import static com.dipesan.miniatm.miniatm.R.string.paymentscreditcard;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -195,19 +196,19 @@ public class PaymentCreditCardFragment extends Fragment implements CompoundButto
                 printer.printerInit();
                 printer.setFontSize(24);
                 printer.printText("===============================");
-                printer.printText("\nPembayaran Kartu Kredit");
+                printer.printText("\n"+getString(paymentscreditcard));
                 printer.printText("\n===============================");
                 printer.printText("\n");
-                printer.printText("\nBank : "+fragpaymentCreditCardBankTextView.getText().toString());
-                printer.printText("\nNo Kartu : "+fragpaymentCardNumberTextView.getText().toString());
-                printer.printText("\nJenis Kartu : "+fragpaymentTypeCardBankTextView.getText().toString());
-                printer.printText("\nNama Pemilik : "+fragpaymentCreditAccountNameTextView.getText().toString());
-                printer.printText("\nJumlah : "+fragpaymentAmountTransferTextView.getText().toString());
+                printer.printText("\n"+getString(R.string.interbankBank)+" "+fragpaymentCreditCardBankTextView.getText().toString());
+                printer.printText("\n"+getString(R.string.numbercard)+": "+fragpaymentCardNumberTextView.getText().toString());
+                printer.printText("\n"+getString(R.string.typecard)+": "+fragpaymentTypeCardBankTextView.getText().toString());
+                printer.printText("\n"+getString(R.string.interbankAccountName)+" "+fragpaymentCreditAccountNameTextView.getText().toString());
+                printer.printText("\n"+getString(R.string.interbankAmount)+" "+fragpaymentAmountTransferTextView.getText().toString());
                 printer.printText("\n");
-                printer.printText("\nDari ");
-                printer.printText("\nBank : "+fragpaymentCreditFromBankTextView.getText().toString());
-                printer.printText("\nNo Rekening : "+fragpaymentCreditFromAccountNumberTextView.getText().toString());
-                printer.printText("\nNama Pemilik : "+fragpaymentCreditFromAccountNameTextView.getText().toString());
+                printer.printText("\n"+getString(R.string.from));
+                printer.printText("\n"+getString(R.string.interbankBank)+" "+fragpaymentCreditFromBankTextView.getText().toString());
+                printer.printText("\n"+getString(R.string.interbankAccountNumber)+" "+fragpaymentCreditFromAccountNumberTextView.getText().toString());
+                printer.printText("\n"+getString(R.string.interbankAccountName)+" "+fragpaymentCreditFromAccountNameTextView.getText().toString());
                 printer.printText("\n");
                 printer.printText("\nMerchant :");
                 printer.printText("\n" + AppConstant.NAME_MERCHANT);
@@ -221,7 +222,7 @@ public class PaymentCreditCardFragment extends Fragment implements CompoundButto
         fragpaymentCreditCardProvidersEditText.setText(null);
         fragpaymentCreditCardCustomerNumberEditText.setText(null);
         fragpaymentCreditCardProcessButton.setEnabled(true);
-        Toast.makeText(getActivity(), "Pembayaran Kartu Kredit\n Berhasil dilakukan", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), ""+getString(R.string.transactionsuccess), Toast.LENGTH_SHORT).show();
         fragpaymentCreditDataMatchesCheckBox.setChecked(false);
     }
 

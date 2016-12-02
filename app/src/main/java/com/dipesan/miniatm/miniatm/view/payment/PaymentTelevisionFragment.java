@@ -175,15 +175,15 @@ public class PaymentTelevisionFragment extends Fragment implements CompoundButto
                 printer.printerInit();
                 printer.setFontSize(24);
                 printer.printText("===============================");
-                printer.printText("\nPembayaran Televisi");
+                printer.printText("\n"+getString(R.string.paymenttelevision));
                 printer.printText("\n===============================");
-                printer.printText("\nPenyedia Layanan :");
+                printer.printText("\n"+getString(R.string.phonecreditProvider));
                 printer.printText("\n"+fragpaymentTelevisionProvidersTextView.getText().toString());
-                printer.printText("\nNama : ");
+                printer.printText("\n"+getString(R.string.name));
                 printer.printText("\n"+fragpaymentTelevisionCustomerNameTextView.getText().toString());
-                printer.printText("\nID PEL/No Referensi : ");
+                printer.printText("\n"+getString(R.string.puurchaseelectrictokenIdCust));
                 printer.printText("\n"+fragpaymentTelevisionCustomerIdTextView.getText().toString());
-                printer.printText("\nJumlah Tagihan : ");
+                printer.printText("\n"+getString(R.string.phonecreditAmount));
                 printer.printText("\n"+fragpaymentTelevisionAmountTextView.getText().toString());
                 printer.printText("\n");
                 printer.printText("\nMerchant :");
@@ -198,7 +198,7 @@ public class PaymentTelevisionFragment extends Fragment implements CompoundButto
         fragpaymentTelevisionCustomerNumberEditText.setText(null);
         fragpaymentTelevisionProvidersEditText.setText(null);
         fragpaymentTelevisionProcessButton.setEnabled(true);
-        Toast.makeText(getActivity(), "Pembayaran Televisi\n Berhasil dilakukan", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), ""+getString(R.string.transactionsuccess), Toast.LENGTH_SHORT).show();
         fragpaymentTelevisionDataMatchesCheckBox.setChecked(false);
 
     }

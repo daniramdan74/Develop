@@ -132,23 +132,23 @@ public class PaymentWaterFragment extends Fragment implements CompoundButton.OnC
                 printer.printerInit();
                 printer.setFontSize(24);
                 printer.printText("===============================");
-                printer.printText("\nPembayaran PDAM");
+                printer.printText("\n"+getString(R.string.paymentwater));
                 printer.printText("\n===============================");
-                printer.printText("\nWilayah : ");
+                printer.printText("\n"+getString(R.string.waterTerritory));
                 printer.printText("\n"+fragpaymentWaterTerritoryTextView.getText().toString());
-                printer.printText("\nID PEL/No Referensi : ");
+                printer.printText("\n"+getString(R.string.puurchaseelectrictokenIdCust));
                 printer.printText("\n"+fragpaymentWaterCustomerIdTextView.getText().toString());
-                printer.printText("\nNama : ");
+                printer.printText("\n"+getString(R.string.name));
                 printer.printText("\n"+fragpaymentWaterCustomerNameTextView.getText().toString());
-                printer.printText("\nAlamat : ");
+                printer.printText("\n"+getString(R.string.address));
                 printer.printText("\n"+fragpaymentWaterAddressTextView.getText().toString());
-                printer.printText("\nPeriode : ");
+                printer.printText("\n"+getString(R.string.period));
                 printer.printText("\n"+fragpaymentWaterPeriodTextView.getText().toString());
-                printer.printText("\nGolongan : ");
+                printer.printText("\n"+getString(R.string.group));
                 printer.printText("\n"+fragpaymentWaterGroupTextView.getText().toString());
-                printer.printText("\nPemakaian : ");
+                printer.printText("\n"+getString(R.string.usage));
                 printer.printText("\n"+fragpaymentWaterUsageTextView.getText().toString());
-                printer.printText("\nJumlah Tagihan : ");
+                printer.printText("\n"+getString(R.string.phonecreditAmount));
                 printer.printText("\n"+fragpaymentWaterAmountTextView.getText().toString());
                 printer.printText("\n");
                 printer.printText("\nMerchant :");
@@ -163,7 +163,7 @@ public class PaymentWaterFragment extends Fragment implements CompoundButton.OnC
         fragpaymentWaterTerritoryEditText.setText(null);
         fragpaymentWaterCustomerIdEditText.setText(null);
         fragpaymentWaterProcessButton.setEnabled(true);
-        Toast.makeText(getActivity(), "Pembayaran PDAM\n Berhasil dilakukan", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), ""+getString(R.string.transactionsuccess), Toast.LENGTH_SHORT).show();
         fragpaymentWaterDataMatchesCheckBox.setChecked(false);
 
     }

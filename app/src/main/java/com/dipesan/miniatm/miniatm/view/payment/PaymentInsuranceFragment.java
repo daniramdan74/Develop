@@ -178,15 +178,15 @@ public class PaymentInsuranceFragment extends Fragment implements CompoundButton
                 printer.printerInit();
                 printer.setFontSize(24);
                 printer.printText("===============================");
-                printer.printText("\nPembayaran Asuransi");
+                printer.printText("\n"+getString(R.string.paymentinsurance));
                 printer.printText("\n===============================");
-                printer.printText("\nPenyedia Layanan :");
+                printer.printText("\n"+getString(R.string.phonecreditProvider));
                 printer.printText("\n"+fragpaymentInsuranceProvidersTextView.getText().toString());
-                printer.printText("\nNama : ");
+                printer.printText("\n"+getString(R.string.name));
                 printer.printText("\n"+fragpaymentInsuranceCustomerNameTextView.getText().toString());
-                printer.printText("\nNo Keanggotaan : ");
+                printer.printText("\n"+getString(R.string.puurchaseelectrictokenIdCust));
                 printer.printText("\n"+fragpaymentInsuranceCustomerNumberTextView.getText().toString());
-                printer.printText("\nJumlah Tagihan : ");
+                printer.printText("\n"+getString(R.string.phonecreditAmount));
                 printer.printText("\n"+fragpaymentInsuranceAmountTextView.getText().toString());
                 printer.printText("\n");
                 printer.printText("\nMerchant :");
@@ -201,7 +201,7 @@ public class PaymentInsuranceFragment extends Fragment implements CompoundButton
         fragpaymentInsuranceCustomerNumberEditText.setText(null);
         fragpaymentInsuranceProviderEditText.setText(null);
         fragpaymentInsuranceProcessButton.setEnabled(true);
-        Toast.makeText(getActivity(), "Pembayaran Asuransi\n Berhasil dilakukan", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), ""+getString(R.string.transactionsuccess), Toast.LENGTH_SHORT).show();
         fragpaymentInsuranceDataMatchesCheckBox.setChecked(false);
 
     }
