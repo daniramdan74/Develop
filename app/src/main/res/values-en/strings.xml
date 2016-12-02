@@ -99,4 +99,23 @@
     <string name="from">From</string>
     <string name="to">To</string>
     <string name="transfersuccess">Successful Transfer</string>
+    <string name="transactionsuccess">Transaction Success</string>
+    <string name="adminbank">Admin Bank</string>
+    <string name="detailedinformation">Detail Information</string>
+    <string name="paymentscreditcard">Payment Credit Card</string>
+    <string name="numbercard">Number Card</string>
+    <string name="typecard">Type of Card</string>
+    <string name="paymentpostpaidphone">Payment Post Paid Phone</string>
+    <string name="pay">Pay</string>
+    <string name="paymentinternet">Payment Internet</string>
+    <string name="paymentelectric">Payment Electric</string>
+    <string name="mountyears">Month</string>
+    <string name="month">Month</string>
+    <string name="paymentwater">Payment Water</string>
+    <string name="address">Address</string>
+    <string name="period">Period</string>
+    <string name="group">Group</string>
+    <string name="usage">Usage</string>
+    <string name="paymentinsurance">Payment Insurance</string>
+    <string name="paymenttelevision">Payment Television</string>
 </resources>

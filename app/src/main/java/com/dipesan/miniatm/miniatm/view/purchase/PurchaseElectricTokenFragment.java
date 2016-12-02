@@ -193,17 +193,17 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
                 printer.printerInit();
                 printer.setFontSize(24);
                 printer.printText("===============================");
-                printer.printText("\nPembelian Token Listrik");
+                printer.printText("\n"+getString(R.string.electric_token));
                 printer.printText("\n===============================");
                 printer.printText("\n");
-                printer.printText("\nID PEL     : " + fragpurchaseElectricIdCustomerTextView.getText().toString());
-                printer.printText("\nNAMA       : " + fragpurchaseElectricNameCustomerTextView.getText().toString());
-                printer.printText("\nTARIF/DAYA : " + fragpurchaseElectricFareTextView.getText().toString());
-                printer.printText("\nRP BAYAR   : " + fragpurchaseElectricNominalTextView.getText().toString());
-                printer.printText("\nADMIN BANK : 1.600");
+                printer.printText("\n"+getString(R.string.puurchaseelectrictokenIdCust) + fragpurchaseElectricIdCustomerTextView.getText().toString());
+                printer.printText("\n"+getString(R.string.name)+ fragpurchaseElectricNameCustomerTextView.getText().toString());
+                printer.printText("\n"+getString(R.string.purchaseelectrictokenFarePower)+ fragpurchaseElectricFareTextView.getText().toString());
+                printer.printText("\n"+getString(R.string.interbankAmount) + fragpurchaseElectricNominalTextView.getText().toString());
+                printer.printText("\n"+getString(R.string.adminbank)+"1.600");
                 printer.printText("\nPPn        : 0");
                 printer.printText("\nPPj        : 707");
-                printer.printText("\nJML KWH    : 50,98");
+                printer.printText("\n"+getString(R.string.interbankAmount)+"KWH : 50,98");
                 printer.setFontSize(30);
                 printer.printText("\nTOKEN :");
                 printer.printText("\n1234-5678-9012-3456-7890");
@@ -222,7 +222,7 @@ public class PurchaseElectricTokenFragment extends Fragment implements CompoundB
         fragmentElectricMeterNumberEditText.setText(null);
         fragmentElectricNominalEditText.setText(null);
         fragmentElectricProcessButton.setEnabled(true);
-        Toast.makeText(getActivity(), "Pembelian Token Listrik\n Berhasil dilakukan", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), ""+getString(R.string.transactionsuccess), Toast.LENGTH_SHORT).show();
         fragpurchaseElectricDataMatchesCheckbox.setChecked(false);
     }
 

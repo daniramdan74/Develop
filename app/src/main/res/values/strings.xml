@@ -108,4 +108,23 @@
     <string name="from">Dari</string>
     <string name="to">Kepada</string>
     <string name="transfersuccess">Transfer Berhasil</string>
+    <string name="transactionsuccess">Transaksi Berhasil</string>
+    <string name="adminbank">Admin Bank</string>
+    <string name="detailedinformation">Detail Informasi</string>
+    <string name="paymentscreditcard">Pembayaran Kartu Kredit</string>
+    <string name="numbercard">Nomor Kartu</string>
+    <string name="typecard">Jenis Kartu</string>
+    <string name="paymentpostpaidphone">Pembayaran Telepon Pascabayar</string>
+    <string name="pay">Bayar</string>
+    <string name="paymentinternet">Pemabayaran Internet</string>
+    <string name="paymentelectric">Pembayaran Listrik</string>
+    <string name="mountyears">Bulan</string>
+    <string name="month">Bulan</string>
+    <string name="paymentwater">Pembayaran PDAM</string>
+    <string name="address">Alamat</string>
+    <string name="period">Periode</string>
+    <string name="group">Golongan</string>
+    <string name="usage">Pemakaian</string>
+    <string name="paymentinsurance">Pembayaran Asuransi</string>
+    <string name="paymenttelevision">Pembayaran Televisi Prabayar</string>
 </resources>

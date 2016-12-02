@@ -311,15 +311,15 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
                 printer.printerInit();
                 printer.setFontSize(24);
                 printer.printText("===============================");
-                printer.printText("\nPembelian Pulsa");
+                printer.printText("\n"+getString(R.string.phone_credit));
                 printer.printText("\n===============================");
-                printer.printText("\nProvider :");
+                printer.printText("\n"+getString(R.string.phonecreditProvider));
                 printer.printText("\n" + itemProviders[whichItemProvider]);
-                printer.printText("\nJenis Paket : ");
+                printer.printText("\n"+getString(R.string.phonecreditType));
                 printer.printText("\n" + finalType);
-                printer.printText("\nNominal :");
+                printer.printText("\n"+getString(R.string.phonecreditAmount));
                 printer.printText("\n" + finalAmount);
-                printer.printText("\nNomor Telpon : \n" + fragmentPhoneNumberEditText.getText().toString());
+                printer.printText("\n"+getString(R.string.phonecreditPhoneNumber)+"\n" + fragmentPhoneNumberEditText.getText().toString());
                 printer.printText("\n");
                 printer.printText("\n");
                 printer.printText("\nMerchant :");
@@ -334,7 +334,7 @@ public class PurchasePhoneCreditFragment extends Fragment implements CompoundBut
         fragmentPhoneNumberEditText.setText(null);
         fragmentPhoneCreditProcessButton.setEnabled(false);
         editDataEnabled();
-        Toast.makeText(getActivity(), "Pembelian Pulsa \n Berhasil dilakukan", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), ""+getString(R.string.transactionsuccess), Toast.LENGTH_SHORT).show();
         fragmentPhoneCreditDataMatchesCheckBox.setChecked(false);
     }
 

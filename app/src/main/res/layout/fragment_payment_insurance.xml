@@ -92,7 +92,7 @@
                             android:layout_marginBottom="2dp"
                             android:layout_marginTop="2dp"
                             android:gravity="center_horizontal"
-                            android:text="Detail Informasi"
+                            android:text="@string/detailedinformation"
                             android:textColor="@color/colorTextIcons"
                             android:textStyle="bold"
                             />
@@ -112,7 +112,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:layout_marginTop="10dp"
-                            android:text="Pembayaran Asuransi"
+                            android:text="@string/paymentinsurance"
                             android:textStyle="bold"/>
 
                         <TextView
@@ -122,7 +122,7 @@
                             android:layout_below="@+id/textview1"
                             android:layout_marginLeft="63dp"
                             android:layout_marginTop="5dp"
-                            android:text="Penyedia : "
+                            android:text="@string/phonecreditProvider"
                             />
                         <TextView
                             android:id="@+id/textview3"
@@ -131,7 +131,7 @@
                             android:layout_below="@+id/fragpayment_insurance_providers_text_view"
                             android:layout_alignRight="@+id/textview2"
                             android:layout_marginTop="5dp"
-                            android:text="Nama : "
+                            android:text="@string/name"
                             />
                         <TextView
                             android:id="@+id/textview4"
@@ -140,7 +140,7 @@
                             android:layout_below="@+id/textview3"
                             android:layout_alignRight="@+id/textview2"
                             android:layout_marginTop="5dp"
-                            android:text="No Keanggotaan : "
+                            android:text="@string/no_identitiy"
                             />
                         <TextView
                             android:id="@+id/textview5"
@@ -149,7 +149,7 @@
                             android:layout_below="@+id/textview4"
                             android:layout_alignRight="@+id/textview2"
                             android:layout_marginTop="5dp"
-                            android:text="Jumlah : "
+                            android:text="@string/interbankAmount"
                             />
                         <TextView
                             android:id="@+id/fragpayment_insurance_providers_text_view"
@@ -202,7 +202,7 @@
                         android:id="@+id/fragpayment_insurance_pay_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Bayar"
+                        android:text="@string/pay"
                         android:textStyle="bold"
                         android:theme="@style/ButtonTheme"/>
                 </LinearLayout>

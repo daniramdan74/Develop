@@ -130,9 +130,9 @@ public class InternetFragment extends Fragment implements CompoundButton.OnCheck
                 printer.printerInit();
                 printer.setFontSize(24);
                 printer.printText("===============================");
-                printer.printText("\nPembayaran Internet");
+                printer.printText("\n"+getString(R.string.internet));
                 printer.printText("\n===============================");
-                printer.printText("\nPenyedia : ");
+                printer.printText("\n"+getString(R.string.phonecreditProvider));
                 printer.printText("\n"+fragpaymentInternetProvidersTextView.getText().toString());
                 printer.printText("\nID PEL/No Referensi : ");
                 printer.printText("\n"+fragpaymentInternetAccountNumberTextView.getText().toString());
@@ -153,7 +153,7 @@ public class InternetFragment extends Fragment implements CompoundButton.OnCheck
         fragpaymentInternetAccountNumberEditText.setText(null);
         fragpaymentInternetProvidersEditText.setText(null);
         fragpaymentInternetProcessButton.setEnabled(true);
-        Toast.makeText(getActivity(), "Pembayaran Telepon Prabayar\n Berhasil dilakukan", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), ""+getString(R.string.transactionsuccess), Toast.LENGTH_SHORT).show();
         fragpaymentInternetDataMatchesCheckBox.setChecked(false);
     }
 
