@@ -105,4 +105,7 @@
     <string name="phonecreditType">Jenis Pulsa</string>
     <string name="withdrawfragment">Tarik Tunai</string>
     <string name="canNotEmpty">Tidak Boleh Kosong</string>
+    <string name="from">Dari</string>
+    <string name="to">Kepada</string>
+    <string name="transfersuccess">Transfer Berhasil</string>
 </resources>

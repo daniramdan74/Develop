@@ -130,19 +130,19 @@ public class InterBankFragment extends Fragment implements CompoundButton.OnChec
                 printer.printerInit();
                 printer.setFontSize(24);
                 printer.printText("===============================");
-                printer.printText("\nTransfer Sesama Bank");
+                printer.printText("\n"+getString(R.string.interbank));
                 printer.printText("\n===============================");
-                printer.printText("\n Tujuan Transfer");
-                printer.printText("\nBank Tujuan  : " + fraginterbankDestinationBankTextView.getText().toString());
-                printer.printText("\nNo Rekening  : " + fraginterbankNumberAccountTextView.getText().toString());
-                printer.printText("\nNama Pemilik : " + fraginterbankNameAccountTextView.getText().toString());
-                printer.printText("\n     Nominal : " + fraginterbankNominalTextView.getText().toString());
+                printer.printText("\n"+getString(R.string.to));
+                printer.printText("\n"+getString(R.string.interbankDestinationBank) + fraginterbankDestinationBankTextView.getText().toString());
+                printer.printText("\n"+getString(R.string.interbankAccountNumber)+ fraginterbankNumberAccountTextView.getText().toString());
+                printer.printText("\n"+getString(R.string.interbankAccountName) + fraginterbankNameAccountTextView.getText().toString());
+                printer.printText("\n"+getString(R.string.interbankAmount)+ fraginterbankNominalTextView.getText().toString());
                 printer.printText("\n");
                 printer.printText("\n--------------------------");
-                printer.printText("\n Dari");
-                printer.printText("\n       Bank  : " + fraginterbankFromBankTextView.getText().toString());
-                printer.printText("\nNo Rekening  : " + fraginterbankFromAccountNumberTextView.getText().toString());
-                printer.printText("\nNama Pemilik : " + fraginterbankFromAccountNameTextView.getText().toString());
+                printer.printText("\n"+getString(R.string.from));
+                printer.printText("\n"+getString(R.string.interbankBank)+ fraginterbankFromBankTextView.getText().toString());
+                printer.printText("\n"+getString(R.string.interbankAccountNumber)+ fraginterbankFromAccountNumberTextView.getText().toString());
+                printer.printText("\n"+getString(R.string.interbankAccountName)+ fraginterbankFromAccountNameTextView.getText().toString());
                 printer.printText("\n");
                 printer.printText("\n");
                 printer.printText("\nMerchant :");
@@ -156,7 +156,7 @@ public class InterBankFragment extends Fragment implements CompoundButton.OnChec
         editDataEnabled();
         fraginterBankDestinationAccountEditText.setText(null);
         fraginterBankAmountTransferEditText.setText(null);
-        Toast.makeText(getActivity(), "Transfer Berhasil", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), ""+getString(R.string.transfersuccess), Toast.LENGTH_SHORT).show();
         fraginterbankDataMatchesCheckBox.setChecked(false);
     }
 

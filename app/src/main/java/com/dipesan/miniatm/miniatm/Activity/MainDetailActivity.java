@@ -14,6 +14,7 @@ public class MainDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main_detail);
         int titleId = getIntent().getIntExtra(MENU, 0);
 

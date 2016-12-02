@@ -96,4 +96,7 @@
     <string name="withdrawfragment">Cash Withdrawal</string>
     <string name="canNotEmpty">Can\'t be empty</string>
     <string name="hello_blank_fragment"></string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="transfersuccess">Successful Transfer</string>
 </resources>
